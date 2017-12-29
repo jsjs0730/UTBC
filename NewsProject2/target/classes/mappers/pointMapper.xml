@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="ga.newspbn.mapper.pointMapper">
+  <!-- 	
+  	####tbl_point_log########
+  	private String uid;
+	private String bname;
+	private int bnum;
+	private int rnum;
+	private String chk;
+	private Date timeclock;
+	
+		
+	
+ -->
+  	<insert id="writeReplyPoint">
+  		insert into tbl_point_log uid, bname, bnum, rnum, chk
+  		values(#{uid}, #{bname}, #{bnum}, #{rnum}, 'rck')
+  	</insert>
+  	<insert id="voteBoardPoint">
+  		insert into tbl_point_log uid, bname, bnum, chk 
+  		values(#{uid}, #{bname}, #{bnum}, 'vck')
+  	</insert>
+   	<insert id="voteBoardPointDis">
+   		insert into tbl_point_log uid, bname, bnum, chk
+   		values(#{uid}, #{bname}, #{bnum}, 'hck')
+   	</insert>
+  	<!-- point용 userid 찾기(글쓰기에서만 사용) -->
+  	<select id="chkuid" resultType="string">
+  		select uid from tbl_member where uname=#{usernick}
+  	</select>
+  	<!-- 글번호로 usernick 찾기(삭제처리) -->
+  	<select id="chkuname" resultType="String">
+  		select usernick from tbl_board where bnum=#{bnum}
+  	</select>
+  	<select id="calculatingPoint" resultType="int">
+  		select count(uid) from tbl_point_log where bnum=#{bnum} and chk=#{chk} <!-- bnum은 모두 포함한다. -->
+  	</select>
+	<update id="updatePoint">
+	<![CDATA[
+		update tbl_member_point set point = if(point<=0, 0, point)+#{point} where uid = #{uid}
+	]]> 
+	</update>  	
+  	<delete id="deleteBoardPointLog">
+  		delete from tbl_point_log where uid=#{uid} and bnum=#{bnum} and chk=#{chk}
+  	</delete>
+  	
+  	
+  </mapper>
+  

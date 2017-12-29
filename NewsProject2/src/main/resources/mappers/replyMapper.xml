@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+    <mapper namespace="ga.newspbn.mapper.ReplyMapper">
+       	<!-- 부모 댓글 -->
+       	<insert id="create">
+       		<selectKey resultType="int" keyProperty="grp" order="BEFORE">
+       			select IF(isnull(grp),100,Max(grp)+100) from tbl_reply       			
+       		</selectKey>
+			insert into tbl_reply (bnum, replytext, replyer, grp)
+			values (#{bnum}, #{replytext}, #{replyer}, #{grp})  			
+    	</insert>   
+
+		<!-- 대댓글 생성하기 -->
+		<!-- 마지막 번호 확인(최대값) -->
+		<select id="maxGrp" resultType="java.lang.Integer">
+		<![CDATA[
+			select max(grp) from tbl_reply where bnum=#{bnum} and grp between (round(#{grp}/100,0)*100) and ((round(#{grp}/100,0)+1)*100)-1; 
+		]]> 
+		</select>
+		<!-- 큰아들 -->
+		<select id="checkGrp" resultType="java.lang.Integer">
+		<![CDATA[
+			select max(grp) from tbl_reply where bnum=#{bnum} and grp between (round(#{grp}/100,2)*100) and ((round(#{grp}/100,0)+1)*100)-1 and lvl=#{lvl}; 
+		]]> 
+		</select>
+		
+		
+		<!-- 기존에 있는 댓글 한줄씩 밀기 -->
+		<update id="updateRereply">
+		<![CDATA[
+			update tbl_reply set grp = grp+1 where bnum=#{bnum} and grp between (round(#{grp}/100,2)*100) and ((round(#{grp}/100,0)+1)*100)-1 and lvl<=#{lvl};
+		]]> 
+		</update>
+				
+		<insert id="createRereply">
+			insert into tbl_reply (bnum, replyer, replytext, grp, lvl)
+			values (#{bnum}, #{replyer}, #{replytext}, #{grp}, #{lvl}+1)
+		</insert>
+		
+		<!-- 목록 -->
+    	<select id="listPage" resultType="ReplyVO">
+			select * from tbl_reply
+			where bnum=#{bnum}
+			order by grp asc, lvl asc 
+			limit #{cri.pageStart}, #{cri.perPageNum}	
+    	</select>
+
+		<!-- 수정 -->
+    	<update id="update">
+			update tbl_reply set replytext = #{replytext} , updatedate=now()
+			where rnum=#{rnum}    	
+    	</update>
+    	
+    	<!-- 삭제 -->    	
+    	<delete id="delete">
+			delete from tbl_reply where rnum=#{rnum}    	
+    	</delete>
+   
+		<!-- 댓글수(페이징용) -->
+    	<select id="count" resultType="int">
+    	<!-- 트랜잭션이 걸리는 시점부터는 tbl_board만을 이용해서 처리해야한다 -->
+			select count(bnum) from tbl_reply where bnum=#{bnum}
+			<!-- update tbl_board set replycnt = 
+				(select count(rnum)
+					from
+					tbl_reply
+					where bnum = tbl_board.bnum) where bnum > 0; -->
+			
+    	</select>
+    	
+    	<!-- 댓글수(게시판표시용) -->
+    	<select id="getBnum" resultType="int">
+    		select bnum from tbl_reply where rnum = #{rnum}    	
+    	</select> 	
+    </mapper>

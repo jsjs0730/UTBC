@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="ga.newspbn.mapper.boardMapper">
+  	<select id="listHome" resultType="BoardVO">
+  		<![CDATA[
+  		  select `bnum`, `title`, `content`, `usernick`, `regdate`, `viewcnt`, `replycnt`, `like`, `dislike`   
+		  from tbl_board
+		  where bnum > 0 and del = 'N'
+		  order by bnum desc, regdate desc
+  		  limit 0, 6
+		]]>
+  	</select>
+  	
+  	<insert id="insertBoard">
+  		insert into tbl_board (bname, usernick, title, content)
+  		values(#{bname}, #{usernick}, #{title}, #{content}); 
+  		insert into tbl_point_log (uid, bname, bnum, chk)  
+  		values(#{uid}, #{bname}, LAST_INSERT_ID(), 'bck');  	 	
+  	</insert>
+  	<select id="read" resultType="BoardVO">
+  		select * from tbl_board where bnum = #{bnum}
+  	</select>
+  	
+  	<update id="update">
+  		update tbl_board set title=#{title}, content=#{content} where bnum = #{bnum}
+  	</update>
+  	
+  	<delete id="delete">
+  		delete from tbl_board where bnum = #{bnum}  	
+  	</delete>
+	<delete id="deleteAllReply">
+		delete from tbl_reply where bnum = #{bnum}
+	</delete>
+  	<select id="listSearch" resultType="BoardVO">  
+  	  	<!-- <![CDATA[ ]]> : 부등호 등의 특문을 사용가능하게 해준다. -->	
+  		<![CDATA[
+  		  select `bnum`, `title`, `content`, `usernick`, `regdate`, `viewcnt`, `replycnt`, `like`, `dislike`   
+		  from tbl_board
+		  where bnum > 0 and del = 'N' and bname=#{bname}
+		]]>
+		
+		<include refid="search"></include>
+		
+		<![CDATA[
+		  order by bnum desc, regdate desc
+  		  limit #{pageStart}, #{perPageNum}
+   		]]>  	
+  	</select>
+  	
+  	<select id="listSearchCount" resultType="int">
+  		<![CDATA[
+  			select count(bnum) from tbl_board where bnum > 0 and del = 'N' and bname=#{bname} 		
+  		]]>
+  		<include refid="search"></include>  	
+  	</select>
+  	
+  	<sql id="search">
+	  	<if test="searchTarget != null">
+	  		<if test="searchTarget == 't'.toString()">
+	  			and title like concat('%', #{searchKeyword}, '%')  		
+	  		</if> 
+	  		<if test="searchTarget == 'c'.toString()">
+	  			and content like concat('%', #{searchKeyword}, '%')
+	  		</if>
+	  		<if test="searchTarget == 'u'.toString()">
+	  			and usernick like concat('%', #{searchKeyword}, '%')
+	  		</if>
+	  		<if test="searchTarget == 'tc'.toString()">
+	  			and ( title like concat('%', #{searchKeyword}, '%') or content like concat('%', #{searchKeyword}, '%'))
+	  		</if>
+	  		<if test="searchTarget == 'cu'.toString()">
+	  			and ( content like concat('%', #{searchKeyword}, '%') or usernick like concat('%', #{searchKeyword}, '%'))
+	  		</if>
+	  		<if test="searchTarget == 'tcu'.toString()">
+	  			and ( title like concat('%', #{searchKeyword}, '%') or content like concat('%', #{searchKeyword}, '%') or usernick like concat('%', #{searchKeyword}, '%'))
+	  		</if>
+	  	</if>
+  	</sql>
+  	
+  	<update id="updateReplyCnt">
+  		update tbl_board set replycnt = replycnt + #{amount} where bnum = #{bnum}  	
+  	</update>
+  	<update id="updateViewCnt">
+  		update tbl_board set viewcnt = viewcnt + 1 where bnum = #{bnum}  	
+  	</update>
+  	<insert id="addAttach">
+  		insert into tbl_attach(fullName, bnum) values (#{fullName}, LAST_INSERT_ID())
+  	</insert>
+  	<select id="getAttach" resultType="string">
+  		select fullName from tbl_attach where bnum = #{bnum} order by regdate
+  	</select>
+  	<delete id="deleteAttach">
+  		delete from tbl_attach where bnum = #{bnum}
+  	</delete>
+  	<insert id="replaceAttach">
+  		insert into tbl_attach(fullName, bnum) values(#{fullName}, #{bnum})
+  	</insert>
+ 
+  	
+  </mapper>
+  
