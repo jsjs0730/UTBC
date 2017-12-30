@@ -20,9 +20,6 @@ public interface ReplyDAO {
 	public List<ReplyVO> listPage(Integer bnum, SearchCriteria cri) throws Exception;
 	public int count(Integer bnum) throws Exception;
 	
-	public void createRe(ReplyVO vo) throws Exception;
-	public Integer maxGrp(ReplyVO vo) throws Exception;
-	public Integer chkGrp(ReplyVO vo) throws Exception;
-	public void updateGrp(ReplyVO vo) throws Exception;
+
 	public int getBnum(Integer rnum) throws Exception;
 }

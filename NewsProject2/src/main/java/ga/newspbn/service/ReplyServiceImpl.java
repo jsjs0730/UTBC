@@ -53,23 +53,6 @@ public class ReplyServiceImpl implements ReplyService {
 	public int count(Integer bnum) throws Exception {
 		return dao.count(bnum);
 	}
-	@Override
-	public void createRereply(ReplyVO vo) throws Exception {
-		dao.createRe(vo);
-	}
-	@Override
-	public Integer maxRereply(ReplyVO vo) throws Exception {
-		return dao.maxGrp(vo);
-	}
-	@Override
-	public Integer checkRereply(ReplyVO vo) throws Exception {
-		return dao.chkGrp(vo);
-	}
-	@Override
-	public void updateRereply(ReplyVO vo) throws Exception {
-		dao.updateGrp(vo);		
-	}
-	
-	
+
 
 }

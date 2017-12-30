@@ -13,32 +13,7 @@
 			values (#{bnum}, #{replytext}, #{replyer}, #{grp})  			
     	</insert>   
 
-		<!-- 대댓글 생성하기 -->
-		<!-- 마지막 번호 확인(최대값) -->
-		<select id="maxGrp" resultType="java.lang.Integer">
-		<![CDATA[
-			select max(grp) from tbl_reply where bnum=#{bnum} and grp between (round(#{grp}/100,0)*100) and ((round(#{grp}/100,0)+1)*100)-1; 
-		]]> 
-		</select>
-		<!-- 큰아들 -->
-		<select id="checkGrp" resultType="java.lang.Integer">
-		<![CDATA[
-			select max(grp) from tbl_reply where bnum=#{bnum} and grp between (round(#{grp}/100,2)*100) and ((round(#{grp}/100,0)+1)*100)-1 and lvl=#{lvl}; 
-		]]> 
-		</select>
-		
-		
-		<!-- 기존에 있는 댓글 한줄씩 밀기 -->
-		<update id="updateRereply">
-		<![CDATA[
-			update tbl_reply set grp = grp+1 where bnum=#{bnum} and grp between (round(#{grp}/100,2)*100) and ((round(#{grp}/100,0)+1)*100)-1 and lvl<=#{lvl};
-		]]> 
-		</update>
-				
-		<insert id="createRereply">
-			insert into tbl_reply (bnum, replyer, replytext, grp, lvl)
-			values (#{bnum}, #{replyer}, #{replytext}, #{grp}, #{lvl}+1)
-		</insert>
+	
 		
 		<!-- 목록 -->
     	<select id="listPage" resultType="ReplyVO">

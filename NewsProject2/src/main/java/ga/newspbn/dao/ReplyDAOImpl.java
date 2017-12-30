@@ -54,23 +54,7 @@ public class ReplyDAOImpl implements ReplyDAO {
 	public int count(Integer bnum) throws Exception {
 		return session.selectOne(namespace+"count", bnum);
 	}
-	@Override
-	public void createRe(ReplyVO vo) throws Exception {
-		session.insert(namespace+"createRereply", vo);
-	}
-	@Override
-	public Integer maxGrp(ReplyVO vo) throws Exception {
-		return session.selectOne(namespace+"maxGrp", vo);		
-	}
-	@Override
-	public Integer chkGrp(ReplyVO vo) throws Exception {
-		// TODO Auto-generated method stub
-		return session.selectOne(namespace+"checkGrp", vo);
-	}
-	@Override
-	public void updateGrp(ReplyVO vo) throws Exception {
-		session.update(namespace+"updateRereply", vo);		
-	}
+
 	@Override
 	public int getBnum(Integer rnum) throws Exception {
 		return session.selectOne(namespace+"getBnum", rnum);

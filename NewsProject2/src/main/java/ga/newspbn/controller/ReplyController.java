@@ -44,36 +44,7 @@ public class ReplyController {
 		}
 		return entity;
 	}
-	// 대 댓글 작성하기
-	 @RequestMapping(value = "/re", method = RequestMethod.POST)
-	 public ResponseEntity<String> reregister(@RequestBody ReplyVO vo) {
-		ResponseEntity<String> entity = null;
-		try {
-			Integer maxGrp = service.maxRereply(vo);			
-			Integer chkGrp = service.checkRereply(vo);
-			
-			if(maxGrp == null || maxGrp == vo.getGrp()){
-				vo.setGrp(vo.getGrp()+1);
-			}else if(vo.getLvl()>0){
-				System.out.println("받은vo.getGrp : " + vo.getGrp());
-				vo.setGrp(chkGrp);
-			}
-			else {
-				vo.setGrp(maxGrp+1);
-				System.out.println("최대값");
-			}
-			System.out.println("들어간 글번호 : " + vo.getGrp());
-			System.out.println("딸린 자식 수 : "+chkGrp+ ", 레벨수 : "+vo.getLvl());
-			
-			service.updateRereply(vo);
-			service.createRereply(vo);
-			entity = new ResponseEntity<String>("success", HttpStatus.OK);
-		} catch (Exception e) {
-			e.printStackTrace();
-			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-		return entity;
-	 }
+	
 	@RequestMapping(value="/{bnum}/{page}", method=RequestMethod.GET)
 	public ResponseEntity<Map<String, Object>> listPage(@PathVariable("bnum") Integer bnum, @PathVariable("page") int page){
 		ResponseEntity<Map<String, Object>> entity = null;

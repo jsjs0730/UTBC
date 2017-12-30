@@ -20,8 +20,5 @@ public interface ReplyService {
 	public List<ReplyVO> listReplyPage(Integer bnum, SearchCriteria cri) throws Exception;
 	public int count(Integer bnum) throws Exception;
 	
-	public void createRereply(ReplyVO vo) throws Exception;
-	public Integer maxRereply(ReplyVO vo) throws Exception;
-	public Integer checkRereply(ReplyVO vo) throws Exception;
-	public void updateRereply(ReplyVO vo) throws Exception;
+
 }
