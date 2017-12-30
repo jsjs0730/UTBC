@@ -28,7 +28,7 @@
 			formObj.submit();
 		});
 		$(".removeBtn").on("click", function(){
-		    var replyCnt = $("#replycntSmall").html().replace(/[^0-9]/g, "");
+		   var replyCnt = $("#replycntSmall").html().replace(/[^0-9]/g, "");
 		   /*  if(replyCnt>0){
 		        alert("댓글이 달린 게시물을 삭제할 수 없다");
 		        return;		        
@@ -55,7 +55,6 @@
 
 <script>
 	$(document).ready(function(){
-		    
 		
 		//첨부파일 처리
 		var template = Handlebars.compile($("#templateAttach").html());
