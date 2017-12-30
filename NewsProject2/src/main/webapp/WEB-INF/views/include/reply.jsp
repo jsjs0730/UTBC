@@ -87,7 +87,6 @@ data+='</li>'
 					replytextObj = $("#newReplyText");
 					var replyer =  replyerObj.val();
 					var replytext = replytextObj.val();
-					//alert("bnum : "+ bnum+ ", replyPage : "+ replyPage);
 					$.ajax({
 						type : "post",
 						url : "./replies/add",
