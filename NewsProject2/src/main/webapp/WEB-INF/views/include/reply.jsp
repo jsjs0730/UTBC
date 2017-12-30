@@ -6,6 +6,7 @@ var data = '<li class="replyLi">'
 			data+='<span class="bg-green"> 댓글 수'
 				data+='<small id="replycntSmall">[${boardVO.replycnt}] </small>'
 			data+='</span>'
+	data+='</li>'
 data+='<li class="replyLi" data-rnum={{rnum}}>'
 	data+='<div class="clearfix">'
 		data+='<h3><댓글번호 : {{grp}}></h3><h4 class="pull-left">{{replyer}}</h4>'
@@ -60,12 +61,6 @@ data+='</li>'
 			return year + "/" + month + "/" + date + "\t"+ hour + ":"+ min +":"+sec;
 		};
 		
-		var printData = function(replyArr, target, templateObject){
-			var template = Handlebars.compile(templateObject.html());
-			var html = template(replyArr);
-			$(".replyLi").remove();//like a flicker
-			target.append(html);
-		};
 		
 		var bnum = ${boardVO.bnum}; //게시물의 번호
 		var replyPage = 1; //수정이나 삭제 작업 이후 사용자가 보던 댓글의 페이지번호를 담아둔다.
@@ -73,7 +68,6 @@ data+='</li>'
 		//페이징 처리를 위한 함수 parameter : 페이지 번호
 		function getPage(pageInfo){
 			$.getJSON(pageInfo, function(data){//목록데이터 처리
-				printData(data.list, $("#comments"), $("#template"));
 				  var indent = $(".replyLvl");
 				  $.each(indent, function(index, item) {
 				   var num = $(this).val();
@@ -112,7 +106,6 @@ data+='</li>'
 								//alert("댓글이 등록 되었습니다.");
 								replyPage = 1;
 								getPage("./replies/"+bnum+"/"+replyPage);
-								replyerObj.val("");
 								replytextObj.val("");
 							}
 						},
