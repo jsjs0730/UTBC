@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <script>
 	$(document).ready(function(){
-		function timeClock(){
+		function timeClock(timeValue){
 			var dateObj = new Date(timeValue);
 			var year = dateObj.getFullYear();
 			var month = dateObj.getMonth() + 1;
@@ -71,28 +71,28 @@
 	//페이징 처리를 위한 함수 parameter : 페이지 번호
 	function getPage(pageInfo){
 		$.getJSON(pageInfo, function(data){//목록데이터 처리
-		    var html;
-			$.each(data, function(key, value){
-			    html = '<li class="replyLi">'
-						html+='<span class="bg-green"> 댓글 수'
-							html+='<small id="replycntSmall">[${boardVO.replycnt}] </small>'
-						html+='</span>'
-				html+='</li>'
-			html+='<li class="replyLi" data-rnum='+data.rnum+'>'
+    		var html = "";
+		    html += '<li class="replyLi">'
+					html+='<span class="bg-green"> 댓글 수'
+						html+='<small id="replycntSmall">[${boardVO.replycnt}] </small>'
+					html+='</span>'
+			html+='</li>'
+			$.each(data.list, function(key, value){
+			html+='<li class="replyLi" data-rnum='+this.rnum+'>'
 				html+='<div class="clearfix">'
-					html+='<h3><댓글번호 : '+data.grp+'></h3><h4 class="pull-left">'+data.replyer+'</h4>'
-						html+='<p class="pull-right">'+data.regdate+'</p>'
-						html+='<input type="hidden" id="replyGrp" value="'+data.grp+'">'
-						html+='<input type="hidden" class="replyLvl" id="replyLvl" value="'+data.lvl+'">'
+					html+='<h3><댓글번호 : '+this.grp+'></h3><h4 class="pull-left">'+this.replyer+'</h4>'
+						html+='<p class="pull-right">'+timeClock(this.regdate)+'</p>'
+						html+='<input type="hidden" id="replyGrp" value="'+this.grp+'">'
+						html+='<input type="hidden" class="replyLvl" id="replyLvl" value="'+this.lvl+'">'
 				html+='</div>'
 				html+='<p>'
-					html+='<em>'+data.replytext+'</em>'
+					html+='<em>'+this.replytext+'</em>'
 				html+='</p>'
 				html+='<button class="btn btn-primary btn-xs replyModBtn">수정</button>'
 				html+='<a class="btn btn-danger btn-xs replyDelBtn">삭제</a>'
 				html+='<a class="btn bg-green btn-xs rereplies">댓글</a>'
-				html+='<hr/>'
-				html+='<div class="col-md-12 form-group replyModDiv">'
+				html+='<hr/>';
+				/* html+='<div class="col-md-12 form-group replyModDiv">'
 					html+='<input type="hidden" value="" id="replyModRnum">'
 					html+='<label class="sr-only">댓글내용</label>'
 					html+='<textarea class="form-control" id="replyModText" placeholder="Comment"></textarea>'
@@ -106,9 +106,11 @@
 					html+='<textarea class="form-control" id="replyInsText" placeholder="Comment"></textarea>'
 					html+='<button class="btn btn-primary btn-xs" id="replyInsBtnSubmit">확인</button>'
 				html+='</div>'
-			html+='</li>';
+			html+='</li>'; */
 			});
 			$("#comments").html(html);
+			printPaging(data.pageMaker,$(".pagination"));
+			$("#replycntSmall").html("[" + data.pageMaker.totalDataCount + "]");
 		});	
 
 	}//getPage함수 종료
@@ -123,10 +125,24 @@
 	$(".pagination").on("click", "li a", function(evnet){
 		event.preventDefault();
 		replyPage = $(this).attr("href");
+		$("#comments").html("");
 		getPage("./replies/"+bnum+"/"+replyPage);
 	});
 	
-	
+	var printPaging = function(pageMaker, target){//페이징 버튼 처리
+		var str = "";
+		if(pageMaker.prev){
+			str += "<li><a href='"+(pageMaker.startPage-1)+"'> << </a></li>";			
+		}
+		for(var i=pageMaker.startPage, len=pageMaker.endPage; i<=len; i++){
+			var strClass= pageMaker.cri.page == i ? 'class=active' : '';
+			str += "<li " + strClass + "><a href='"+ i + "'>"+ i +"</a></li>";			
+		}		
+		if(pageMaker.next){
+			str += "<li><a href='"+(pageMaker.endPage + 1)+"'> >> </a></li>";
+		}
+		target.html(str);
+	};
 	//수정
 	$(".replyModBtn").on("click", function(){
 		var reply = $(this).parent();//li
@@ -198,54 +214,7 @@
 		});
 	});
 	
-	//대댓글
-	$(".rereplies").on("click", function(){
-		var reply = $(this).parent();
-		$(".replyInsDiv").hide();
-		$(".replyModDiv").hide(); //다른쪽에 열린  div 숨기기
-		reply.find(".replyInsDiv").show();
-		reply.find("#replyInsBtnSubmit").on("click", function(){
-			var replyInsReplyer = reply.find('#replyInsReplyer').val();
-			var replyInsText = reply.find('#replyInsText').val();
-			var replyInsGrp = reply.find("#replyGrp").val();
-			var replyInsLvl = reply.find("#replyLvl").val();
-			console.log("text : "+ replyInsText + "\n" + "grp : " + replyInsGrp + "\n" +  "lvl : " + replyInsLvl);
-			$.ajax({
-				type : "post",
-				url : './replies/re',
-				beforeSend : function(xhr){
-				  xhr.setRequestHeader(csrfHeader, csrfToken);  
-				},
-				headers : {
-					"Content-Type": "application/json",
-					"X-HTTP-Method-Override" : "POST"
-				},
-				data : JSON.stringify({
-					bnum : bnum,
-					grp : replyInsGrp,
-					lvl : replyInsLvl,
-					replytext : replyInsText,
-					replyer : replyInsReplyer
-					
-				}),
-				dataType : "text",
-				success : function(result){
-					if(result == "success"){
-						replyPage = 1;
-						getPage("./replies/"+bnum+"/"+replyPage);
-					}
-				},
-				error : function(request, status, error){
-					console.log("bnum : "+bnum + "\n"+"text : "+ replyInsText + "\n" + "grp : " + replyInsGrp + "\n" +  "lvl : " + replyInsLvl);
-					console.log("code" + request.status+ "\n" + "message : " + request.responseText+"\n"+"error : "+error);
-				}
-			});
-		});	
-	});
-	//printPaging(data.pageMaker,$(".pagination"));
-	$(".replyModDiv").hide(); //수정 삭제 숨기기
-	$(".replyInsDiv").hide();
-	//$("#replycntSmall").html("[" + data.pageMaker.totalDataCount + "]");
+
 });
 
 		

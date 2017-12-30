@@ -145,6 +145,7 @@
 				<ul id="pagination" class="pagination pagination-sm no-margin">
 				</ul>
 			</div>
+			<%@ include file="../include/reply.jsp" %>
 			<!-- Comment form -->
 				<div class="well" style="height:220px">
 					<h4>너도 한 마디</h4>				
@@ -165,7 +166,6 @@
 						<p>댓글작성은 <a href="/login">로그인</a>을 해야 합니다.</p>
 					</sec:authorize>
 				</div>
-			<%@ include file="../include/reply.jsp" %>
 		</div>
 		<div class="col-md-4">
 			<div class="well text-center">
