@@ -166,8 +166,8 @@
 						<p>댓글작성은 <a href="/login">로그인</a>을 해야 합니다.</p>
 					</sec:authorize>
 				</div>
-		</div>
 			<%@ include file="../include/reply.jsp" %>
+		</div>
 		<div class="col-md-4">
 			<div class="well text-center">
 				<p class="lead">
