@@ -78,9 +78,15 @@ function deleteReply(rnum){
 	});
 };
 
+function addReReply(rnum){
+    
+}
+
+
 //페이징 처리를 위한 함수 parameter : 페이지 번호
 function getPage(pageInfo){
 	$.getJSON(pageInfo, function(data){//목록데이터 처리
+	    console.log(data.list);
 		var html = "";
 	    html += '<li class="replyLi">'
 				html+='<span class="bg-green"> 댓글 수'
@@ -90,17 +96,17 @@ function getPage(pageInfo){
 		$.each(data.list, function(key, value){
 		html+='<li class="replyLi" data-rnum='+this.rnum+'>'
 			html+='<div class="clearfix">'
-				html+='<h3><댓글번호 : '+this.grp+'></h3><h4 class="pull-left">'+this.replyer+'</h4>'
+				html+='<h3><댓글번호 : '+this.rnum+'></h3><h4 class="pull-left">'+this.replyer+'</h4>'
 					html+='<p class="pull-right">'+timeClock(this.regdate)+'</p>'
-					html+='<input type="hidden" id="replyGrp" value="'+this.grp+'">'
-					html+='<input type="hidden" class="replyLvl" id="replyLvl" value="'+this.lvl+'">'
+					html+='<input type="hidden" id="replyDepth" value="'+this.depth+'">'
+					html+='<input type="hidden" id="replySeq" value="'+this.Seq+'">'
 			html+='</div>'
 			html+='<p>'
 				html+='<em>'+this.replytext+'</em>'
 			html+='</p>'
 			html+='<a class="btn btn-primary btn-xs replyModBtn" href="javascript:modifyReply('+this.rnum+');">수정</a>'
 			html+='<a class="btn btn-danger btn-xs replyDelBtn" href="javascript:deleteReply('+this.rnum+');">삭제</a>'
-			html+='<a class="btn bg-green btn-xs rereplies">댓글</a>'
+			html+='<a class="btn bg-green btn-xs rereplies" href="javascript:addReReply('+this.rnum+')">댓글</a>'
 			html+='<hr/>'
 			    html+='<div class="col-md-12 form-group replyModDiv">'
 					html+='<input type="hidden" value="" id="replyModRnum">'
@@ -161,50 +167,48 @@ function getPage(pageInfo){
 		target.html(str);
 	};
 	
-}//getPage함수 종료
+};//getPage함수 종료
 
-
-	$(document).ready(function(){
-	    $("#replyAddBtn").on("click", function(){
-	        replyerObj = $("#newReplyUsernick");
-	    	replytextObj = $("#newReplyText");
-	    	var replyer =  replyerObj.val();
-	    	var replytext = replytextObj.val();
-	    	
-	    	$.ajax({
-	    		type : "post",
-	    		url : "./replies/add",
-	    		beforeSend : function(xhr){
-	    		  xhr.setRequestHeader(csrfHeader, csrfToken);  
-	    		},
-	    		headers : {
-	    			"Content-Type": "application/json",
-	    			"X-HTTP-Method-Override" : "POST"
-	    		},
-	    		dataType : "text",
-	    		data : JSON.stringify({bnum:bnum, replyer:replyer, replytext:replytext}),
-	    		success : function(result){
-	    			console.log("결과 : " + result);
-	    			if(result == "success"){
-	    				//alert("댓글이 등록 되었습니다.");
-	    				replyPage = 1;
-	    				getPage("./replies/"+bnum+"/"+replyPage);
-	    				replytextObj.val("");
-	    			}
-	    		},
-	    		error : function(request, status, error ) {   // 오류가 발생했을 때 호출된다. 
-	    			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-	    		}
-	    	});
-	    });	
-		
+$(document).ready(function(){
+    $("#replyAddBtn").on("click", function(){
+        replyerObj = $("#newReplyUsernick");
+    	replytextObj = $("#newReplyText");
+    	var replyer =  replyerObj.val();
+    	var replytext = replytextObj.val();
+    	
+    	$.ajax({
+    		type : "post",
+    		url : "./replies/add",
+    		beforeSend : function(xhr){
+    		  xhr.setRequestHeader(csrfHeader, csrfToken);  
+    		},
+    		headers : {
+    			"Content-Type": "application/json",
+    			"X-HTTP-Method-Override" : "POST"
+    		},
+    		dataType : "text",
+    		data : JSON.stringify({bnum:bnum, replyer:replyer, replytext:replytext}),
+    		success : function(result){
+    			console.log("결과 : " + result);
+    			if(result == "success"){
+    				//alert("댓글이 등록 되었습니다.");
+    				replyPage = 1;
+    				getPage("./replies/"+bnum+"/"+replyPage);
+    				replytextObj.val("");
+    			}
+    		},
+    		error : function(request, status, error ) {   // 오류가 발생했을 때 호출된다. 
+    			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+    		}
+    	});
+    });	
 		
 	//목록		
 	if($("#comments li").size()>1){
 		return;
 	}
 	getPage("./replies/"+ bnum + "/1");
-
+	
 	//페이징 버튼 이벤트 처리
 	$(".pagination").on("click", "li a", function(evnet){
 		event.preventDefault();

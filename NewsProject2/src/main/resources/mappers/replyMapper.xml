@@ -6,11 +6,11 @@
     <mapper namespace="ga.newspbn.mapper.ReplyMapper">
        	<!-- 부모 댓글 -->
        	<insert id="create">
-       		<selectKey resultType="int" keyProperty="grp" order="BEFORE">
+       		<!-- <selectKey resultType="int" keyProperty="grp" order="BEFORE">
        			select IF(isnull(grp),100,Max(grp)+100) from tbl_reply       			
-       		</selectKey>
-			insert into tbl_reply (bnum, replytext, replyer, grp)
-			values (#{bnum}, #{replytext}, #{replyer}, #{grp})  			
+       		</selectKey> -->
+			insert into tbl_reply (bnum, replytext, replyer)
+			values (#{bnum}, #{replytext}, #{replyer})  			
     	</insert>   
 
 	
@@ -19,7 +19,7 @@
     	<select id="listPage" resultType="ReplyVO">
 			select * from tbl_reply
 			where bnum=#{bnum}
-			order by grp asc, lvl asc 
+			order by if(isNull(parent), rnum, parent) seq,  
 			limit #{cri.pageStart}, #{cri.perPageNum}	
     	</select>
 
