@@ -45,6 +45,13 @@ public class ReplyServiceImpl implements ReplyService {
 		dao.delete(rnum);
 		bdao.updateReplyCnt(bnum, -1); //댓글이 삭제 되면 카운트를 한개 내림
 	}
+	
+	@Transactional
+	@Override
+	public void createReReply(ReplyVO vo) throws Exception {
+		dao.createReReply(vo);
+		bdao.updateReplyCnt(vo.getBnum(), 1); //댓글이 추가 되면 카운트를 올림
+	}
 	@Override
 	public List<ReplyVO> listReplyPage(Integer bnum, SearchCriteria cri) throws Exception {
 		return dao.listPage(bnum, cri);

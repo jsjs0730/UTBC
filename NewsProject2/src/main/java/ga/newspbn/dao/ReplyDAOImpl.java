@@ -40,7 +40,13 @@ public class ReplyDAOImpl implements ReplyDAO {
 	public void delete(Integer rnum) throws Exception {
 		session.delete(namespace+"delete", rnum);
 	}
+	
+	
 
+	@Override
+	public void createReReply(ReplyVO vo) throws Exception {
+		session.insert(namespace+"createReReply", vo);
+	}
 	@Override
 	public List<ReplyVO> listPage(Integer bnum, SearchCriteria cri) throws Exception {
 		Map<String, Object> paramMap = new HashMap<String, Object>();

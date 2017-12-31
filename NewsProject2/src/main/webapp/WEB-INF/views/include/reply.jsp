@@ -13,9 +13,8 @@ var csrfHeader = $("meta[name='_csrf_header']").attr("content");
 //수정
 function modifyReply(rnum){
     var reply = $(".replyLi[data-rnum="+rnum+"]");//li
-	$(".replyModDiv").hide(); //다른쪽에 열린 수정 삭제 div 숨기기
-	$(".replyInsDiv").hide();
-	reply.find(".replyModDiv").show();			 
+    $(".replyInsDiv").hide();
+	reply.find(".replyModDiv").toggle(); //다른쪽에 열린 수정 삭제 div 숨기기
 	reply.find('#replyModText').val(reply.find("p em").text());
 	reply.find("#replyModRnum").val(reply.attr("data-rnum"));
 
@@ -79,7 +78,9 @@ function deleteReply(rnum){
 };
 
 function addReReply(rnum){
-    
+    var reply = $(".replyLi[data-rnum="+rnum+"]");//li
+    $(".replyModDiv").hide();
+    reply.find(".replyInsDiv").toggle();
 }
 
 
@@ -98,8 +99,9 @@ function getPage(pageInfo){
 			html+='<div class="clearfix">'
 				html+='<h3><댓글번호 : '+this.rnum+'></h3><h4 class="pull-left">'+this.replyer+'</h4>'
 					html+='<p class="pull-right">'+timeClock(this.regdate)+'</p>'
+					html+='<input type="hidden" id="replyParent" value="'+this.parent+'">'
 					html+='<input type="hidden" id="replyDepth" value="'+this.depth+'">'
-					html+='<input type="hidden" id="replySeq" value="'+this.Seq+'">'
+					html+='<input type="hidden" id="replySeq" value="'+this.seq+'">'
 			html+='</div>'
 			html+='<p>'
 				html+='<em>'+this.replytext+'</em>'
@@ -115,8 +117,9 @@ function getPage(pageInfo){
 					html+='<button class="btn btn-primary btn-xs" id="replyModBtnSubmit">수정</button>'
 				html+='</div>'
 				html+='<div class="col-md-12 form-group replyInsDiv">'
-					html+='<input type="hidden" id="replyInsGrp">'
-					html+='<input type="hidden" id="replyInsLvl">'
+					html+='<input type="hidden" id="replyInsParent">'
+					html+='<input type="hidden" id="replyInsDep">'
+					html+='<input type="hidden" id="replyInsSeq">'
 					html+='<input type="text" class="form-control" id="replyInsReplyer" value="${uname }" placeholder="Name">'
 					html+='<label class="sr-only">댓글내용</label>'
 					html+='<textarea class="form-control" id="replyInsText" placeholder="Comment"></textarea>'
