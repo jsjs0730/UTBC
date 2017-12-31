@@ -81,6 +81,37 @@ function addReReply(rnum){
     var reply = $(".replyLi[data-rnum="+rnum+"]");//li
     $(".replyModDiv").hide();
     reply.find(".replyInsDiv").toggle();
+    
+    var replyer = $("#newReplyUsernick").val();
+    var depth = reply.find("#replyInsDep").val();
+    var idx = reply.find("#replyInsIdx").val();
+    reply.find("#replyInsBtnSubmit").on("click", function(){
+       $.ajax({
+           type : "post",
+   		url : "./replies/addReReply",
+   		beforeSend : function(xhr){
+   		  xhr.setRequestHeader(csrfHeader, csrfToken);  
+   		},
+   		headers : {
+   			"Content-Type": "application/json",
+   			"X-HTTP-Method-Override" : "POST"
+   		},
+   		dataType : "text",
+   		data : JSON.stringify({bnum:bnum, replyer:replyer, replytext:reply.find("#replyInsText").val(), depth:depth, idx:idx }),
+   		success : function(result){
+   			console.log("결과 : " + result);
+   			if(result == "success"){
+   				//alert("댓글이 등록 되었습니다.");
+   				replyPage = 1;
+   				getPage("./replies/"+bnum+"/"+replyPage);
+   				replytext="";
+   			}
+   		},
+   		error : function(request, status, error ) {   // 오류가 발생했을 때 호출된다. 
+   			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+   		}
+       });
+    });
 }
 
 
@@ -99,9 +130,8 @@ function getPage(pageInfo){
 			html+='<div class="clearfix">'
 				html+='<h3><댓글번호 : '+this.rnum+'></h3><h4 class="pull-left">'+this.replyer+'</h4>'
 					html+='<p class="pull-right">'+timeClock(this.regdate)+'</p>'
-					html+='<input type="hidden" id="replyParent" value="'+this.parent+'">'
 					html+='<input type="hidden" id="replyDepth" value="'+this.depth+'">'
-					html+='<input type="hidden" id="replySeq" value="'+this.seq+'">'
+					html+='<input type="hidden" id="replyIdx" value="'+this.idx+'">'
 			html+='</div>'
 			html+='<p>'
 				html+='<em>'+this.replytext+'</em>'
@@ -117,10 +147,9 @@ function getPage(pageInfo){
 					html+='<button class="btn btn-primary btn-xs" id="replyModBtnSubmit">수정</button>'
 				html+='</div>'
 				html+='<div class="col-md-12 form-group replyInsDiv">'
-					html+='<input type="hidden" id="replyInsParent">'
-					html+='<input type="hidden" id="replyInsDep">'
-					html+='<input type="hidden" id="replyInsSeq">'
-					html+='<input type="text" class="form-control" id="replyInsReplyer" value="${uname }" placeholder="Name">'
+					html+='<input type="hidden" id="replyInsDep" value="'+this.depth+'">'
+					html+='<input type="hidden" id="replyInsIdx" value="'+this.idx+'">'
+					html+='<input type="text" class="form-control" id="replyInsReplyer" value="${uname }" readOnly>'
 					html+='<label class="sr-only">댓글내용</label>'
 					html+='<textarea class="form-control" id="replyInsText" placeholder="Comment"></textarea>'
 					html+='<button class="btn btn-primary btn-xs" id="replyInsBtnSubmit">확인</button>'
@@ -132,6 +161,13 @@ function getPage(pageInfo){
 		$(".replyInsDiv").hide();
 		printPaging(data.pageMaker,$(".pagination"));
 		$("#replycntSmall").html("[" + data.pageMaker.totalDataCount + "]");
+		
+		var sibal = $("#replyDepth").val().match(/@/g);
+		var byung;
+		if(sibal){
+		    byung = sibal.length;
+			$(".clearfix").css("margin-left",  byung*20);
+		}
 	});	
 	function timeClock(timeValue){
 		var dateObj = new Date(timeValue);

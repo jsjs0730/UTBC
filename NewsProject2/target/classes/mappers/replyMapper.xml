@@ -6,25 +6,39 @@
     <mapper namespace="ga.newspbn.mapper.ReplyMapper">
        	<!-- 부모 댓글 -->
        	<insert id="create">
-       		<!-- <selectKey resultType="int" keyProperty="grp" order="BEFORE">
-       			select IF(isnull(grp),100,Max(grp)+100) from tbl_reply       			
-       		</selectKey> -->
-			insert into tbl_reply (bnum, replytext, replyer)
-			values (#{bnum}, #{replytext}, #{replyer})  			
+       		<![CDATA[
+       		insert into tbl_reply (bnum, replytext, replyer)
+			values (#{bnum}, #{replytext}, #{replyer}); 
+			UPDATE tbl_reply SET idx = LAST_INSERT_ID(), depth=cast(LAST_INSERT_ID() as CHAR) where rnum=LAST_INSERT_ID();
+			]]>	
     	</insert>   
 
 		<!-- 대댓글 -->
 		<insert id="createReReply">
-			insert into tbl_reply(bnum, replytext, replyer, parent, depth, seq)
-			values (#{bnum}, #{replytext}, #{replyer}, #{parent}, depth+1, seq+1)
+			<selectKey resultType="string" keyProperty="depth" order="BEFORE">
+				<!-- 가져온 depth 번호에 @가 있는지 없는지 확인한다. -->			
+       			select if((select (char_length(depth) - char_length(replace(depth, '@', '')))/char_length('@')
+			 	  from tbl_reply a
+			  		 where depth = #{depth})>0, 
+			   	 <!-- 있으면 맨마지막 @뒤에 숫자를 1증가,  -->
+			  	 (select substring_index(depth, '@', -1)+1 from tbl_reply a where depth = #{depth}),
+			  	 <!-- 없어서 맨마지막에 @뒤에 숫자를 붙이는 것 까지는 좋았다. -->
+			   	 (select concat(#{depth},'@', select depth(substring_index(depth, '@', -1)+1) from tbl_reply a)       			
+	 		</selectKey>
+			insert into tbl_reply(bnum, replytext, replyer, idx, depth)
+			values (
+			 #{bnum},
+			 #{replytext},
+			 #{replyer},
+			 (select max(idx)+1 from tbl_reply a),
+			 #{depth});
 		</insert>
-	
 		
 		<!-- 목록 -->
     	<select id="listPage" resultType="ReplyVO">
 			select * from tbl_reply
 			where bnum=#{bnum}
-			order by if(isNull(parent), rnum, parent), seq   
+			order by depth    
 			limit #{cri.pageStart}, #{cri.perPageNum}	
     	</select>
 

@@ -45,6 +45,20 @@ public class ReplyController {
 		return entity;
 	}
 	
+	@RequestMapping(value="/addReReply", method=RequestMethod.POST)
+	public ResponseEntity<String> insertReReply(@RequestBody ReplyVO vo){
+		ResponseEntity<String> entity = null;
+		try {
+			service.createReReply(vo);			
+			entity = new ResponseEntity<String>("success", HttpStatus.OK);
+		}catch (Exception e) {
+			e.printStackTrace();
+			entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return entity;
+				
+	} 
+	
 	@RequestMapping(value="/{bnum}/{page}", method=RequestMethod.GET)
 	public ResponseEntity<Map<String, Object>> listPage(@PathVariable("bnum") Integer bnum, @PathVariable("page") int page){
 		ResponseEntity<Map<String, Object>> entity = null;

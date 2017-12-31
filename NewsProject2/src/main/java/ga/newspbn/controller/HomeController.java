@@ -53,14 +53,14 @@ public class HomeController {
 		GetPharse gp = new GetPharse();
 		//gp.getSuyongso();
 		
-		if(!locale.toString().equals("ko_KR") && !locale.toString().equals("ko")) {
-			System.out.println("센족짱개 새끼는 날리는거임");
-			return "redirect:https://www.naver.com";
-		}
-		if(!ip.equals("127.0.0.1") && !ip.equals("0:0:0:0:0:0:0:1")) {
-			System.out.println("ip가 다른 모르는 새끼는 날리는거임");
-			return "redirect:https://www.naver.com";
-		}
+//		if(!locale.toString().equals("ko_KR") && !locale.toString().equals("ko")) {
+//			System.out.println("센족짱개 새끼는 날리는거임");
+//			return "redirect:https://www.naver.com";
+//		}
+//		if(!ip.equals("127.0.0.1") && !ip.equals("0:0:0:0:0:0:0:1")) {
+//			System.out.println("ip가 다른 모르는 새끼는 날리는거임");
+//			return "redirect:https://www.naver.com";
+//		}
 		
 		model.addAttribute("list", service.listHomePage(cri));
 		
