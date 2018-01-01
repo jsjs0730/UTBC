@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,10 +52,15 @@ public class ReplyServiceImpl implements ReplyService {
 		String tempDepth = oldDepth + "@";
 		vo.setDepth(tempDepth);
 		
-		int getMaxDepth = (Integer)dao.getMaxDepth(vo);
-		String newDepth = tempDepth + ((int)getMaxDepth+1);
+		Integer getMaxDepth = dao.getMaxDepth(vo);
 		
-		vo.setDepth(newDepth);
+		if(getMaxDepth == null) {
+			vo.setDepth(tempDepth+"1");
+		}else {
+			String newDepth = tempDepth + ((int)getMaxDepth+1);
+			vo.setDepth(newDepth);
+		}
+		
 		
 		int rnum = dao.getRnum();
 		vo.setRnum(rnum);
