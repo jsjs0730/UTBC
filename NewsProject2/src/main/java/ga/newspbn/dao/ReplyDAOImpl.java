@@ -27,10 +27,12 @@ public class ReplyDAOImpl implements ReplyDAO {
 	
 	private static String namespace = "ga.newspbn.mapper.ReplyMapper.";
 	@Override
-	public void create(ReplyVO vo) throws Exception {
+	public Integer create(ReplyVO vo) throws Exception {
 		
-		session.insert(namespace+"create", vo);
+		return session.insert(namespace+"create", vo);
 	}
+
+
 	@Override
 	public void update(ReplyVO vo) throws Exception {
 		session.update(namespace+"update", vo);

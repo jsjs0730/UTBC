@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,6 +58,7 @@ public class ReplyServiceImpl implements ReplyService {
 	public void createReReply(ReplyVO vo) throws Exception {
 		dao.createReReply(vo);
 		bdao.updateReplyCnt(vo.getBnum(), 1); //댓글이 추가 되면 카운트를 올림
+
 	}
 	@Override
 	public List<ReplyVO> listReplyPage(Integer bnum, SearchCriteria cri) throws Exception {

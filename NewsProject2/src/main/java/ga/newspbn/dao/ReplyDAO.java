@@ -14,7 +14,7 @@ import ga.newspbn.vo.SearchCriteria;
  */
 public interface ReplyDAO {
 	//부모댓글
-	public void create(ReplyVO vo) throws Exception;
+	public Integer create(ReplyVO vo) throws Exception;
 	public void update(ReplyVO vo) throws Exception;
 	public void delete(Integer rnum) throws Exception;
 	

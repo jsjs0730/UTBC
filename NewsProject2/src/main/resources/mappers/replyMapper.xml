@@ -6,12 +6,9 @@
     <mapper namespace="ga.newspbn.mapper.ReplyMapper">
        	<!-- 부모 댓글 -->
        	<insert id="create">
-       		<![CDATA[
-       		insert into tbl_reply (bnum, replytext, replyer, idx)
-			values (#{bnum}, #{replytext}, #{replyer}, last_insert_id); 
-			]]>	
+       		insert into tbl_reply (bnum, replytext, replyer)
+			values (#{bnum}, #{replytext}, #{replyer}) 
     	</insert> 
-    	  
     	<select id="chkDepth" resultType="string" >
     	<!-- 간단하다
     			vo로 날아온 depth를 받아서 같은 값이 있으면 최대값 +1 을 하여 반환

@@ -30,12 +30,6 @@ public class ReplyVO {
 	private Date regdate;
 	private Date updatedate;
 	
-	
-	@Override
-	public String toString() {
-		return "ReplyVO [rnum=" + rnum + ", bnum=" + bnum + ", idx=" + idx + ", depth=" + depth + ", replytext="
-				+ replytext + ", replyer=" + replyer + ", regdate=" + regdate + ", updatedate=" + updatedate + "]";
-	}
 	public Integer getRnum() {
 		return rnum;
 	}
@@ -83,6 +77,12 @@ public class ReplyVO {
 	}
 	public void setUpdatedate(Date updatedate) {
 		this.updatedate = updatedate;
+	}
+	
+	@Override
+	public String toString() {
+		return "ReplyVO [rnum=" + rnum + ", bnum=" + bnum + ", idx=" + idx + ", depth=" + depth + ", replytext="
+				+ replytext + ", replyer=" + replyer + ", regdate=" + regdate + ", updatedate=" + updatedate + "]";
 	}
 
 	
