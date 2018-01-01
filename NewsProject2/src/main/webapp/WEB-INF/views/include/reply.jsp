@@ -118,15 +118,15 @@ function addReReply(rnum){
 //페이징 처리를 위한 함수 parameter : 페이지 번호
 function getPage(pageInfo){
 	$.getJSON(pageInfo, function(data){//목록데이터 처리
-	    console.log(data.list);
-		var html = "";
+	   	var html = "";
+		
 	    html += '<li class="replyLi">'
 				html+='<span class="bg-green"> 댓글 수'
 					html+='<small id="replycntSmall">[${boardVO.replycnt}] </small>'
 				html+='</span>'
 		html+='</li>'
 		$.each(data.list, function(key, value){
-		html+='<li class="replyLi" data-rnum='+this.rnum+'>'
+		html+='<li class="replyLi" data-rnum="'+this.rnum+'" style="margin-left:'+this.depthCnt*20+'px">'
 			html+='<div class="clearfix">'
 				html+='<h3><댓글번호 : '+this.rnum+'></h3><h4 class="pull-left">'+this.replyer+'</h4>'
 					html+='<p class="pull-right">'+timeClock(this.regdate)+'</p>'
@@ -139,7 +139,6 @@ function getPage(pageInfo){
 			html+='<a class="btn btn-primary btn-xs replyModBtn" href="javascript:modifyReply('+this.rnum+');">수정</a>'
 			html+='<a class="btn btn-danger btn-xs replyDelBtn" href="javascript:deleteReply('+this.rnum+');">삭제</a>'
 			html+='<a class="btn bg-green btn-xs rereplies" href="javascript:addReReply('+this.rnum+')">댓글</a>'
-			html+='<hr/>'
 			    html+='<div class="col-md-12 form-group replyModDiv">'
 					html+='<input type="hidden" value="" id="replyModRnum">'
 					html+='<label class="sr-only">댓글내용</label>'
@@ -155,19 +154,15 @@ function getPage(pageInfo){
 					html+='<button class="btn btn-primary btn-xs" id="replyInsBtnSubmit">확인</button>'
 				html+='</div>'
 		html+='</li>';
+		html+='<hr/>'
 		});
 		$("#comments").html(html);
 		$(".replyModDiv").hide(); //수정 삭제 숨기기
 		$(".replyInsDiv").hide();
 		printPaging(data.pageMaker,$(".pagination"));
 		$("#replycntSmall").html("[" + data.pageMaker.totalDataCount + "]");
+	   
 		
-		var sibal = $("#replyDepth").val().match(/@/g);
-		var byung;
-		if(sibal){
-		    byung = sibal.length;
-			$(".clearfix").css("margin-left",  byung*20);
-		}
 	});	
 	function timeClock(timeValue){
 		var dateObj = new Date(timeValue);
