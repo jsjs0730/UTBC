@@ -9,6 +9,11 @@ import java.util.Date;
  * @author KEN
  *	Park Jong-hyun
  */
+/**
+ * @author KEN
+ * Park Jong-hyun
+ * 2018. 01. 02 
+ */
 public class ReplyVO {
 //	rnum int NOT null auto_increment,
 //	bnum int not null default 0,
@@ -24,7 +29,7 @@ public class ReplyVO {
 	private Integer bnum;
 	private int idx;//1,2,3,4,5,6,7
 	private String depth;// 1/1/1/1 10단계
-	
+	private int depthCnt;// '@' 개수 카운팅
 	private String replytext;
 	private String replyer;
 	private Date regdate;
@@ -54,6 +59,13 @@ public class ReplyVO {
 	public void setDepth(String depth) {
 		this.depth = depth;
 	}
+	
+	public int getDepthCnt() {
+		return depthCnt;
+	}
+	public void setDepthCnt(int depthCnt) {
+		this.depthCnt = depthCnt;
+	}
 	public String getReplytext() {
 		return replytext;
 	}
@@ -78,13 +90,14 @@ public class ReplyVO {
 	public void setUpdatedate(Date updatedate) {
 		this.updatedate = updatedate;
 	}
-	
 	@Override
 	public String toString() {
-		return "ReplyVO [rnum=" + rnum + ", bnum=" + bnum + ", idx=" + idx + ", depth=" + depth + ", replytext="
-				+ replytext + ", replyer=" + replyer + ", regdate=" + regdate + ", updatedate=" + updatedate + "]";
+		return "ReplyVO [rnum=" + rnum + ", bnum=" + bnum + ", idx=" + idx + ", depth=" + depth + ", depthCnt="
+				+ depthCnt + ", replytext=" + replytext + ", replyer=" + replyer + ", regdate=" + regdate
+				+ ", updatedate=" + updatedate + "]";
 	}
-
+	
+	
 	
 		
 }

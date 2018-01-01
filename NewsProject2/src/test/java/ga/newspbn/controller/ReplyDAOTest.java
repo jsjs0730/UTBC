@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.StringUtils;
 
 import ga.newspbn.dao.ReplyDAO;
 import ga.newspbn.vo.ReplyVO;
@@ -30,7 +31,7 @@ public class ReplyDAOTest {
 	@Test
 	public void testGetMaxDepth() throws Exception{
 		ReplyVO vo = new ReplyVO();
-		String oldDepth = "38";
+		String oldDepth = "8@1";
 		String tempDepth = oldDepth + "@";
 		vo.setDepth(tempDepth);
 		int getMaxDepth = (Integer)dao.getMaxDepth(vo);
@@ -38,6 +39,7 @@ public class ReplyDAOTest {
 		//결과1 :  oldDepth = "28"; 28@2 에 있는 2 를 반환 함
 		//결과2 :  oldDepth = "38"; null 을 반환 했다
 		String newDepth = tempDepth + ((int)getMaxDepth+1);
-		System.out.println("새로운 번호를 가진 getDepth : " + newDepth);
+		int cntDepth = StringUtils.countOccurrencesOf(newDepth, "@");
+		System.out.println("새로운 번호를 가진 getDepth : " + newDepth + " cntDepth : " + cntDepth);
 	}
 }

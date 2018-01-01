@@ -9,6 +9,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import ga.newspbn.dao.BoardDAO;
 import ga.newspbn.dao.ReplyDAO;
@@ -53,14 +54,17 @@ public class ReplyServiceImpl implements ReplyService {
 		vo.setDepth(tempDepth);
 		
 		Integer getMaxDepth = dao.getMaxDepth(vo);
-		
+		String newDepth = "";
 		if(getMaxDepth == null) {
-			vo.setDepth(tempDepth+"1");
+			newDepth = tempDepth + "1";
+			vo.setDepth(newDepth);
 		}else {
-			String newDepth = tempDepth + ((int)getMaxDepth+1);
+			newDepth = tempDepth + ((int)getMaxDepth+1);
 			vo.setDepth(newDepth);
 		}
 		
+		int atCnt = StringUtils.countOccurrencesOf(newDepth, "@");
+		vo.setDepthCnt(atCnt);
 		
 		int rnum = dao.getRnum();
 		vo.setRnum(rnum);

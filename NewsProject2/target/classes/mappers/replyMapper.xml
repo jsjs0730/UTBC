@@ -6,15 +6,15 @@
     <mapper namespace="ga.newspbn.mapper.ReplyMapper">
        	<!-- 부모 댓글 -->
        	<insert id="create">
-       		insert into tbl_reply (bnum, replytext, replyer, idx, depth)
-			values (#{bnum}, #{replytext}, #{replyer}, #{idx}, #{depth});
+       		insert into tbl_reply (bnum, replytext, replyer, idx, depth, depthCnt)
+			values (#{bnum}, #{replytext}, #{replyer}, #{idx}, #{depth}, 0);
 			insert into tbl_reply_sequence (rnum) values (last_insert_id()); 
     	</insert> 
 		<select id="getRnum" resultType="int">
 			select max(rnum) from tbl_reply_sequence
 		</select>
     	<update id="updateIdxAndDepth">
-    		update tbl_reply set idx=#{idx} , depth=#{depth} where rnum = #{rnum}
+    		update tbl_reply set idx=#{idx} , depth=#{depth}, depthCnt=#{depthCnt} where rnum = #{rnum}
     	</update>
 		
 		
@@ -28,13 +28,14 @@
 		</select>
 		
 		<insert id="createReReply">
-			insert into tbl_reply(bnum, replytext, replyer, idx, depth)
+			insert into tbl_reply(bnum, replytext, replyer, idx, depth, depthCnt)
 			values (
 			 #{bnum},
 			 #{replytext},
 			 #{replyer},
 			 #{idx},
-			 #{depth});
+			 #{depth},
+			 #{depthCnt});
 			 insert into tbl_reply_sequence (rnum) values (last_insert_id());
 		</insert>
     	
