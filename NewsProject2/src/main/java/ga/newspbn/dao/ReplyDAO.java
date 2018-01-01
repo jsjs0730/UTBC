@@ -18,7 +18,7 @@ public interface ReplyDAO {
 	public void update(ReplyVO vo) throws Exception;
 	public void delete(Integer rnum) throws Exception;
 	
-	//대댓글
+	//입력하고 글번호 가져와서 저장
 	public int getRnum() throws Exception;
 	
 	//생성 전 depth 조정
