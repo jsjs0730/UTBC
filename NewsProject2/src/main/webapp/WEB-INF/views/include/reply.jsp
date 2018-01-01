@@ -87,7 +87,7 @@ function addReReply(rnum){
     var idx = reply.find("#replyInsIdx").val();
     reply.find("#replyInsBtnSubmit").on("click", function(){
        $.ajax({
-           type : "post",
+        type : "post",
    		url : "./replies/addReReply",
    		beforeSend : function(xhr){
    		  xhr.setRequestHeader(csrfHeader, csrfToken);  
