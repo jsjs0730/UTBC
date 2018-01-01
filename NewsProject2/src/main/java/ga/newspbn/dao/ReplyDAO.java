@@ -24,6 +24,9 @@ public interface ReplyDAO {
 	//생성 전 depth 조정
 	public void updateIdxAndDepth(ReplyVO vo) throws Exception;
 	
+	//대댓글 생성전 depth중 최대치 구하기
+	public Integer getMaxDepth(ReplyVO vo) throws Exception;
+	
 	//대댓글 생성
 	public void createReReply(ReplyVO vo) throws Exception;
 	
