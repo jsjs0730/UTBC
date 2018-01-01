@@ -35,8 +35,8 @@ public class ReplyDAOTest {
 		vo.setDepth(tempDepth);
 		int getMaxDepth = (Integer)dao.getMaxDepth(vo);
 		logger.debug("int getMaxDepth = (Integer)dao.getMaxDepth(vo);" + getMaxDepth);
-		//결과 :  oldDepth = "28"; 28@2 에 있는 2 를 반환 함
-		
+		//결과1 :  oldDepth = "28"; 28@2 에 있는 2 를 반환 함
+		//결과2 :  oldDepth = "38"; null 을 반환 했다
 		String newDepth = tempDepth + ((int)getMaxDepth+1);
 		System.out.println("새로운 번호를 가진 getDepth : " + newDepth);
 	}
