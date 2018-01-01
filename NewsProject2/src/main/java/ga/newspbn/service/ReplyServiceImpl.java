@@ -34,6 +34,12 @@ public class ReplyServiceImpl implements ReplyService {
 	public void addReply(ReplyVO vo) throws Exception {
 		dao.create(vo);
 		bdao.updateReplyCnt(vo.getBnum(), 1); //댓글이 추가 되면 카운트를 올림
+		int rnum = dao.getRnum();
+		vo.setRnum(rnum);
+		vo.setDepth(String.valueOf(rnum));
+		vo.setIdx(rnum);
+		dao.updateIdxAndDepth(vo);
+		
 	}
 	
 	@Override

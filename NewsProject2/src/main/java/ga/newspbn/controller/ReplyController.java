@@ -41,11 +41,6 @@ public class ReplyController {
 		ResponseEntity<String> entity = null;
 		try {
 			service.addReply(vo);
-			int rnum = service.getRnum();
-			vo.setRnum(rnum);
-			vo.setDepth(String.valueOf(rnum));
-			vo.setIdx(rnum);
-			service.updateIdxAndDepth(vo);
 			
 			entity = new ResponseEntity<String>("success", HttpStatus.OK);
 		} catch (Exception e) {
