@@ -42,6 +42,27 @@ public class ReplyServiceImpl implements ReplyService {
 		
 	}
 	
+	@Transactional
+	@Override
+	public void createReReply(ReplyVO vo) throws Exception {
+		dao.createReReply(vo);
+		bdao.updateReplyCnt(vo.getBnum(), 1); //댓글이 추가 되면 카운트를 올림
+
+		//생성하고 대댓글 기준 정리
+		String oldDepth = vo.getDepth();
+		String tempDepth = oldDepth + "@";
+		vo.setDepth(tempDepth);
+		
+		int getMaxDepth = (Integer)dao.getMaxDepth(vo);
+		String newDepth = tempDepth + ((int)getMaxDepth+1);
+		
+		vo.setDepth(newDepth);
+		
+		int rnum = dao.getRnum();
+		vo.setRnum(rnum);
+		vo.setIdx(rnum);
+		dao.updateIdxAndDepth(vo);
+	}
 	@Override
 	public int getRnum() throws Exception {
 		return dao.getRnum();
@@ -65,13 +86,6 @@ public class ReplyServiceImpl implements ReplyService {
 		bdao.updateReplyCnt(bnum, -1); //댓글이 삭제 되면 카운트를 한개 내림
 	}
 	
-	@Transactional
-	@Override
-	public void createReReply(ReplyVO vo) throws Exception {
-		dao.createReReply(vo);
-		bdao.updateReplyCnt(vo.getBnum(), 1); //댓글이 추가 되면 카운트를 올림
-
-	}
 	@Override
 	public List<ReplyVO> listReplyPage(Integer bnum, SearchCriteria cri) throws Exception {
 		return dao.listPage(bnum, cri);
