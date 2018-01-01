@@ -83,8 +83,8 @@ function addReReply(rnum){
     reply.find(".replyInsDiv").toggle();
     
     var replyer = $("#newReplyUsernick").val();
-    var depth = reply.find("#replyInsDep").val();
-    var idx = reply.find("#replyInsIdx").val();
+    var depth = reply.find("#replyInsDep").val(); //this.depth 부모꺼
+    var idx = reply.find("#replyInsIdx").val();	//this.idx
     reply.find("#replyInsBtnSubmit").on("click", function(){
        $.ajax({
         type : "post",
