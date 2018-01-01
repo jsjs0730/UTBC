@@ -49,6 +49,14 @@ public class ReplyController {
 	public ResponseEntity<String> insertReReply(@RequestBody ReplyVO vo){
 		ResponseEntity<String> entity = null;
 		try {
+			System.out.println("vo.getDepth() : " + vo.getDepth());
+			String chkdep = service.chkDepth(vo);
+			if(chkdep == "" || chkdep == null) {
+				vo.setDepth(vo.getDepth()+"@1");
+				chkdep = service.chkDepth(vo);
+			}else {
+				vo.setDepth(chkdep);
+			}
 			service.createReReply(vo);			
 			entity = new ResponseEntity<String>("success", HttpStatus.OK);
 		}catch (Exception e) {
@@ -71,14 +79,10 @@ public class ReplyController {
 			
 			Map<String, Object> map = new HashMap<String, Object>();
 			List<ReplyVO> list = service.listReplyPage(bnum, cri);
-			
 			map.put("list", list); //Model을 사용할 수 없으므로 Map을 이용하여 전송한다.(RestController는 API만)
-			
 			Integer replyCount = service.count(bnum);
 			pageMaker.setTotalDataCount(replyCount);
-			
 			map.put("pageMaker", pageMaker);
-			
 			entity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 			
 		} catch (Exception e) {

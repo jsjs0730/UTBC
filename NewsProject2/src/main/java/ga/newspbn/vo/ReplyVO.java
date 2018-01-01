@@ -22,13 +22,20 @@ public class ReplyVO {
 	
 	private Integer rnum;
 	private Integer bnum;
-	private String idx;//1,2,3,4,5,6,7
+	private int idx;//1,2,3,4,5,6,7
 	private String depth;// 1/1/1/1 10단계
 	
 	private String replytext;
 	private String replyer;
 	private Date regdate;
 	private Date updatedate;
+	
+	
+	@Override
+	public String toString() {
+		return "ReplyVO [rnum=" + rnum + ", bnum=" + bnum + ", idx=" + idx + ", depth=" + depth + ", replytext="
+				+ replytext + ", replyer=" + replyer + ", regdate=" + regdate + ", updatedate=" + updatedate + "]";
+	}
 	public Integer getRnum() {
 		return rnum;
 	}
@@ -41,10 +48,10 @@ public class ReplyVO {
 	public void setBnum(Integer bnum) {
 		this.bnum = bnum;
 	}
-	public String getIdx() {
+	public int getIdx() {
 		return idx;
 	}
-	public void setIdx(String idx) {
+	public void setIdx(int idx) {
 		this.idx = idx;
 	}
 	public String getDepth() {
@@ -77,11 +84,7 @@ public class ReplyVO {
 	public void setUpdatedate(Date updatedate) {
 		this.updatedate = updatedate;
 	}
-	@Override
-	public String toString() {
-		return "ReplyVO [rnum=" + rnum + ", bnum=" + bnum + ", idx=" + idx + ", depth=" + depth + ", replytext="
-				+ replytext + ", replyer=" + replyer + ", regdate=" + regdate + ", updatedate=" + updatedate + "]";
-	}
 
+	
 		
 }

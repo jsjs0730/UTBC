@@ -46,6 +46,12 @@ public class ReplyServiceImpl implements ReplyService {
 		bdao.updateReplyCnt(bnum, -1); //댓글이 삭제 되면 카운트를 한개 내림
 	}
 	
+	
+	
+	@Override
+	public String chkDepth(ReplyVO vo) throws Exception {
+		return dao.chkDepth(vo);
+	}
 	@Transactional
 	@Override
 	public void createReReply(ReplyVO vo) throws Exception {

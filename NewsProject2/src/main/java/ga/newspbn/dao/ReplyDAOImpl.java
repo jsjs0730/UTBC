@@ -44,6 +44,10 @@ public class ReplyDAOImpl implements ReplyDAO {
 	
 
 	@Override
+	public String chkDepth(ReplyVO vo) throws Exception {
+		return session.selectOne(namespace + "chkDepth", vo);
+	}
+	@Override
 	public void createReReply(ReplyVO vo) throws Exception {
 		session.insert(namespace+"createReReply", vo);
 	}
