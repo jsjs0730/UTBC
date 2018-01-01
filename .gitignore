@@ -66,3 +66,4 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/ecilpse,java,maven,windows,java-web
+/NewsProject2/
