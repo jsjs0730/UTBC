@@ -32,8 +32,6 @@ public class ReplyDAOTest {
 		ReplyVO vo = new ReplyVO();
 		String oldDepth = "5@53@45456";
 		vo.setDepth(oldDepth);
-		String chkdep = dao.chkDepth(vo);
-		logger.debug(dao.chkDepth(vo).toString());
 		
 	}
 }

@@ -35,6 +35,18 @@ public class ReplyServiceImpl implements ReplyService {
 		dao.create(vo);
 		bdao.updateReplyCnt(vo.getBnum(), 1); //댓글이 추가 되면 카운트를 올림
 	}
+	
+	@Override
+	public int getRnum() throws Exception {
+		return dao.getRnum();
+	}
+
+	@Override
+	public void updateIdxAndDepth(ReplyVO vo) throws Exception {
+		dao.updateIdxAndDepth(vo);
+	}
+
+
 	@Override
 	public void modifyReply(ReplyVO vo) throws Exception {
 		dao.update(vo);		
@@ -47,12 +59,6 @@ public class ReplyServiceImpl implements ReplyService {
 		bdao.updateReplyCnt(bnum, -1); //댓글이 삭제 되면 카운트를 한개 내림
 	}
 	
-	
-	
-	@Override
-	public String chkDepth(ReplyVO vo) throws Exception {
-		return dao.chkDepth(vo);
-	}
 	@Transactional
 	@Override
 	public void createReReply(ReplyVO vo) throws Exception {

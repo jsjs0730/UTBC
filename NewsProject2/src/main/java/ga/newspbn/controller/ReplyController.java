@@ -9,6 +9,8 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,6 +31,8 @@ import ga.newspbn.vo.SearchCriteria;
 @RestController
 @RequestMapping("/board/replies")
 public class ReplyController {
+	private static final Logger logger = LoggerFactory.getLogger(ReplyController.class);
+	
 	@Inject
 	private ReplyService service;
 		
@@ -37,6 +41,12 @@ public class ReplyController {
 		ResponseEntity<String> entity = null;
 		try {
 			service.addReply(vo);
+			int rnum = service.getRnum();
+			vo.setRnum(rnum);
+			vo.setDepth(String.valueOf(rnum));
+			vo.setIdx(rnum);
+			service.updateIdxAndDepth(vo);
+			
 			entity = new ResponseEntity<String>("success", HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -50,13 +60,6 @@ public class ReplyController {
 		ResponseEntity<String> entity = null;
 		try {
 			System.out.println("vo.getDepth() : " + vo.getDepth());
-			String chkdep = service.chkDepth(vo);
-			if(chkdep == "" || chkdep == null) {
-				vo.setDepth(vo.getDepth()+"@1");
-				chkdep = service.chkDepth(vo);
-			}else {
-				vo.setDepth(chkdep);
-			}
 			service.createReReply(vo);			
 			entity = new ResponseEntity<String>("success", HttpStatus.OK);
 		}catch (Exception e) {

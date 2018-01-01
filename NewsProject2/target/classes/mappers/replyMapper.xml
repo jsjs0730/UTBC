@@ -6,28 +6,19 @@
     <mapper namespace="ga.newspbn.mapper.ReplyMapper">
        	<!-- 부모 댓글 -->
        	<insert id="create">
-       		insert into tbl_reply (bnum, replytext, replyer)
-			values (#{bnum}, #{replytext}, #{replyer}) 
+       		insert into tbl_reply (bnum, replytext, replyer, idx, depth)
+			values (#{bnum}, #{replytext}, #{replyer}, #{idx}, #{depth});
+			insert into tbl_reply_sequence (rnum) values (last_insert_id()); 
     	</insert> 
-    	
-    	
+		<select id="getRnum" resultType="int">
+			select max(rnum) from tbl_reply_sequence
+		</select>
+    	<update id="updateIdxAndDepth">
+    		update tbl_reply set idx=#{idx} , depth=#{depth} where rnum = #{rnum}
+    	</update>
 
 		<!-- 대댓글 -->
 		<insert id="createReReply">
-			<!--
-				*selectKey를 사용하려고 했으나 불필요한 sql문만 많아지고 가독성도 좋지 않아서
-				dao를 만들고 확인해서 변환까지 해주는 녀석(chkDepth)을 만들어서 vo에 담아 전송하겠다.
-			
-			 <selectKey resultType="string" keyProperty="depth" order="BEFORE">
-				가져온 depth 번호에 @가 있는지 없는지 확인한다.			
-       			select if((select (char_length(depth) - char_length(replace(depth, '@', '')))/char_length('@')
-			 	  from tbl_reply a
-			  		 where depth = #{depth})>0, 
-			   	 있으면 맨마지막 @뒤에 숫자를 1증가, 
-			  	 (select substring_index(depth, '@', -1)+1 from tbl_reply a where depth = #{depth}),
-			  	 없어서 맨마지막에 @뒤에 숫자를 붙이는 것 까지는 좋았다.
-			   	 (select concat(#{depth},'@', select depth(substring_index(depth, '@', -1)+1) from tbl_reply a)       			
-	 		</selectKey> -->
 			insert into tbl_reply(bnum, replytext, replyer, idx, depth)
 			values (
 			 #{bnum},
@@ -36,6 +27,7 @@
 			 (select max(idx)+1 from tbl_reply a),
 			 #{depth});
 		</insert>
+    	
 		
 		<!-- 목록 -->
     	<select id="listPage" resultType="ReplyVO">

@@ -19,8 +19,10 @@ public interface ReplyDAO {
 	public void delete(Integer rnum) throws Exception;
 	
 	//대댓글
+	public int getRnum() throws Exception;
+	
 	//생성 전 depth 조정
-	public String chkDepth(ReplyVO vo) throws Exception;
+	public void updateIdxAndDepth(ReplyVO vo) throws Exception;
 	
 	//대댓글 생성
 	public void createReReply(ReplyVO vo) throws Exception;

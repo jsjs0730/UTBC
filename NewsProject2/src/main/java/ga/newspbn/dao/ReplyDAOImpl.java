@@ -28,7 +28,8 @@ public class ReplyDAOImpl implements ReplyDAO {
 	private static String namespace = "ga.newspbn.mapper.ReplyMapper.";
 	@Override
 	public void create(ReplyVO vo) throws Exception {
-		
+//		vo.setIdx(vo.getIdx()+1);
+//		vo.setDepth(String.valueOf((vo.getIdx()+1)));
 		session.insert(namespace+"create", vo);
 	}
 
@@ -44,11 +45,18 @@ public class ReplyDAOImpl implements ReplyDAO {
 	}
 	
 	
+	
+	@Override
+	public int getRnum() throws Exception {
+		return session.selectOne(namespace + "getRnum");
+	}
+
 
 	@Override
-	public String chkDepth(ReplyVO vo) throws Exception {
-		return session.selectOne(namespace + "chkDepth", vo);
+	public void updateIdxAndDepth(ReplyVO vo) throws Exception {
+		session.update(namespace + "updateIdxAndDepth", vo);
 	}
+	
 	@Override
 	public void createReReply(ReplyVO vo) throws Exception {
 		session.insert(namespace+"createReReply", vo);
