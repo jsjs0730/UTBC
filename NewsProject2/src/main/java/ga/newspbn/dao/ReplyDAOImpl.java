@@ -57,6 +57,14 @@ public class ReplyDAOImpl implements ReplyDAO {
 		session.update(namespace + "updateIdxAndDepth", vo);
 	}
 	
+	
+	
+	@Override
+	public Integer getMaxDepth(ReplyVO vo) throws Exception {
+		return session.selectOne(namespace + "getMaxDepth", vo);
+	}
+
+
 	@Override
 	public void createReReply(ReplyVO vo) throws Exception {
 		session.insert(namespace+"createReReply", vo);

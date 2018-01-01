@@ -16,16 +16,26 @@
     	<update id="updateIdxAndDepth">
     		update tbl_reply set idx=#{idx} , depth=#{depth} where rnum = #{rnum}
     	</update>
-
+		
+		
+		
 		<!-- 대댓글 -->
+		<select id="getMaxDepth" resultType="Integer">
+		<!-- 무조건 depth + @ 형태로 날아온다 (대댓글 이기 때문에) -->
+		select max(cast(substring_index(depth, '@', -1) as unsigned)) from tbl_reply where 
+			depth regexp concat(#{depth}, '[0-9]*[^@]$')
+		order by depth;
+		</select>
+		
 		<insert id="createReReply">
 			insert into tbl_reply(bnum, replytext, replyer, idx, depth)
 			values (
 			 #{bnum},
 			 #{replytext},
 			 #{replyer},
-			 (select max(idx)+1 from tbl_reply a),
+			 #{idx},
 			 #{depth});
+			 insert into tbl_reply_sequence (rnum) values (last_insert_id());
 		</insert>
     	
 		
