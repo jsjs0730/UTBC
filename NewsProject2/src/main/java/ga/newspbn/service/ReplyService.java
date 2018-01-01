@@ -18,6 +18,7 @@ public interface ReplyService {
 	public void removeReply(Integer rnum) throws Exception;
 	
 	public void createReReply(ReplyVO vo) throws Exception;
+	
 	public String chkDepth(ReplyVO vo) throws Exception;
 	public List<ReplyVO> listReplyPage(Integer bnum, SearchCriteria cri) throws Exception;
 	public int count(Integer bnum) throws Exception;

@@ -9,19 +9,7 @@
        		insert into tbl_reply (bnum, replytext, replyer)
 			values (#{bnum}, #{replytext}, #{replyer}) 
     	</insert> 
-    	<select id="chkDepth" resultType="string" >
-    	<!-- 간단하다
-    			vo로 날아온 depth를 받아서 같은 값이 있으면 최대값 +1 을 하여 반환
-    			없으면 null
-    	 -->
- 			select substring_index(depth, '@', -1)+1 from tbl_reply a where depth =
-			(select max(depth) from tbl_reply a where length(depth)
-			 = (select length(depth) from tbl_reply where depth = #{depth} and  
-			 (select (char_length(depth) - char_length(replace(depth, '@', '')))/char_length('@')
-						 from tbl_reply a
-			   where depth = #{depth})>0
- 			));
-    	</select>
+    	
     	
 
 		<!-- 대댓글 -->

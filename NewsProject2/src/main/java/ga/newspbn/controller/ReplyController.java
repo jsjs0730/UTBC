@@ -50,13 +50,13 @@ public class ReplyController {
 		ResponseEntity<String> entity = null;
 		try {
 			System.out.println("vo.getDepth() : " + vo.getDepth());
-//			String chkdep = service.chkDepth(vo);
-//			if(chkdep == "" || chkdep == null) {
-//				vo.setDepth(vo.getDepth()+"@1");
-//				chkdep = service.chkDepth(vo);
-//			}else {
-//				vo.setDepth(chkdep);
-//			}
+			String chkdep = service.chkDepth(vo);
+			if(chkdep == "" || chkdep == null) {
+				vo.setDepth(vo.getDepth()+"@1");
+				chkdep = service.chkDepth(vo);
+			}else {
+				vo.setDepth(chkdep);
+			}
 			service.createReReply(vo);			
 			entity = new ResponseEntity<String>("success", HttpStatus.OK);
 		}catch (Exception e) {
