@@ -9,6 +9,8 @@
        		insert into tbl_reply (bnum, replytext, replyer, idx, depth, depthCnt)
 			values (#{bnum}, #{replytext}, #{replyer}, #{idx}, #{depth}, 0);
 			insert into tbl_reply_sequence (rnum) values (last_insert_id()); 
+			insert into tbl_point_log (uid, bname, bnum, rnum, chk)  
+  			values(#{uid}, #{bname}, #{bnum}, last_insert_id(), 'rck');  
     	</insert> 
 		<select id="getRnum" resultType="int">
 			select max(rnum) from tbl_reply_sequence
@@ -37,6 +39,8 @@
 			 #{depth},
 			 #{depthCnt});
 			 insert into tbl_reply_sequence (rnum) values (last_insert_id());
+			 insert into tbl_point_log (uid, bname, bnum, rnum, chk)  
+  			 values(#{uid}, #{bname}, #{bnum}, last_insert_id(), 'rck');
 		</insert>
     	
 		
