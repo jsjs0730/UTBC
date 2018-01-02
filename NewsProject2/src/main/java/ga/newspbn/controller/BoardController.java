@@ -48,10 +48,9 @@ public class BoardController {
 	@RequestMapping(value="/insert", method=RequestMethod.POST)
 	public String insertPost(BoardVO vo, @ModelAttribute("cri") SearchCriteria cri, RedirectAttributes rttr) throws Exception{
 		logger.info("글쓰기 페이지에서 등록을 시도함.....post");
-		logger.info(vo.toString());
+//		logger.info(vo.toString());
 		rttr.addAttribute("bname", cri.getBname());	//글쓰고 해당 글이 있는 곳으로 날림
 		service.insert(vo);
-		logger.info(vo.getUid());
 //		int calPoint = pointService.calculatingPoint("bck") *30;//글 한개 쓸 때 마다 30point
 		
 		pointService.updatePoint(vo.getUid(), 30);	
