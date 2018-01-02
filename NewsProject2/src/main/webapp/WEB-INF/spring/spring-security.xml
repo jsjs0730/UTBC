@@ -4,18 +4,18 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
-  	<http pattern="/**/*.js" security="none"/>
-	<http pattern="/**/*.css" security="none"/>
-	<http pattern="/resources/*" security="none"/>
-	
 	<http auto-config="true" use-expressions="true">
 	<headers>
         <frame-options policy="SAMEORIGIN"/><!-- smarteditor x-frame-options deny로 iframe접근하지 못하는현상 -->
     </headers>
 		<intercept-url pattern="/admin/listPage" access="hasAuthority('admin')"></intercept-url>
-		<intercept-url pattern="/board/insert" access="hasAnyAuthority('admin','user')"></intercept-url>
-		<intercept-url pattern="/board/modifyPage" access="hasAnyAuthority('admin', 'user')"></intercept-url>
-		<intercept-url pattern="/board/replies/**" access="hasAnyAuthority('admin', 'user')"></intercept-url>
+		<intercept-url pattern="/board/insert" access="hasAnyAuthority('admin','normal')"></intercept-url>
+		<intercept-url pattern="/board/modifyPage" access="hasAnyAuthority('admin', 'normal')"></intercept-url>
+		<intercept-url pattern="/board/replies/add" access="hasAnyAuthority('admin', 'normal')"></intercept-url>
+		<intercept-url pattern="/board/replies/addReReply" access="hasAnyAuthority('admin', 'normal')"></intercept-url>
+		<intercept-url pattern="/board/replies/update/*" access="hasAnyAuthority('admin', 'normal')"></intercept-url>
+		<intercept-url pattern="/board/replies/delete/*" access="hasAnyAuthority('admin', 'normal')"></intercept-url>
+		<intercept-url pattern="/board/replies/com/*/*" access="permitAll"></intercept-url>
 		<intercept-url pattern="/login" access="isAnonymous()"/>
 		<intercept-url pattern="/resources/**" access="permitAll"/>
 		<intercept-url pattern="/home" access="permitAll"/>
