@@ -161,7 +161,7 @@
 	                    html+='<div class="col-md-12 form-group replyInsDiv">'
 	                        html+='<input type="hidden" id="replyInsDep" value="'+this.depth+'">'
 	                        html+='<input type="hidden" id="replyInsIdx" value="'+this.idx+'">'
-	                        html+='<input type="text" class="form-control" id="replyInsReplyer" value="${uname }" readOnly>'
+	                        html+='<input type="text" class="form-control" id="replyInsReplyer" value="'+writer+'" readOnly>'
 	                        html+='<label class="sr-only">댓글내용</label>'
 	                        html+='<textarea class="form-control" id="replyInsText" placeholder="Comment"></textarea>'
 	                        html+='<button class="btn btn-primary btn-xs pull-right" id="replyInsBtnSubmit">확인</button>'

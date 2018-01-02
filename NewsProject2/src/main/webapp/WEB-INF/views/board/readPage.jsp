@@ -149,7 +149,7 @@
 				<sec:authorize access="isAuthenticated()">
 				  <div class="col-md-6 form-group">
 				    <label class="sr-only" for="newReplyUsernick">닉네임</label>
-				    <input type="text" class="form-control" id="newReplyUsernick" value="${principal.uname }" placeholder="Name" readOnly>
+				    <input type="text" class="form-control" id="newReplyUsernick" value="${uname }" placeholder="Name" readOnly>
 				  </div>
 				  <div class="col-md-12 form-group">
 				    <label class="sr-only" for="newReplyText">댓글내용</label>
