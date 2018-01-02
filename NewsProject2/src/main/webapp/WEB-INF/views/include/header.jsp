@@ -4,10 +4,7 @@
 <%@ taglib prefix="sec"  uri="http://www.springframework.org/security/tags"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="ga.newspbn.vo.MemberVO"%>
-<%@ page import="org.springframework.security.core.context.SecurityContextHolder" %>
-<%@ page import="org.springframework.security.core.Authentication" %>   
-<c:set var="ctx" value="${pageContext.request.requestURI}"/>
+
 
 <!DOCTYPE html>
 <html>
