@@ -81,7 +81,9 @@
   	</sql>
   	
   	<update id="updateReplyCnt">
-  		update tbl_board set replycnt = replycnt + #{amount} where bnum = #{bnum}  	
+  	<![CDATA[
+  		update tbl_board set replycnt = if(replycnt<=0, 0, replycnt) + #{amount} where bnum = #{bnum}
+  	]]>  	
   	</update>
   	<update id="updateViewCnt">
   		update tbl_board set viewcnt = viewcnt + 1 where bnum = #{bnum}  	
