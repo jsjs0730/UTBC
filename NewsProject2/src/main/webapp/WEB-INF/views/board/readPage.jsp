@@ -19,6 +19,34 @@
 
 <script>
 	$(document).ready(function(){
+	   	//첨부파일 처리
+		var template = Handlebars.compile($("#templateAttach").html());
+		var bnum = ${boardVO.bnum}; //게시물의 번호
+		$.getJSON("/board/getAttach/" + bnum, function(list){
+		    $(list).each(function(){
+		        var fileInfo = getFileInfo(this);
+		        var html = template(fileInfo);
+		        $(".uploadedList").append(html);
+		    });
+		});
+		//이미지 파일 이벤트 처리-확대처리
+		$(".uploadedList").on("click", ".mailbox-attachment-info a", function(event){
+		    var fileLink = $(this).attr('href');
+		    if(checkImageType(fileLink)){
+		        event.preventDefault();
+		        var imgTag = $("#popup_img");
+		        imgTag.attr("src", fileLink);
+		        console.log(imgTag.attr("src"));
+		        
+		        $(".popup").show("slow");
+		        imgTag.addClass("show");
+		    }
+		});
+		//이미지 파일 이벤트 처리-축소처리
+		$("#popup_img").on("click", function(){
+		    $(".popup").hide("slow");
+		});
+		
 		var formObj = $("form[class='frm1']");
 		console.log(formObj);
 		
@@ -50,40 +78,8 @@
 			formObj.attr("method", "get");
 			formObj.submit();			
 		});
-	});
-</script>
-
-<script>
-	$(document).ready(function(){
 		
-		//첨부파일 처리
-		var template = Handlebars.compile($("#templateAttach").html());
-		var bnum = ${boardVO.bnum}; //게시물의 번호
-		$.getJSON("/board/getAttach/" + bnum, function(list){
-		    $(list).each(function(){
-		        var fileInfo = getFileInfo(this);
-		        var html = template(fileInfo);
-		        $(".uploadedList").append(html);
-		    });
-		});
-		//이미지 파일 이벤트 처리-확대처리
-		$(".uploadedList").on("click", ".mailbox-attachment-info a", function(event){
-		    var fileLink = $(this).attr('href');
-		    if(checkImageType(fileLink)){
-		        event.preventDefault();
-		        var imgTag = $("#popup_img");
-		        imgTag.attr("src", fileLink);
-		        console.log(imgTag.attr("src"));
-		        
-		        $(".popup").show("slow");
-		        imgTag.addClass("show");
-		    }
-		});
-		//이미지 파일 이벤트 처리-축소처리
-		$("#popup_img").on("click", function(){
-		    $(".popup").hide("slow");
-		});
-	});
+	});	
 </script>
 <script type="text/javascript" src="/resources/js/upload.js"></script>
 <script id="templateAttach" type="text/x-handlebars-template">
@@ -94,6 +90,7 @@
 	</div>
 </li>
 </script>
+
 <div class="container">
 	<div class="row">
 		<div class="col-md-8">
@@ -123,49 +120,49 @@
 		        <ul class="mailbox-attachments clearfix uploadedList"></ul>
 		        <div class="popup back" style="display:none;"></div>
 		        <div id="popup_front" class="popup front" style="display:none;"><img src="" alt="" id="popup_img" /></div>
-		        
+		    <sec:authorize access="isAuthenticated()">
+		    	<sec:authentication property="principal.authorities" var="authorities"/>
+		   		<sec:authentication property="principal.uname" var="uname"/>
+		   	</sec:authorize>
+		    <%@ include file="../include/reply.jsp" %>   
 			<ul class="pager">
 				<li><button type="submit" class="btn btn-primary goListBtn">&larr;목록</button></li>
 				<sec:authorize access="isAuthenticated()">
-				<sec:authentication property="principal.uname" var="uname"/>
-				<sec:authentication property="principal.authorities" var="authorities"/>
-					<c:if test="${boardVO.usernick == uname or authorities == '[admin]'}">
-						<li><button type="submit" class="btn btn-warning modifyBtn">수정</button></li>	
-						<li><button type="submit" class="btn btn-danger removeBtn">삭제</button></li>
-					</c:if>	
+				<sec:authorize access="#boardVO.usernick == principal.uname or hasAuthority('admin')">
+					<li><button type="submit" class="btn btn-warning modifyBtn">수정</button></li>	
+					<li><button type="submit" class="btn btn-danger removeBtn">삭제</button></li>
+				</sec:authorize>
 				</sec:authorize>
 			</ul>
-			
 			<hr />
-			<ul id="comments" class="comments" style="list-style-type:none;maring:0;padding:0">
-				
-			</ul>	
+			<ul id="comments" class="comments" style="list-style-type:none;maring:0px;padding:0px">
+			
+			</ul>
 			<!--  Paging -->
 			<div class="text-center">
 				<ul id="pagination" class="pagination pagination-sm no-margin">
 				</ul>
 			</div>
-			<%@ include file="../include/reply.jsp" %>
 			<!-- Comment form -->
-				<div class="well" style="height:220px">
-					<h4>너도 한 마디</h4>				
-					<sec:authorize access="isAuthenticated()">
-					  <div class="col-md-6 form-group">
-					    <label class="sr-only" for="newReplyUsernick">닉네임</label>
-					    <input type="text" class="form-control" id="newReplyUsernick" value="${uname }" placeholder="Name" readOnly>
-					  </div>
-					  <div class="col-md-12 form-group">
-					    <label class="sr-only" for="newReplyText">댓글내용</label>
-					    <textarea class="form-control" id="newReplyText" placeholder="Comment"></textarea>
-					  </div>
-					  <div class="col-md-12 form-group text-right">
-					  	<button type="submit" class="btn btn-primary" id="replyAddBtn">등록</button>
-					  </div>								
-					</sec:authorize>
-					<sec:authorize access="isAnonymous()">
-						<p>댓글작성은 <a href="/login">로그인</a>을 해야 합니다.</p>
-					</sec:authorize>
-				</div>
+			<div class="well" style="height:220px">
+				<h4>너도 한 마디</h4>				
+				<sec:authorize access="isAuthenticated()">
+				  <div class="col-md-6 form-group">
+				    <label class="sr-only" for="newReplyUsernick">닉네임</label>
+				    <input type="text" class="form-control" id="newReplyUsernick" value="${principal.uname }" placeholder="Name" readOnly>
+				  </div>
+				  <div class="col-md-12 form-group">
+				    <label class="sr-only" for="newReplyText">댓글내용</label>
+				    <textarea class="form-control" id="newReplyText" placeholder="Comment"></textarea>
+				  </div>
+				  <div class="col-md-12 form-group text-right">
+				  	<button type="submit" class="btn btn-primary" id="replyAddBtn">등록</button>
+				  </div>								
+				</sec:authorize>
+				<sec:authorize access="isAnonymous()">
+					<p>댓글작성은 <a href="/login">로그인</a>을 해야 합니다.</p>
+				</sec:authorize>
+			</div>
 		</div>
 		<div class="col-md-4">
 			<div class="well text-center">
@@ -236,4 +233,5 @@
 		</div>
 	</div>
 </div>
+
 <%@ include file="../include/footer.jsp" %>
