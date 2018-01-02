@@ -65,7 +65,7 @@ public class ReplyController {
 				
 	} 
 	
-	@RequestMapping(value="/{bnum}/{page}", method=RequestMethod.GET)
+	@RequestMapping(value="/com/{bnum}/{page}", method=RequestMethod.GET)
 	public ResponseEntity<Map<String, Object>> listPage(@PathVariable("bnum") Integer bnum, @PathVariable("page") int page){
 		ResponseEntity<Map<String, Object>> entity = null;
 		try {
@@ -89,7 +89,7 @@ public class ReplyController {
 		}
 		return entity;
 	}
-	@RequestMapping(value="/{rnum}", method= {RequestMethod.PUT, RequestMethod.PATCH})
+	@RequestMapping(value="/update/{rnum}", method= {RequestMethod.PUT, RequestMethod.PATCH})
 	public ResponseEntity<String> update(@PathVariable("rnum") Integer rnum, @RequestBody ReplyVO vo){
 		ResponseEntity<String> entity = null;
 		
@@ -103,7 +103,7 @@ public class ReplyController {
 		}
 		return entity;
 	}
-	@RequestMapping(value="/{rnum}", method=RequestMethod.DELETE)
+	@RequestMapping(value="/delete/{rnum}", method=RequestMethod.DELETE)
 	public ResponseEntity<String> remove(@PathVariable("rnum") Integer rnum){
 		ResponseEntity<String> entity = null;
 		try {
