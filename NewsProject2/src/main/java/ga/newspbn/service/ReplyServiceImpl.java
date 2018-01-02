@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import ga.newspbn.dao.BoardDAO;
+import ga.newspbn.dao.PointDAO;
 import ga.newspbn.dao.ReplyDAO;
 import ga.newspbn.vo.ReplyVO;
 import ga.newspbn.vo.SearchCriteria;
@@ -29,9 +30,13 @@ public class ReplyServiceImpl implements ReplyService {
 	@Inject
 	private BoardDAO bdao;
 	
+	@Inject
+	private PointDAO pdao;
+	
 	@Transactional
 	@Override
 	public void addReply(ReplyVO vo) throws Exception {
+		vo.setUid(pdao.chkUid(vo.getReplyer())); //uid는 reply table에 없다
 		dao.create(vo);
 		bdao.updateReplyCnt(vo.getBnum(), 1); //댓글이 추가 되면 카운트를 올림
 		int rnum = dao.getRnum();
@@ -45,9 +50,9 @@ public class ReplyServiceImpl implements ReplyService {
 	@Transactional
 	@Override
 	public void createReReply(ReplyVO vo) throws Exception {
+		vo.setUid(pdao.chkUid(vo.getReplyer())); //uid는 reply table에 없다
 		dao.createReReply(vo);
 		bdao.updateReplyCnt(vo.getBnum(), 1); //댓글이 추가 되면 카운트를 올림
-
 		//생성하고 대댓글 기준 정리
 		String oldDepth = vo.getDepth();
 		String tempDepth = oldDepth + "@";
