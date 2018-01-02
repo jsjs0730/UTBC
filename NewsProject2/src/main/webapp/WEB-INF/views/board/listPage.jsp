@@ -12,7 +12,7 @@
 	  <div class="row content">
 	    <div class="col-sm-8 text-left">
 			<c:forEach items="${list }" var="boardVO">
-				<a href="/board/readPage${pageMaker.makeSearch(pageMaker.cri.page) }&bnum=${boardVO.bnum}" style="color:#000"><h3>${boardVO.title }</h3>
+				<a href="/board/readPage${pageMaker.makeSearch(pageMaker.cri.page) }&bnum=${boardVO.bnum}&bname=${boardVO.bname}" style="color:#000"><h3>${boardVO.title }</h3>
 				<c:choose>
 					<c:when test="${fn:length(boardVO.content)>50 }">
 						<p>${fn:escapeXml(fn:substring(boardVO.content.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "").replaceAll("&nbsp;"," "), 0, 30))}...&lt;생략&gt;</p>
