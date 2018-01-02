@@ -16,10 +16,6 @@
 		
 	
  -->
-  	<insert id="writeReplyPoint">
-  		insert into tbl_point_log uid, bname, bnum, rnum, chk
-  		values(#{uid}, #{bname}, #{bnum}, #{rnum}, 'rck')
-  	</insert>
   	<insert id="voteBoardPoint">
   		insert into tbl_point_log uid, bname, bnum, chk 
   		values(#{uid}, #{bname}, #{bnum}, 'vck')
