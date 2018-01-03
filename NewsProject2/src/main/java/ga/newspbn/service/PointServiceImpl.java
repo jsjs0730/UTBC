@@ -31,10 +31,12 @@ public class PointServiceImpl implements PointService {
 	public void voteBoardPointDis(PointCycleLogVO pclvo) throws Exception {
 		pdao.voteBoardPointDis(pclvo);
 	}
-	@Override
+/*	@Override
 	public int calculatingPoint(String chk) throws Exception {
 		return pdao.calculatingPoint(chk);
-	}
+	}*/
+	
+	
 	@Override
 	public void updatePoint(String uid, int ipoint) throws Exception {
 		pdao.updatePoint(uid, ipoint);
@@ -48,8 +50,16 @@ public class PointServiceImpl implements PointService {
 		pdao.deletePointLog(pclvo);
 	}
 	@Override
+	public void deleteReplyPointLog(PointCycleLogVO pclvo) throws Exception {
+		pdao.deleteReplyPointLog(pclvo);
+	}
+	@Override
 	public String chkUsernick(int bnum) throws Exception {
 		return pdao.chkUsernick(bnum);
+	}
+	@Override
+	public String chkUsernickForReply(int rnum) throws Exception {
+		return pdao.chkUsernickForReply(rnum);
 	}
 	
 }

@@ -28,20 +28,32 @@
   	<select id="chkuid" resultType="string">
   		select uid from tbl_member where uname=#{usernick}
   	</select>
-  	<!-- 글번호로 usernick 찾기(삭제처리) -->
-  	<select id="chkuname" resultType="String">
+  	<!-- 글번호로 usernick 찾기(글 삭제처리) -->
+  	<select id="chkunameForBoard" resultType="String">
   		select usernick from tbl_board where bnum=#{bnum}
   	</select>
-  	<select id="calculatingPoint" resultType="int">
-  		select count(uid) from tbl_point_log where bnum=#{bnum} and chk=#{chk} <!-- bnum은 모두 포함한다. -->
+  	<!-- 댓글번호로 usernick 찾기(글 삭제처리) -->
+  	<select id="chkunameForReply" resultType="String">
+  		select replyer from tbl_reply where rnum=#{rnum}
   	</select>
+  	<!-- 
+  	 <select id="calculatingPoint" resultType="int">
+  		select count(uid) from tbl_point_log where bnum=#{bnum} and chk=#{chk} bnum은 모두 포함한다.
+  	</select>
+  	 -->
 	<update id="updatePoint">
 	<![CDATA[
 		update tbl_member_point set point = if(point<=0, 0, point)+#{point} where uid = #{uid}
 	]]> 
 	</update>  	
+  	
+  	<!-- 내가 쓴 글 로그 삭제용 -->
   	<delete id="deleteBoardPointLog">
   		delete from tbl_point_log where uid=#{uid} and bnum=#{bnum} and chk=#{chk}
+  	</delete>
+  	<!-- 내가 쓴 댓 글 로그 삭제용 -->
+  	<delete id="deleteReplyPointLog">
+  		delete from tbl_point_log where uid=#{uid} and rnum=#{rnum} and chk=#{chk}
   	</delete>
   	
   	

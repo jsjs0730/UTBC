@@ -15,19 +15,23 @@ public interface PointDAO {
 	//비추천시 로그기록
 	public void voteBoardPointDis(PointCycleLogVO pclvo) throws Exception;
 	
-	//작성에 의한 포인트 계산
-	public int calculatingPoint(String chk) throws Exception;
+	/*//작성에 의한 포인트 계산
+	public int calculatingPoint(String chk) throws Exception;*/
 	
 	//포인트 업데이트
 	public void updatePoint(String uid, int ipoint) throws Exception;
 	
-	//글삭제시 로그 삭제
+	//글삭제시 로그 삭제 - 내가 쓴 글 로그
 	public void deletePointLog(PointCycleLogVO pclvo) throws Exception;
 	
+	//댓글 삭제시 로그 삭제 - 내가 쓴 댓글 로그
+	public void deleteReplyPointLog(PointCycleLogVO pclvo) throws Exception;
 	
 	//포인트 관련 uname, usernick을 받아 uid로 변환
 	public String chkUid(String usernick) throws Exception;
 	//글번호로  usernick 찾기
 	public String chkUsernick(int bnum) throws Exception;
+	//댓번호로  usernick 찾기
+	public String chkUsernickForReply(int rnum) throws Exception;
 	
 }

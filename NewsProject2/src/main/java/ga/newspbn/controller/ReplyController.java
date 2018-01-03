@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ga.newspbn.service.PointService;
 import ga.newspbn.service.ReplyService;
 import ga.newspbn.vo.PageMaker;
+import ga.newspbn.vo.PointCycleLogVO;
 import ga.newspbn.vo.ReplyVO;
 import ga.newspbn.vo.SearchCriteria;
 
@@ -113,6 +114,14 @@ public class ReplyController {
 	public ResponseEntity<String> remove(@PathVariable("rnum") Integer rnum){
 		ResponseEntity<String> entity = null;
 		try {
+			//로그 삭제전 포인트 로그 삭제
+			PointCycleLogVO pclvo = new PointCycleLogVO();
+			pclvo.setRnum(rnum);
+			pclvo.setUid(pointService.chkUid(pointService.chkUsernickForReply(rnum)));
+			pclvo.setChk("rck");
+			pointService.deleteBoardPointLog(pclvo);
+			//포인트 회수
+			pointService.updatePoint(pclvo.getUid(), -5);
 			service.removeReply(rnum);
 			entity = new ResponseEntity<String>("success", HttpStatus.OK);
 		} catch (Exception e) {

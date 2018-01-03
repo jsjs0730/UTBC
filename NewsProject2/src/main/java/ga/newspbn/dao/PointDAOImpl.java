@@ -37,10 +37,10 @@ public class PointDAOImpl implements PointDAO {
 	public String chkUid(String usernick) throws Exception {
 		return sqlSession.selectOne(namespace+"chkuid", usernick);
 	}
-	@Override
+/*	@Override
 	public int calculatingPoint(String chk) throws Exception {
 		return sqlSession.selectOne(namespace+"calculatingPoint", chk);
-	}
+	}*/
 	@Override
 	public void updatePoint(String uid, int ipoint) throws Exception {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
@@ -53,10 +53,23 @@ public class PointDAOImpl implements PointDAO {
 	public void deletePointLog(PointCycleLogVO pclvo) throws Exception {
 		sqlSession.delete(namespace+"deleteBoardPointLog", pclvo);
 	}
+	
+	
+
+	@Override
+	public void deleteReplyPointLog(PointCycleLogVO pclvo) throws Exception {
+		sqlSession.delete(namespace+"deleteReplyPointLog", pclvo);
+	}
 
 	@Override
 	public String chkUsernick(int bnum) throws Exception {
-		return sqlSession.selectOne(namespace+"chkuname", bnum);
+		return sqlSession.selectOne(namespace+"chkunameForBoard", bnum);
+	}
+
+	@Override
+	public String chkUsernickForReply(int rnum) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(namespace+"chkunameForReply", rnum);
 	}
 	
 	
