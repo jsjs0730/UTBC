@@ -54,8 +54,7 @@ public class BoardController {
 //		logger.info(vo.toString());
 		rttr.addAttribute("bname", cri.getBname());	//글쓰고 해당 글이 있는 곳으로 날림
 		service.insert(vo);
-//		int calPoint = pointService.calculatingPoint("bck") *30;//글 한개 쓸 때 마다 30point
-		
+
 		pointService.updatePoint(vo.getUid(), 30);	
 							//			페이지명
 		rttr.addFlashAttribute("msg", "success");//데이터를 담아 전달
@@ -147,7 +146,9 @@ public class BoardController {
 		
 		String voter = (String) paramMap.get("voter");
 		String chk = (String) paramMap.get("chk");
-		
+		//포인트 획득은 글번호의 대상이 해야 한다.
+		//게시글 게시자 찾기
+		String writer = pointService.chkUid(pointService.chkUsernick(bnum));
 		//로그 기록
 		PointCycleLogVO pclvo = new PointCycleLogVO();
 		pclvo.setBnum(bnum);
@@ -159,12 +160,12 @@ public class BoardController {
 				pointService.voteBoardPoint(pclvo);
 				//equals 유의 할 것.
 				if(chk.equals("vck")) {
-					System.out.println("뭐야  chk?? : " + chk);
 					pointService.updateVote(bnum, 1, 0);
+					pointService.updatePoint(writer, 2);
 				}
 				if(chk.equals("hck")) {
-					System.out.println("뭐야  chk?? : " + chk);
 					pointService.updateVote(bnum, 0, 1);
+					pointService.updatePoint(writer, -2);
 				}
 				result.put("code", "GOOD");
 			}else {
