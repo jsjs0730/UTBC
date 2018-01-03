@@ -12,10 +12,7 @@
 	private int rnum;
 	private String chk;
 	private Date timeclock;
-	
-		
-	
- -->
+	-->
   	<insert id="voteBoardPoint">
   		insert into tbl_point_log uid, bname, bnum, chk 
   		values(#{uid}, #{bname}, #{bnum}, 'vck')
