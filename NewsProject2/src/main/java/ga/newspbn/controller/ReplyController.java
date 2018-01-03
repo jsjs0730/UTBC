@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import ga.newspbn.service.PointService;
 import ga.newspbn.service.ReplyService;
 import ga.newspbn.vo.PageMaker;
 import ga.newspbn.vo.ReplyVO;
@@ -35,6 +36,9 @@ public class ReplyController {
 	
 	@Inject
 	private ReplyService service;
+	
+	@Inject
+	private PointService pointService;
 		
 	@RequestMapping(value="/add", method=RequestMethod.POST)
 	public ResponseEntity<String> insert(@RequestBody ReplyVO vo){
@@ -42,6 +46,7 @@ public class ReplyController {
 		try {
 			service.addReply(vo);
 			
+			pointService.updatePoint(vo.getUid(), 10);
 			entity = new ResponseEntity<String>("success", HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -55,7 +60,8 @@ public class ReplyController {
 		ResponseEntity<String> entity = null;
 		try {
 			System.out.println("vo.getDepth() : " + vo.getDepth());
-			service.createReReply(vo);			
+			service.createReReply(vo);
+			pointService.updatePoint(vo.getUid(), 10);
 			entity = new ResponseEntity<String>("success", HttpStatus.OK);
 		}catch (Exception e) {
 			e.printStackTrace();
