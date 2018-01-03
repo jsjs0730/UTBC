@@ -141,7 +141,7 @@
 								</c:otherwise>
 							</c:choose>   
 						</p>
-			              <span class="pull-right text-muted">127 likes - 3 comments</span>
+			              <span class="pull-right text-muted">${boardVO.vlike } likes - ${boardVO.dislike } dislikes - ${boardVO.viewcnt } comments</span>
 			            </div>
 			            <!-- /.box-body -->
 					</div>
