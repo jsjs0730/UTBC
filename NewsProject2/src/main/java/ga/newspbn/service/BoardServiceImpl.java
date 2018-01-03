@@ -109,5 +109,10 @@ public class BoardServiceImpl implements BoardService {
 			dao.replaceAttach(fileName, bnum);
 		}
 	}
-
+	@Override
+	public List<BoardVO> getVoteResult(Integer bnum) throws Exception {
+		return dao.voteResult(bnum);
+	}
+	
+	
 }

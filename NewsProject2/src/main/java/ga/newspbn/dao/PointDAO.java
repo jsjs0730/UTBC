@@ -10,10 +10,14 @@ import ga.newspbn.vo.PointCycleLogVO;
  * Park Jong-hyun
  */
 public interface PointDAO {
+	//추천여부 확인
+	public int chkVoteCount(PointCycleLogVO pclvo) throws Exception;
+	
 	//추천시 로그기록
 	public void voteBoardPoint(PointCycleLogVO pclvo) throws Exception;
-	//비추천시 로그기록
-	public void voteBoardPointDis(PointCycleLogVO pclvo) throws Exception;
+	
+	//추천 화면
+	public void updateVote(int bnum, int like, int dislike) throws Exception;
 	
 	/*//작성에 의한 포인트 계산
 	public int calculatingPoint(String chk) throws Exception;*/

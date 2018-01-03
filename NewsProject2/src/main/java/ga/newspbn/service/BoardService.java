@@ -27,4 +27,5 @@ public interface BoardService {
 	
 	public List<String> getAttach(Integer bnum) throws Exception;
 	
+	public List<BoardVO> getVoteResult(Integer bnum) throws Exception;
 }

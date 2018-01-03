@@ -81,6 +81,7 @@
 		
 	});	
 </script>
+
 <script type="text/javascript" src="/resources/js/upload.js"></script>
 <script id="templateAttach" type="text/x-handlebars-template">
 <li data-src="{{fullName}}">

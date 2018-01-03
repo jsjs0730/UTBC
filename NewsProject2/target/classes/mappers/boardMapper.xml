@@ -43,7 +43,6 @@
 		]]>
 		
 		<include refid="search"></include>
-		
 		<![CDATA[
 		  order by bnum desc, regdate desc
   		  limit #{pageStart}, #{perPageNum}
@@ -100,7 +99,9 @@
   	<insert id="replaceAttach">
   		insert into tbl_attach(fullName, bnum) values(#{fullName}, #{bnum})
   	</insert>
- 
-  	
+
+ 	<select id="getVoteResult" resultType="BoardVO">
+ 		select like, dislike from tbl_board where bnum = #{bnum}
+ 	</select>
   </mapper>
   

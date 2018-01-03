@@ -23,19 +23,25 @@ public class PointServiceImpl implements PointService {
 	PointDAO pdao;
 	private static final Logger logger = LoggerFactory.getLogger(PointServiceImpl.class);
 
+	
+	
+	@Override
+	public int chkVoteCount(PointCycleLogVO pclvo) throws Exception {
+		return pdao.chkVoteCount(pclvo);
+	}
 	@Override
 	public void voteBoardPoint(PointCycleLogVO pclvo) throws Exception {
 		pdao.voteBoardPoint(pclvo);
-	}
-	@Override
-	public void voteBoardPointDis(PointCycleLogVO pclvo) throws Exception {
-		pdao.voteBoardPointDis(pclvo);
 	}
 /*	@Override
 	public int calculatingPoint(String chk) throws Exception {
 		return pdao.calculatingPoint(chk);
 	}*/
 	
+	@Override
+	public void updateVote(int bnum, int like, int dislike) throws Exception {
+		pdao.updateVote(bnum, like, dislike);
+	}
 	
 	@Override
 	public void updatePoint(String uid, int ipoint) throws Exception {

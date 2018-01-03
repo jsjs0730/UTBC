@@ -34,5 +34,7 @@ public interface BoardDAO {
 	public List<String> getAttach(Integer bnum) throws Exception;
 	public void deleteAttach(Integer bnum) throws Exception;
 	public void replaceAttach(String fullName, Integer bnum) throws Exception;
-
+	
+	//추천 - 관련
+	public List<BoardVO> voteResult(Integer bnum) throws Exception;
 }

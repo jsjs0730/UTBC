@@ -97,7 +97,6 @@
 	        },
 	        headers : {
 	            "Content-Type": "application/json",
-	            "X-HTTP-Method-Override" : "POST"
 	        },
 	        dataType : "text",
 	        data : JSON.stringify({bnum:bnum, bname:bname, replyer:replyer, replytext:reply.find("#replyInsText").val(), depth:depth, idx:idx }),
@@ -233,7 +232,6 @@ $(document).ready(function(){
             },
             headers : {
                 "Content-Type": "application/json",
-                "X-HTTP-Method-Override" : "POST"
             },
             dataType : "text",
             data : JSON.stringify({bnum:bnum, bname:bname, replyer:replyer, replytext:replytext}),

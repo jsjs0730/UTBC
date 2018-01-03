@@ -3,12 +3,16 @@
  */
 package ga.newspbn.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,6 +28,7 @@ import ga.newspbn.service.PointService;
 import ga.newspbn.vo.BoardVO;
 import ga.newspbn.vo.PageMaker;
 import ga.newspbn.vo.PointCycleLogVO;
+import ga.newspbn.vo.ReplyVO;
 import ga.newspbn.vo.SearchCriteria;
 
 /**
@@ -125,5 +130,46 @@ public class BoardController {
 		return service.getAttach(bnum);
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="/vote/{bnum}", method=RequestMethod.GET)
+	public Map<String, Object> listPage(@PathVariable("bnum") Integer bnum) throws Exception{
+		Map<String, Object> result = new HashMap<String, Object>();
+			List<BoardVO>list = service.getVoteResult(bnum);
+			result.put("ballotData", list); //Model을 사용할 수 없으므로 Map을 이용하여 전송한다.(RestController는 API만)
+		return result;
+	}
+	
+	//추천
+	//댓글은 responseEntity를 사용했지만 이번에는 Map으로 해보겠다.
+	@ResponseBody
+	@RequestMapping(value = "/vote/{bnum}", method=RequestMethod.POST)
+	public Map<String, Object> vote(@PathVariable("bnum") Integer bnum, @RequestParam Map<String, Object> paramMap) throws Exception {
+		//응답 값
+		Map<String, Object> result = new HashMap<String, Object>();
+		
+		String bname = (String) paramMap.get("bname");
+		String writer = (String) paramMap.get("writer");
+		String chk = (String) paramMap.get("chk");
+		
+		//로그 삭제전 포인트 로그 삭제
+		PointCycleLogVO pclvo = new PointCycleLogVO();
+		pclvo.setBnum(bnum);
+		pclvo.setUid(pointService.chkUid(writer));
+		pclvo.setBname(bname);
+		pclvo.setChk(chk);
+		int chkCnt = pointService.chkVoteCount(pclvo);
+			if(chkCnt < 1) {
+				//처음 투표니까 로그 기록
+				pointService.voteBoardPoint(pclvo);
+				if(chk == "rck")pointService.updateVote(bnum, 1, 0);
+				if(chk == "hck")pointService.updateVote(bnum, 0, 1);
+				result.put("code", "GOOD");
+			}else {
+				result.put("code", "FAIL");
+				result.put("messsage", "추천은 한 번만 합니다.");
+			}
+		
+		return result;
+	}
 	
 }

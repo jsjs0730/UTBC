@@ -24,15 +24,27 @@ public class PointDAOImpl implements PointDAO {
 	@Inject
 	private SqlSession sqlSession;
 
+	
+	@Override
+	public int chkVoteCount(PointCycleLogVO pclvo) throws Exception {
+		return sqlSession.selectOne(namespace+"chkVoteCount", pclvo);
+	}
+
 	@Override
 	public void voteBoardPoint(PointCycleLogVO pclvo) throws Exception {
 		sqlSession.insert(namespace+"voteBoardPoint", pclvo);
 	}
 
+	
 	@Override
-	public void voteBoardPointDis(PointCycleLogVO pclvo) throws Exception {
-		sqlSession.insert(namespace+"voteBoardPointDis", pclvo);
+	public void updateVote(int bnum, int like, int dislike) throws Exception {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("bnum", bnum);
+		paramMap.put("like", like);
+		paramMap.put("dislike",dislike);
+		sqlSession.update(namespace+"updateVote", paramMap);
 	}
+
 	@Override
 	public String chkUid(String usernick) throws Exception {
 		return sqlSession.selectOne(namespace+"chkuid", usernick);

@@ -34,8 +34,6 @@ public class BoardDAOImpl implements BoardDAO {
 
 	}
 	
-	
-
 	@Override
 	public List<BoardVO> homeList(Criteria cri) throws Exception {
 		return sqlSession.selectList(namespace+"listHome", cri);
@@ -116,9 +114,9 @@ public class BoardDAOImpl implements BoardDAO {
 		sqlSession.insert(namespace+"replaceAttach", paramMap);
 	}
 
-
-
-	
-	
+	@Override
+	public List<BoardVO> voteResult(Integer bnum) throws Exception {
+		return sqlSession.selectList(namespace+"getVoteResult", bnum);
+	}
 
 }

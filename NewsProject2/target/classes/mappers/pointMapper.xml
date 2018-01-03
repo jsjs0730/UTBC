@@ -13,14 +13,19 @@
 	private String chk;
 	private Date timeclock;
 	-->
+	<!-- 추천 로그 기록 -->
   	<insert id="voteBoardPoint">
   		insert into tbl_point_log uid, bname, bnum, chk 
-  		values(#{uid}, #{bname}, #{bnum}, 'vck')
+  		values(#{uid}, #{bname}, #{bnum}, #{chk})
   	</insert>
-   	<insert id="voteBoardPointDis">
-   		insert into tbl_point_log uid, bname, bnum, chk
-   		values(#{uid}, #{bname}, #{bnum}, 'hck')
-   	</insert>
+   	<!-- 투표 여부 확인 -->
+   	<select id="chkVoteCount" resultType="int">
+   		select count(uid) from tbl_point_log where uid=#{uid}, bnum=#{bnum} and (select chk like 'vck' or chk like 'hck')
+   	</select>
+   	<update id="updateVote">
+   		update tbl_board set like=#{like}, dislike=#{dislike} where bnum = #{bnum}
+   	</update>
+   	
   	<!-- point용 userid 찾기(글쓰기에서만 사용) -->
   	<select id="chkuid" resultType="string">
   		select uid from tbl_member where uname=#{usernick}
