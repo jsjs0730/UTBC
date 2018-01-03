@@ -14,7 +14,8 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-
+#pom.properties kill
+pom.properties
 # External tool builders
 .externalToolBuilders/
 
