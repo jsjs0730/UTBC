@@ -12,8 +12,6 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,7 +27,6 @@ import ga.newspbn.service.PointService;
 import ga.newspbn.vo.BoardVO;
 import ga.newspbn.vo.PageMaker;
 import ga.newspbn.vo.PointCycleLogVO;
-import ga.newspbn.vo.ReplyVO;
 import ga.newspbn.vo.SearchCriteria;
 
 /**
@@ -86,8 +83,7 @@ public class BoardController {
 	
 	@RequestMapping(value="/removePage", method=RequestMethod.POST)
 	public String removePage(@RequestParam("bnum") int bnum, SearchCriteria cri, RedirectAttributes rttr) throws Exception {
-		
-		//로그 삭제전 포인트 로그 삭제
+		//삭제전 포인트 로그 삭제
 		PointCycleLogVO pclvo = new PointCycleLogVO();
 		pclvo.setBnum(bnum);
 		pclvo.setUid(pointService.chkUid(pointService.chkUsernick(bnum)));
@@ -95,6 +91,7 @@ public class BoardController {
 		pointService.deleteBoardPointLog(pclvo);
 		//포인트 회수
 		pointService.updatePoint(pclvo.getUid(), -15);
+		
 		service.remove(bnum);
 		
 		rttr.addFlashAttribute("msg", "success");
