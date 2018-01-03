@@ -27,7 +27,6 @@ public class ReplyVO {
 	
 	private Integer rnum;
 	private Integer bnum;
-	private String bname; 
 	private int idx;//1,2,3,4,5,6,7
 	private String depth;// 1/1/1/1 10단계
 	private int depthCnt;// '@' 개수 카운팅
@@ -93,13 +92,6 @@ public class ReplyVO {
 		this.updatedate = updatedate;
 	}
 	
-	public String getBname() {
-		return bname;
-	}
-	public void setBname(String bname) {
-		this.bname = bname;
-	}
-		
 	public String getUid() {
 		return uid;
 	}
@@ -109,9 +101,9 @@ public class ReplyVO {
 	
 	@Override
 	public String toString() {
-		return "ReplyVO [rnum=" + rnum + ", bnum=" + bnum + ", bname=" + bname + ", idx=" + idx + ", depth=" + depth
-				+ ", depthCnt=" + depthCnt + ", replytext=" + replytext + ", replyer=" + replyer + ", regdate="
-				+ regdate + ", updatedate=" + updatedate + ", uid=" + uid + "]";
+		return "ReplyVO [rnum=" + rnum + ", bnum=" + bnum + ", idx=" + idx + ", depth=" + depth + ", depthCnt="
+				+ depthCnt + ", replytext=" + replytext + ", replyer=" + replyer + ", regdate=" + regdate
+				+ ", updatedate=" + updatedate + ", uid=" + uid + "]";
 	}
 	
 	

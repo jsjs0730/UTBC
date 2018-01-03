@@ -20,8 +20,6 @@ public class PageMaker {
 	private boolean prev;
 	private boolean next;
 	
-	private String bname;
-	
 	private int displayPageNum = 10;	//화면에 표시되는 페이지 번호 개수
 	
 	private Criteria cri;

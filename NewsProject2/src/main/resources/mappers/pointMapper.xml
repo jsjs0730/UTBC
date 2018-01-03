@@ -16,7 +16,7 @@
 	<!-- 추천 로그 기록 -->
   	<insert id="voteBoardPoint">
   		insert into tbl_point_log (uid, bname, bnum, chk) 
-  		values(#{uid}, #{bname}, #{bnum}, #{chk})
+  		values(#{uid}, (select bname from tbl_board where bnum = #{bnum}), #{bnum}, #{chk})
   	</insert>
    	<!-- 투표 여부 확인 -->
    	<select id="chkVoteCount" resultType="int">

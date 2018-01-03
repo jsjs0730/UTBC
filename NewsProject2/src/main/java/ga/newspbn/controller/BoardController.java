@@ -148,7 +148,6 @@ public class BoardController {
 		//응답 값
 		Map<String, Object> result = new HashMap<String, Object>();
 		
-		String bname = (String) paramMap.get("bname");
 		String voter = (String) paramMap.get("voter");
 		String chk = (String) paramMap.get("chk");
 		
@@ -156,7 +155,6 @@ public class BoardController {
 		PointCycleLogVO pclvo = new PointCycleLogVO();
 		pclvo.setBnum(bnum);
 		pclvo.setUid(pointService.chkUid(voter));
-		pclvo.setBname(bname);
 		pclvo.setChk(chk);
 		int chkCnt = pointService.chkVoteCount(pclvo);
 			if(chkCnt == 0) {

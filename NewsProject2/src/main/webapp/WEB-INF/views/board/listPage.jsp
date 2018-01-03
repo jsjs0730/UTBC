@@ -12,7 +12,7 @@
 	  <div class="row content">
 	    <div class="col-sm-8 text-left">
 			<c:forEach items="${list }" var="boardVO">
-				<a href="/board/readPage${pageMaker.makeSearch(pageMaker.cri.page) }&bnum=${boardVO.bnum}&bname=${boardVO.bname}" style="color:#000"><h3>${boardVO.title }</h3>
+				<a href="/board/readPage${pageMaker.makeSearch(pageMaker.cri.page) }&bnum=${boardVO.bnum}" style="color:#000"><h3>${boardVO.title }</h3>
 				<c:choose>
 					<c:when test="${fn:length(boardVO.content)>50 }">
 						<p>${fn:escapeXml(fn:substring(boardVO.content.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "").replaceAll("&nbsp;"," "), 0, 30))}...&lt;생략&gt;</p>
@@ -24,7 +24,7 @@
 				<div class="info">		
 					<i class="fa fa-user" aria-hidden="true"></i>&nbsp; <a style="color:#888">${boardVO.usernick }</a> <span style="color:#bbb">&nbsp; |  &nbsp; </span>
 					<i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp; <span class="itm"><fmt:formatDate value="${boardVO.regdate }" pattern="yyyy-MM-dd HH:mm:ss"/></span> <span style="color:#bbb">&nbsp; |  &nbsp; </span>
-					<i class="fa fa-thumbs-up" aria-hidden="true"></i>&nbsp; <span class="itm">${boardVO.like }</span><span style="color:#bbb">&nbsp; |  &nbsp; </span>
+					<i class="fa fa-thumbs-up" aria-hidden="true"></i>&nbsp; <span class="itm">${boardVO.vlike }</span><span style="color:#bbb">&nbsp; |  &nbsp; </span>
 					<i class="fa fa-eye" aria-hidden="true"></i>&nbsp; <span class="itm">${boardVO.viewcnt }</span><span style="color:#bbb">&nbsp; |  &nbsp; </span>
 					<i class="fa fa-barcode" aria-hidden="true"></i>&nbsp; <span class="itm">${boardVO.bnum }</span><span style="color:#bbb">&nbsp; |  &nbsp; </span>
 					<i class="fa fa-commenting-o" aria-hidden="true"></i>&nbsp;	<span class="itm cmt">${boardVO.replycnt }</span>			

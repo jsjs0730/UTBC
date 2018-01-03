@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 
 <script>
-	var bname =  $("#bname").val();
 	var bnum = ${boardVO.bnum}; //게시물의 번호
 	var replyPage = 1; 
 
@@ -99,7 +98,7 @@
 	            "Content-Type": "application/json",
 	        },
 	        dataType : "text",
-	        data : JSON.stringify({bnum:bnum, bname:bname, replyer:replyer, replytext:reply.find("#replyInsText").val(), depth:depth, idx:idx }),
+	        data : JSON.stringify({bnum:bnum, replyer:replyer, replytext:reply.find("#replyInsText").val(), depth:depth, idx:idx }),
 	        success : function(result){
 	            console.log("결과 : " + result);
 	            if(result == "success"){
@@ -234,7 +233,7 @@ $(document).ready(function(){
                 "Content-Type": "application/json",
             },
             dataType : "text",
-            data : JSON.stringify({bnum:bnum, bname:bname, replyer:replyer, replytext:replytext}),
+            data : JSON.stringify({bnum:bnum, replyer:replyer, replytext:replytext}),
             success : function(result){
                 console.log("결과 : " + result);
                 if(result == "success"){
