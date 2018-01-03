@@ -114,7 +114,7 @@ public class ReplyController {
 	public ResponseEntity<String> remove(@PathVariable("rnum") Integer rnum){
 		ResponseEntity<String> entity = null;
 		try {
-			//로그 삭제전 포인트 로그 삭제
+			//삭제전 포인트 로그 삭제
 			PointCycleLogVO pclvo = new PointCycleLogVO();
 			pclvo.setRnum(rnum);
 			pclvo.setUid(pointService.chkUid(pointService.chkUsernickForReply(rnum)));
