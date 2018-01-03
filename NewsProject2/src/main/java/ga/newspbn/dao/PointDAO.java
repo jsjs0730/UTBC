@@ -17,7 +17,7 @@ public interface PointDAO {
 	public void voteBoardPoint(PointCycleLogVO pclvo) throws Exception;
 	
 	//추천 화면
-	public void updateVote(int bnum, int like, int dislike) throws Exception;
+	public void updateVote(int bnum, int vlike, int dislike) throws Exception;
 	
 	/*//작성에 의한 포인트 계산
 	public int calculatingPoint(String chk) throws Exception;*/

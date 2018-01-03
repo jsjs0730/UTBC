@@ -6,7 +6,7 @@
   <mapper namespace="ga.newspbn.mapper.boardMapper">
   	<select id="listHome" resultType="BoardVO">
   		<![CDATA[
-  		  select `bnum`, `title`, `content`, `usernick`, `regdate`, `viewcnt`, `replycnt`, `like`, `dislike`   
+  		  select `bnum`, `title`, `content`, `usernick`, `regdate`, `viewcnt`, `replycnt`, `vlike`, `dislike`   
 		  from tbl_board
 		  where bnum > 0 and del = 'N'
 		  order by bnum desc, regdate desc
@@ -37,7 +37,7 @@
   	<select id="listSearch" resultType="BoardVO">  
   	  	<!-- <![CDATA[ ]]> : 부등호 등의 특문을 사용가능하게 해준다. -->	
   		<![CDATA[
-  		  select `bnum`, `title`, `content`, `usernick`, `regdate`, `viewcnt`, `replycnt`, `like`, `dislike`   
+  		  select `bnum`, `title`, `content`, `usernick`, `regdate`, `viewcnt`, `replycnt`, `vlike`, `dislike`   
 		  from tbl_board
 		  where bnum > 0 and del = 'N' and bname=#{bname}
 		]]>
@@ -101,7 +101,7 @@
   	</insert>
 
  	<select id="getVoteResult" resultType="BoardVO">
- 		select like, dislike from tbl_board where bnum = #{bnum}
+ 		select vlike, dislike from tbl_board where bnum = #{bnum}
  	</select>
   </mapper>
   

@@ -39,8 +39,8 @@ public class PointServiceImpl implements PointService {
 	}*/
 	
 	@Override
-	public void updateVote(int bnum, int like, int dislike) throws Exception {
-		pdao.updateVote(bnum, like, dislike);
+	public void updateVote(int bnum, int vlike, int dislike) throws Exception {
+		pdao.updateVote(bnum, vlike, dislike);
 	}
 	
 	@Override

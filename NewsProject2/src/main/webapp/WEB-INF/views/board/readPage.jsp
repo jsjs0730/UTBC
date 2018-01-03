@@ -16,7 +16,6 @@
 	<input type="hidden" name="searchKeyword" value="${cri.searchKeyword}">
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 </form>
-
 <script>
 	$(document).ready(function(){
 	   	//첨부파일 처리
@@ -102,7 +101,7 @@
 			        </div>				          	
 		          	<div class="col-sm-8 col-md-8">
 		          		<i class="fa fa-user" aria-hidden="true"></i>&nbsp; <a style="color:#888">${boardVO.usernick }</a> <span style="color:#bbb">&nbsp; |  &nbsp; </span>
-		          		<i class="fa fa-thumbs-up" aria-hidden="true"></i>&nbsp; <span class="itm">${boardVO.like }</span><span style="color:#bbb">&nbsp; |  &nbsp; </span>
+		          		<i class="fa fa-thumbs-up" aria-hidden="true"></i>&nbsp; <span class="itm">${boardVO.vlike }</span><span style="color:#bbb">&nbsp; |  &nbsp; </span>
 						<i class="fa fa-eye" aria-hidden="true"></i>&nbsp; <span class="itm">${boardVO.viewcnt }</span><span style="color:#bbb">&nbsp; |  &nbsp; </span>
 		          		<span class="glyphicon glyphicon-pencil"></span> <a href="singlepost.html#comments">${boardVO.replycnt }</a>			          		
 		          		&nbsp;&nbsp;<span class="glyphicon glyphicon-time"></span> <fmt:formatDate value="${boardVO.regdate }" pattern="yyyy-MM-dd HH:mm:ss"/>
@@ -113,6 +112,10 @@
 		        <p class="lead">
 		          ${boardVO.content }
 				</p>
+		    <sec:authorize access="isAuthenticated()">
+		    	<sec:authentication property="principal.authorities" var="authorities"/>
+		   		<sec:authentication property="principal.uname" var="uname"/>
+		   	</sec:authorize>
 				
 		        <div class="row">
 		        <%@ include file="../include/vote.jsp" %>
@@ -121,10 +124,6 @@
 		        <ul class="mailbox-attachments clearfix uploadedList"></ul>
 		        <div class="popup back" style="display:none;"></div>
 		        <div id="popup_front" class="popup front" style="display:none;"><img src="" alt="" id="popup_img" /></div>
-		    <sec:authorize access="isAuthenticated()">
-		    	<sec:authentication property="principal.authorities" var="authorities"/>
-		   		<sec:authentication property="principal.uname" var="uname"/>
-		   	</sec:authorize>
 		    <%@ include file="../include/reply.jsp" %>   
 			<ul class="pager">
 				<li><button type="submit" class="btn btn-primary goListBtn">&larr;목록</button></li>
@@ -150,7 +149,7 @@
 				<sec:authorize access="isAuthenticated()">
 				  <div class="col-md-6 form-group">
 				    <label class="sr-only" for="newReplyUsernick">닉네임</label>
-				    <input type="text" class="form-control" id="newReplyUsernick" value="${uname }" placeholder="Name" readOnly>
+				    <input type="hidden" class="form-control" id="newReplyUsernick" value="${uname }" placeholder="Name" readOnly>
 				  </div>
 				  <div class="col-md-12 form-group">
 				    <label class="sr-only" for="newReplyText">댓글내용</label>

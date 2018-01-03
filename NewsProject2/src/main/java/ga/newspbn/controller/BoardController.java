@@ -3,6 +3,7 @@
  */
 package ga.newspbn.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -133,9 +134,9 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping(value="/vote/{bnum}", method=RequestMethod.GET)
 	public Map<String, Object> listPage(@PathVariable("bnum") Integer bnum) throws Exception{
-		Map<String, Object> result = new HashMap<String, Object>();
-			List<BoardVO>list = service.getVoteResult(bnum);
-			result.put("ballotData", list); //Model을 사용할 수 없으므로 Map을 이용하여 전송한다.(RestController는 API만)
+		List<BoardVO> vo = new ArrayList<BoardVO>(service.getVoteResult(bnum));
+		Map<String, Object> result = new HashMap<>();
+		result.put("list", vo);
 		return result;
 	}
 	
@@ -148,25 +149,32 @@ public class BoardController {
 		Map<String, Object> result = new HashMap<String, Object>();
 		
 		String bname = (String) paramMap.get("bname");
-		String writer = (String) paramMap.get("writer");
+		String voter = (String) paramMap.get("voter");
 		String chk = (String) paramMap.get("chk");
 		
-		//로그 삭제전 포인트 로그 삭제
+		//로그 기록
 		PointCycleLogVO pclvo = new PointCycleLogVO();
 		pclvo.setBnum(bnum);
-		pclvo.setUid(pointService.chkUid(writer));
+		pclvo.setUid(pointService.chkUid(voter));
 		pclvo.setBname(bname);
 		pclvo.setChk(chk);
 		int chkCnt = pointService.chkVoteCount(pclvo);
-			if(chkCnt < 1) {
+			if(chkCnt == 0) {
 				//처음 투표니까 로그 기록
 				pointService.voteBoardPoint(pclvo);
-				if(chk == "rck")pointService.updateVote(bnum, 1, 0);
-				if(chk == "hck")pointService.updateVote(bnum, 0, 1);
+				//equals 유의 할 것.
+				if(chk.equals("vck")) {
+					System.out.println("뭐야  chk?? : " + chk);
+					pointService.updateVote(bnum, 1, 0);
+				}
+				if(chk.equals("hck")) {
+					System.out.println("뭐야  chk?? : " + chk);
+					pointService.updateVote(bnum, 0, 1);
+				}
 				result.put("code", "GOOD");
 			}else {
 				result.put("code", "FAIL");
-				result.put("messsage", "추천은 한 번만 합니다.");
+				result.put("message", "추천은 한 번만 합니다.");
 			}
 		
 		return result;

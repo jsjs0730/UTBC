@@ -37,10 +37,10 @@ public class PointDAOImpl implements PointDAO {
 
 	
 	@Override
-	public void updateVote(int bnum, int like, int dislike) throws Exception {
-		Map<String, Object> paramMap = new HashMap<>();
+	public void updateVote(int bnum, int vlike, int dislike) throws Exception {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("bnum", bnum);
-		paramMap.put("like", like);
+		paramMap.put("vlike", vlike);
 		paramMap.put("dislike",dislike);
 		sqlSession.update(namespace+"updateVote", paramMap);
 	}

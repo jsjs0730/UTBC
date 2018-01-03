@@ -27,7 +27,7 @@ public class BoardVO {
 	private Date regdate;
 	private int viewcnt;
 	private int replycnt;
-	private int like;
+	private int vlike;
 	private int dislike;
 	private String del; //기본 : N, 삭제한 글은 Y
 	private String[] files;
@@ -82,11 +82,12 @@ public class BoardVO {
 	public void setViewcnt(int viewcnt) {
 		this.viewcnt = viewcnt;
 	}
-	public int getLike() {
-		return like;
+
+	public int getVlike() {
+		return vlike;
 	}
-	public void setLike(int like) {
-		this.like = like;
+	public void setVlike(int vlike) {
+		this.vlike = vlike;
 	}
 	public int getDislike() {
 		return dislike;
@@ -113,14 +114,12 @@ public class BoardVO {
 	public void setFiles(String[] files) {
 		this.files = files;
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return "BoardVO [bnum=" + bnum + ", bname=" + bname + ", usernick=" + usernick + ", title=" + title
 				+ ", content=" + content + ", regdate=" + regdate + ", viewcnt=" + viewcnt + ", replycnt=" + replycnt
-				+ ", like=" + like + ", dislike=" + dislike + ", del=" + del + ", files=" + Arrays.toString(files) + "]";
+				+ ", vlike=" + vlike + ", dislike=" + dislike + ", del=" + del + ", files=" + Arrays.toString(files)
+				+ ", uid=" + uid + "]";
 	}
 
 		
