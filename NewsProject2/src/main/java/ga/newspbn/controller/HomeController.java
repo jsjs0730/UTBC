@@ -64,7 +64,7 @@ public class HomeController {
 		int vlike = 1;
 		model.addAttribute("slide", service.listSlide(vlike));
 		model.addAttribute("list", service.listHomePage(cri));
-		
+		model.addAttribute("favorite", service.listFavorite(vlike));
 		return "home";
 	}
 	@RequestMapping(value="/login", method=RequestMethod.GET)

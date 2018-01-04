@@ -38,8 +38,10 @@ public class BoardDAOImpl implements BoardDAO {
 		return sqlSession.selectList(namespace+"listSlide", vlike);
 	}
 
-
-
+	@Override
+	public List<BoardVO> homeListFavorite(int vlike) throws Exception {
+		return sqlSession.selectList(namespace+"listFavorite", vlike);
+	}
 
 	@Override
 	public void insertBoard(BoardVO vo) throws Exception {

@@ -75,9 +75,9 @@
 			    <div class="carousel-inner" role="listbox">
 			      	<c:forEach var="sbox" items="${slide }" >
 				     	 <div class="item" data="${sbox.bnum }">
-					        <img src="/resources/img/0d07da65.gif" alt="${sbox.bnum }" width="460" height="345">
-					        <div class="carousel-caption">
-					          <h2 style="color:#2ce9ef">${sbox.title }</h2>
+					      <img src="/resources/img/0d07da65.gif" alt="${sbox.bnum }" width="460" height="345">
+					       <div class="carousel-caption">
+					            <a href="/board/readPage?bnum=${sbox.bnum }"><h2 style="color:#2ce9ef">${sbox.title }</h2></a>
 					        </div>
 				      	</div>
 			         </c:forEach>
@@ -102,6 +102,7 @@
 							});
 					    });
 					    $(".carousel-inner>.item:eq(0)").addClass("active");
+					    
 					});
 				</script>
 			
@@ -305,83 +306,21 @@
 			            <!-- /.box-header -->
 			            <div class="box-body no-padding">
 			              <table class="table table-condensed">
-			                <tbody><tr>
-			                  <th style="width: 10px">#</th>
-			                  <th>Task</th>
-			                  <th></th>
-			                  <th style="width: 20px">Label</th>
-			                </tr>
-			                <tr>
-			                  <td>1.</td>
-			                  <td>Update software</td>
-			                  <td>
-			                  </td>
-			                  <td><span class="badge bg-red">55%</span></td>
-			                </tr>
-			                <tr>
-			                  <td>2.</td>
-			                  <td>Clean database</td>
-			                  <td>
-			                  </td>
-			                  <td><span class="badge bg-yellow">70%</span></td>
-			                </tr>
-			                <tr>
-			                  <td>3.</td>
-			                  <td>Cron job running</td>
-			                  <td>
-			                  </td>
-			                  <td><span class="badge bg-light-blue">30%</span></td>
-			                </tr>
-			                <tr>
-			                  <td>4.</td>
-			                  <td>Fix and squish bugs</td>
-			                  <td>
-			                  </td>
-			                  <td><span class="badge bg-green">90%</span></td>
-			                </tr>
-			                <tr>
-			                  <td>5.</td>
-			                  <td>Fix and squish bugs</td>
-			                  <td>
-			                  </td>
-			                  <td><span class="badge bg-green">90%</span></td>
-			                </tr>
-			                <tr>
-			                  <td>6.</td>
-			                  <td>Fix and squish bugs</td>
-			                  <td>
-			                  </td>
-			                  <td><span class="badge bg-green">90%</span></td>
-			                </tr>
-			                <tr>
-			                  <td>7.</td>
-			                  <td>Fix and squish bugs</td>
-			                  <td>
-			                  </td>
-			                  <td><span class="badge bg-green">90%</span></td>
-			                </tr>
-			                <tr>
-			                  <td>8.</td>
-			                  <td>Fix and squish bugs</td>
-			                  <td>
-			                  </td>
-			                  <td><span class="badge bg-green">90%</span></td>
-			                </tr>
-			                <tr>
-			                  <td>9.</td>
-			                  <td>Fix and squish bugs</td>
-			                  <td>
-			                  </td>
-			                  <td><span class="badge bg-green">90%</span></td>
-			                </tr>
-			                <tr>
-			                  <td>10.</td>
-			                  <td>Fix and squish bugs</td>
-			                  <td>
-			                  </td>
-			                  <td><span class="badge bg-green">90%</span></td>
-			                </tr>
-			              </tbody></table>
+			                <tbody>
+				                <tr>
+				                  <th style="width: 40px">순위</th>
+				                  <th style="text-align:center">제목</th>
+				                  <th style="width: 40px">공감</th>
+				                </tr>
+				                <c:forEach var="favorite" items="${favorite }" varStatus="status">
+					                <tr class="fav">
+					                  <td style="text-align:center"><span class="badge  bg-blue">${status.index +1}</span></td>
+					                  <td><a href="/board/readPage?bnum=${favorite.bnum }">${favorite.title }</a></td>
+					                  <td>${favorite.vlike }</td>
+					                </tr>
+				                </c:forEach>
+			              	</tbody>
+			              </table>
 			            </div>
 				            <!-- /.box-body -->
 						</div>
@@ -389,8 +328,20 @@
 			</div>
 		</div><!-- .right -->
 	</div>
-	
-	
 </section>
-
+<script>
+    $(".badge:eq(0)").removeClass("bg-blue").addClass("bg-red");
+    $(".badge:eq(1)").removeClass("bg-blue").addClass("bg-red");
+    $(document).ready(function(){
+	    var ticker = function() {
+	        timer = setTimeout(function() {
+	          $(".table-condensed>tbody>tr:eq(1)").animate({ marginTop: "-20px" }, 400, function() {
+	            $(this).appendTo(".table-condensed>tbody");
+	          });
+	          ticker();
+	        }, 2000);
+    	};
+    	ticker();
+    });
+</script>
 <%@ include file="include/footer.jsp" %>

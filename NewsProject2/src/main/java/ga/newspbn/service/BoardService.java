@@ -17,7 +17,7 @@ public interface BoardService {
 	
 	public List<BoardVO> listHomePage(Criteria cri) throws Exception;
 	public List<BoardVO> listSlide(int vlike) throws Exception;
-	
+	public List<BoardVO> listFavorite(int vlike) throws Exception;
 	public void insert(BoardVO vo) throws Exception; //insertBoard
 	public BoardVO read(Integer bnum) throws Exception; //read
 	public void modify(BoardVO vo) throws Exception; //update + file modify

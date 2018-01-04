@@ -17,6 +17,9 @@
   	<select id="listSlide" resultType="BoardVO">
   		select `bnum`, `bname`, `title` from tbl_board where `vlike` > #{vlike} group by `bname`;
   	</select>
+  	<select id="listFavorite" resultType="BoardVO">
+  		select `bnum`, `title`, `vlike`, `bname` from tbl_board where `vlike` > #{vlike} order by vlike desc;
+  	</select>
   	<insert id="insertBoard">
   		insert into tbl_board (bname, usernick, title, content)
   		values(#{bname}, #{usernick}, #{title}, #{content}); 

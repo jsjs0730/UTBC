@@ -16,6 +16,7 @@ import ga.newspbn.vo.SearchCriteria;
 public interface BoardDAO {
 	public List<BoardVO> homeList(Criteria cri) throws Exception;
 	public List<BoardVO> homeListSlide(int vlike) throws Exception;
+	public List<BoardVO> homeListFavorite(int vlike) throws Exception;
 	public void insertBoard(BoardVO vo) throws Exception;
 	public BoardVO read(Integer bnum) throws Exception;
 	public void update(BoardVO vo) throws Exception;
