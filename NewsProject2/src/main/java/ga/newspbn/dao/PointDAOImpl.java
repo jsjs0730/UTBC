@@ -65,8 +65,6 @@ public class PointDAOImpl implements PointDAO {
 	public void deletePointLog(PointCycleLogVO pclvo) throws Exception {
 		sqlSession.delete(namespace+"deleteBoardPointLog", pclvo);
 	}
-	
-	
 
 	@Override
 	public void deleteReplyPointLog(PointCycleLogVO pclvo) throws Exception {

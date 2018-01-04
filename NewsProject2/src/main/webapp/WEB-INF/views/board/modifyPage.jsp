@@ -34,13 +34,30 @@
 		});
 	});
 </script>
+<input type="hidden" name="oldbname" id="oldbname" class="form-control" value="${boardVO.bname}" readonly="readonly">
 <form role="form" id="modifyForm" action="modifyPage" method="post">
 	<input type="hidden" name="page" class="form-control" value="${cri.page}" readonly="readonly">
 	<input type="hidden" name="perPageNum" class="form-control" value="${cri.perPageNum}" readonly="readonly">
-	<input type="hidden" name="bname" class="form-control" value="${boardVO.bname}" readonly="readonly">
 	<input type="hidden" name="searchTarget" class="form-control" value="${cri.searchTarget}">
 	<input type="hidden" name="searchKeyword" class="form-control" value="${cri.searchKeyword}">
 	<div class="box-body">
+		<div class="form-group">
+			<label for="bname">bname</label>
+			<select name="bname" id="bname">
+				<option value="newsflash">속보</option>
+				<option value="politics">정치</option>
+				<option value="economy">경제</option>
+				<option value="society">사회</option>				
+				<option value="community">커뮤니티</option>
+			</select>	
+		</div>
+		<script>
+			var oldbname = $("#oldbname").val();
+			alert(oldbname);
+			if(oldbname != ""){
+			    $("#bname option[value="+oldbname+"]").attr("selected",  "selected");
+			}
+		</script>
 		<div class="form-group">
 			<label for="bnum">bnum</label>
 			<input type="text" name="bnum" class="form-control" value="${boardVO.bnum }" readonly="readonly">	

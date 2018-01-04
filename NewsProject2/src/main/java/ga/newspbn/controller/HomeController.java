@@ -61,7 +61,8 @@ public class HomeController {
 //			System.out.println("ip가 다른 모르는 새끼는 날리는거임");
 //			return "redirect:https://www.naver.com";
 //		}
-		
+		int vlike = 1;
+		model.addAttribute("slide", service.listSlide(vlike));
 		model.addAttribute("list", service.listHomePage(cri));
 		
 		return "home";

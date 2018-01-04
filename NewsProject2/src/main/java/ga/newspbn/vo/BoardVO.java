@@ -31,7 +31,10 @@ public class BoardVO {
 	private int dislike;
 	private String del; //기본 : N, 삭제한 글은 Y
 	private String[] files;
-	private String uid;
+	
+	private String uid;	//포인트에 사용될 변수 - 보안을 핑계(?)로 조인문으로 바로 부르진 않는다.
+	private String filesrc;	//join문에서 사용될 변수 - 불러도 된다 이건
+	
 	
 	
 	public String getUid() {
@@ -40,6 +43,14 @@ public class BoardVO {
 	public void setUid(String uid) {
 		this.uid = uid;
 	}
+	
+	public String getFilesrc() {
+		return filesrc;
+	}
+	public void setFilesrc(String filesrc) {
+		this.filesrc = filesrc;
+	}
+	
 	public Integer getBnum() {
 		return bnum;
 	}
@@ -114,12 +125,14 @@ public class BoardVO {
 	public void setFiles(String[] files) {
 		this.files = files;
 	}
+	
+	
 	@Override
 	public String toString() {
 		return "BoardVO [bnum=" + bnum + ", bname=" + bname + ", usernick=" + usernick + ", title=" + title
 				+ ", content=" + content + ", regdate=" + regdate + ", viewcnt=" + viewcnt + ", replycnt=" + replycnt
 				+ ", vlike=" + vlike + ", dislike=" + dislike + ", del=" + del + ", files=" + Arrays.toString(files)
-				+ ", uid=" + uid + "]";
+				+ ", uid=" + uid + ", filesrc=" + filesrc + "]";
 	}
 
 		

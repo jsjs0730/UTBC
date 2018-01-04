@@ -27,17 +27,26 @@ public class BoardDAOImpl implements BoardDAO {
 	
 	@Inject
 	private SqlSession sqlSession;
-	
+
+	@Override
+	public List<BoardVO> homeList(Criteria cri) throws Exception {
+		return sqlSession.selectList(namespace+"listHome", cri);
+	}
+
+	@Override
+	public List<BoardVO> homeListSlide(int vlike) throws Exception {
+		return sqlSession.selectList(namespace+"listSlide", vlike);
+	}
+
+
+
+
 	@Override
 	public void insertBoard(BoardVO vo) throws Exception {
 		sqlSession.insert(namespace+"insertBoard", vo);
 
 	}
 	
-	@Override
-	public List<BoardVO> homeList(Criteria cri) throws Exception {
-		return sqlSession.selectList(namespace+"listHome", cri);
-	}
 
 
 

@@ -16,6 +16,7 @@ import ga.newspbn.vo.SearchCriteria;
 public interface BoardService {
 	
 	public List<BoardVO> listHomePage(Criteria cri) throws Exception;
+	public List<BoardVO> listSlide(int vlike) throws Exception;
 	
 	public void insert(BoardVO vo) throws Exception; //insertBoard
 	public BoardVO read(Integer bnum) throws Exception; //read

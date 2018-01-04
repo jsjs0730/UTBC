@@ -38,6 +38,14 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardVO> listHomePage(Criteria cri) throws Exception {
 		return dao.homeList(cri);
 	}
+	
+	
+	@Override
+	public List<BoardVO> listSlide(int vlike) throws Exception {
+		return dao.homeListSlide(vlike);
+	}
+
+
 	@Transactional
 	@Override
 	public void insert(BoardVO vo) throws Exception {

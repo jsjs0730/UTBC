@@ -6,14 +6,17 @@
   <mapper namespace="ga.newspbn.mapper.boardMapper">
   	<select id="listHome" resultType="BoardVO">
   		<![CDATA[
-  		  select `bnum`, `title`, `content`, `usernick`, `regdate`, `viewcnt`, `replycnt`, `vlike`, `dislike`   
-		  from tbl_board
-		  where bnum > 0 and del = 'N'
-		  order by bnum desc, regdate desc
-  		  limit 0, 6
+  		   select `bnum`, `title`, `content`, `usernick`, `regdate`, `viewcnt`, `replycnt`, `vlike`, `dislike`, `filesrc`   
+			from tbl_board left join tbl_member
+			 on tbl_board.usernick = tbl_member.uname
+			where bnum > 0 and del = 'N'
+			 order by bnum desc, regdate desc
+		  	 limit 0, 6
 		]]>
   	</select>
-  	
+  	<select id="listSlide" resultType="BoardVO">
+  		select `bnum`, `bname`, `title` from tbl_board where `vlike` > #{vlike} group by `bname`;
+  	</select>
   	<insert id="insertBoard">
   		insert into tbl_board (bname, usernick, title, content)
   		values(#{bname}, #{usernick}, #{title}, #{content}); 
@@ -25,7 +28,7 @@
   	</select>
   	
   	<update id="update">
-  		update tbl_board set title=#{title}, content=#{content} where bnum = #{bnum}
+  		update tbl_board set title=#{title}, bname=#{bname}, content=#{content} where bnum = #{bnum}
   	</update>
   	
   	<delete id="delete">

@@ -68,39 +68,42 @@
 			      <li data-target="#myCarousel" data-slide-to="1"></li>
 			      <li data-target="#myCarousel" data-slide-to="2"></li>
 			      <li data-target="#myCarousel" data-slide-to="3"></li>
+			      <li data-target="#myCarousel" data-slide-to="4"></li>
 			    </ol>
 			
 			    <!-- Wrapper for slides -->
 			    <div class="carousel-inner" role="listbox">
-			      <div class="item active">
-			        <img src="/resources/img/0d07da65.gif" alt="Chania" width="460" height="345">
-			        <div class="carousel-caption">
-			          <h3>Chania</h3>
-			          <p>The atmosphere in Chania has a touch of Florence and Venice.</p>
-			        </div>
-			      </div>
-			      <div class="item">
-			        <img src="/resources/img/66018413_p0.jpg" alt="Chania" width="460" height="345">
-			        <div class="carousel-caption">
-			          <h3>Chania</h3>
-			          <p>The atmosphere in Chania has a touch of Florence and Venice.</p>
-			        </div>
-			      </div>    
-			      <div class="item">
-			        <img src="/resources/img/66107141_p0.jpg" alt="Flower" width="460" height="345">
-			        <div class="carousel-caption">
-			          <h3>Flowers</h3>
-			          <p>Beautiful flowers in Kolymbari, Crete.</p>
-			        </div>
-			      </div>
-			      <div class="item">
-			        <img src="/resources/img/66176759_p0.jpg" alt="Flower" width="460" height="345">
-			        <div class="carousel-caption">
-			          <h3>Flowers</h3>
-			          <p>Beautiful flowers in Kolymbari, Crete.</p>
-			        </div>
-			      </div>  
+			      	<c:forEach var="sbox" items="${slide }" >
+				     	 <div class="item" data="${sbox.bnum }">
+					        <img src="/resources/img/0d07da65.gif" alt="${sbox.bnum }" width="460" height="345">
+					        <div class="carousel-caption">
+					          <h2 style="color:#2ce9ef">${sbox.title }</h2>
+					        </div>
+				      	</div>
+			         </c:forEach>
 			    </div>
+			    <script>
+					$(function(){
+					    var imgbnum = new Array();
+					    $(".carousel-inner>.item").each(function(){
+					        imgbnum.push($(this).attr("data"));
+					    	var bnum = imgbnum.pop();
+					        //홈게시글 첨부파일 불러오기
+					  	  	$.getJSON("/board/getAttach/"+bnum  , function(list){
+					  	        //console.log("list : " + list);
+					  	        //console.log("imgbnum.pop : " + bnum);
+							    $(list).each(function(i, e){
+							        if(i==0){//마지막 파일만(pop은 마지막부터 가져온다.)
+									    var fileInfo = getFileInfo(e);
+									    console.log(fileInfo);
+							        	$("img[alt="+bnum+"]").attr("src", fileInfo.getLink);	 
+							        }
+							    });
+							});
+					    });
+					    $(".carousel-inner>.item:eq(0)").addClass("active");
+					});
+				</script>
 			
 			    <!-- Left and right controls -->
 			    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
@@ -114,16 +117,13 @@
 			  </div>
 			</div><!-- slider end -->
 			
-			
-			
-			
 			<div class="row">
 			<c:forEach items="${list }" var="boardVO">
 				<div class="col-md-4">
 					<div class="box box-widget box-solid box-default" data="${boardVO.bnum }">
 			            <div class="box-header with-border">
 			              <div class="user-block">
-			                <img class="img-circle" src="/resources/dist/img/user1-128x128.jpg" alt="User Image">
+			                <img class="img-circle boardWriter" src="${boardVO.filesrc }" alt="User Image">
 			                <span class="username"><a href="#">${boardVO.usernick }</a></span>
 			                <span class="description"><a href="/board/readPage?bnum=${boardVO.bnum}" style="color:#000">${boardVO.title }</a></span>
 			              </div>
@@ -156,8 +156,8 @@
 					    	var bnum = imgbnum.pop();
 					        //홈게시글 첨부파일 불러오기
 					  	  	$.getJSON("/board/getAttach/"+bnum  , function(list){
-					  	        console.log("list : " + list);
-					  	        console.log("imgbnum.pop : " + bnum);
+					  	        //console.log("list : " + list);
+					  	        //console.log("imgbnum.pop : " + bnum);
 							    $(list).each(function(i, e){
 							        if(i==0){//마지막 파일만(pop은 마지막부터 가져온다.)
 									    var fileInfo = getFileInfo(e);
@@ -167,6 +167,10 @@
 							    });
 							});
 					    });
+					    var boardWriter =  $(".boardWriter").attr("src"); 
+	            	    if(boardWriter == '' || boardWriter == null){
+	            	        $(".boardWriter").attr("src", "/resources/dist/img/user1-128x128.jpg");       	   
+	            	    }
 					});
 				</script>
 			</div><!-- .row 1 -->
