@@ -19,7 +19,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import ga.newspbn.service.BoardService;
-import ga.newspbn.util.GetPharse;
 import ga.newspbn.vo.Criteria;
 
 /**
@@ -50,8 +49,7 @@ public class HomeController {
 		logger.info("지금 접속한 자의 IP : "+ip);
 		
 		System.out.println("ip의 데이터 타입 : "+ip.getClass().getName());
-		GetPharse gp = new GetPharse();
-		//gp.getSuyongso();
+		
 		
 //		if(!locale.toString().equals("ko_KR") && !locale.toString().equals("ko")) {
 //			System.out.println("센족짱개 새끼는 날리는거임");
