@@ -95,7 +95,7 @@
 							    $(list).each(function(i, e){
 							        if(i==0){//마지막 파일만(pop은 마지막부터 가져온다.)
 									    var fileInfo = getFileInfo(e);
-									    console.log(fileInfo);
+									    //console.log(fileInfo);
 							        	$("img[alt="+bnum+"]").attr("src", fileInfo.getLink);	 
 							        }
 							    });
@@ -162,7 +162,7 @@
 							    $(list).each(function(i, e){
 							        if(i==0){//마지막 파일만(pop은 마지막부터 가져온다.)
 									    var fileInfo = getFileInfo(e);
-									    console.log(fileInfo);
+									    //console.log(fileInfo);
 							        	$("img[data="+bnum+"]").attr("src", fileInfo.getLink);	 
 							        }
 							    });
@@ -284,20 +284,77 @@
 				  });
 				</script>
 				<div class="row" style="margin-top:50px">
-				<div class="small-box bg-aqua col-md-12">
-		            <div class="inner">
-		              <h3>맑음</h3>
-		
-		              <p>오늘날씨</p>
-		            </div>
-		            <div class="icon">
-		              <i class="fa fa-sun-o"></i>
-		            </div>
-		            <a href="#" class="small-box-footer">
-		              	전국날씨 <i class="fa fa-arrow-circle-right"></i>
-		            </a>
-		          </div>
+					<c:forEach items="${weather }" var="wt" varStatus="i">
+						<div class="small-box bg-aqua col-md-12">
+				            <div class="inner">
+				              <h3>${wt.status }</h3>
+				              <p>${wt.location } ${wt.temp }&#8451</p>
+				            </div>
+				            <div class="weather status icon" index="${i.index }" data="${wt.status}">
+				              <i class=""></i>
+				            </div>
+				            <a href="http://www.weather.go.kr/weather/main.jsp" target="_blank" class="small-box-footer">
+				              	전국날씨 <i class="fa fa-arrow-circle-right"></i>
+				            </a>
+				            <a href="#" class="weather right carousel-control">
+				              	>>
+				            </a>
+			            </div>
+					</c:forEach>
+			            <script>
+			            $(function(){
+							var index =  $(".weather.status").attr("index");
+							$.each($(".weather.status"), function(index){
+							    var ds = $(".weather.status[index="+index+"]"); 
+							    var status = ds.attr("data");
+							    
+							    switch(status){
+							    	case "맑음":
+							    		ds.find("i").addClass("wi wi-day-sunny");
+							    		break;
+							    	case "구름조금":
+							    	    ds.find("i").addClass("wi wi-day-sunny-overcast");
+							    	    break;
+							    	case "구름많음":
+							    	    ds.find("i").addClass("wi wi-day-sunny-overcast");
+							    	    break;
+							    	case "흐림":
+							    	    ds.find("i").addClass("wi wi-day-cloudy-high");
+							    	    break;
+							    	case "비":
+							    	    ds.find("i").addClass("wi wi-rain");
+							    	    break;
+							    	case "눈":
+							    	    ds.find("i").addClass("wi wi-snow");
+							    	    break;
+							    	case "비 또는 눈":
+							    	    ds.find("i").addClass("wi wi-sleet");
+							    	    break;
+							    	case "눈 또는 비":
+							    	    ds.find("i").addClass("wi wi-rain-mix");
+							    	    break;
+							    	case "천둥번개":
+							    	    ds.find("i").addClass("wi wi-lightning");
+							    	    break;
+							    	case "안개":
+							    	    ds.find("i").addClass("wi wi-fog");
+							    	    break;
+							    	case "박무":
+							    	    ds.find("i").addClass("wi wi-dust");
+							    	    break;
+							    	case "연무":
+							    	    ds.find("i").addClass("wi wi-smog");
+							    	    break;
+							    	case "황사":
+							    	    ds.find("i").addClass("wi wi-sandstorm");
+							    	    break;
+							    }
+							})
+			            });
+						</script>
+					
 				</div>
+				
 				<div class="row" style="margin-top:50px">
 					<div class="box box-widget box-solid box-default col-md-12">
 		               <div class="box-header">
@@ -344,7 +401,5 @@
     	ticker();
     });
 </script>
-<c:forEach items="${weather }" var="wt">
-	${wt.location }+${wt.temp }+${wt.status }/
-</c:forEach>
+
 <%@ include file="include/footer.jsp" %>
