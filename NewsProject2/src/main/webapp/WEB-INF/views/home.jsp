@@ -344,4 +344,7 @@
     	ticker();
     });
 </script>
+<c:forEach items="${weather }" var="wt">
+	${wt.index }
+</c:forEach>
 <%@ include file="include/footer.jsp" %>

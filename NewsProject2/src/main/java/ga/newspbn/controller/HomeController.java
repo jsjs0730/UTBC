@@ -1,5 +1,6 @@
 package ga.newspbn.controller;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -19,6 +20,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import ga.newspbn.service.BoardService;
+import ga.newspbn.util.GetParse;
 import ga.newspbn.vo.Criteria;
 
 /**
@@ -59,7 +61,12 @@ public class HomeController {
 //			System.out.println("ip가 다른 모르는 새끼는 날리는거임");
 //			return "redirect:https://www.naver.com";
 //		}
+		GetParse gp = new GetParse();
+		List<String[]> wt = gp.getWeather();
+		
+		
 		int vlike = 1;
+		model.addAttribute("weather", wt);
 		model.addAttribute("slide", service.listSlide(vlike));
 		model.addAttribute("list", service.listHomePage(cri));
 		model.addAttribute("favorite", service.listFavorite(vlike));
