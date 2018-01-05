@@ -2,6 +2,7 @@ package ga.newspbn.controller;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -62,10 +63,9 @@ public class HomeController {
 //			return "redirect:https://www.naver.com";
 //		}
 		GetParse gp = new GetParse();
-		List<String[]> wt = gp.getWeather();
-		
-		
+		List<Map> wt = gp.getWeather();
 		int vlike = 1;
+		
 		model.addAttribute("weather", wt);
 		model.addAttribute("slide", service.listSlide(vlike));
 		model.addAttribute("list", service.listHomePage(cri));

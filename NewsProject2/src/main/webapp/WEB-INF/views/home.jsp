@@ -345,6 +345,6 @@
     });
 </script>
 <c:forEach items="${weather }" var="wt">
-	${wt.index }
+	${wt.location }+${wt.temp }+${wt.status }/
 </c:forEach>
 <%@ include file="include/footer.jsp" %>
