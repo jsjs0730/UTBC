@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-  <mapper namespace="ga.newspbn.mapper.memberMapper">
+  <mapper namespace="tk.utbc.mapper.memberMapper">
   	<insert id="createUser">
   		insert into tbl_member
   		(uid, upw, uname, email, birthdate, joindate, gender, profile_picture, filesrc, profile_content)

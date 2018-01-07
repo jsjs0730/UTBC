@@ -42,9 +42,9 @@
 		<tx:annotation-driven/>
 		
 		
-		<context:component-scan base-package="ga.newspbn.dao"></context:component-scan>
-		<context:component-scan base-package="ga.newspbn.service"></context:component-scan>
-		<context:component-scan base-package="ga.newspbn.aop"></context:component-scan>
+		<context:component-scan base-package="tk.utbc.dao"></context:component-scan>
+		<context:component-scan base-package="tk.utbc.service"></context:component-scan>
+		<context:component-scan base-package="tk.utbc.aop"></context:component-scan>
 		
 		<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 		<aop:config></aop:config>
