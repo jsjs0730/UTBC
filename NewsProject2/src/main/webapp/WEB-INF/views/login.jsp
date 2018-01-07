@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>NewsPBN | 로그인</title>
+    <title>UTBC | 로그인</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.4 -->
     <link href="/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -53,7 +53,7 @@
 
 <div class="login-box">
   <div class="login-logo">
-    <a href="/">NEWS<b>PBN</b></a>
+    <a href="/">good<b>UTBC</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">

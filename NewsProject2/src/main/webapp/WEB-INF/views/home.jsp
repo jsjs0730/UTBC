@@ -90,12 +90,9 @@
 					    	var bnum = imgbnum.pop();
 					        //홈게시글 첨부파일 불러오기
 					  	  	$.getJSON("/board/getAttach/"+bnum  , function(list){
-					  	        //console.log("list : " + list);
-					  	        //console.log("imgbnum.pop : " + bnum);
 							    $(list).each(function(i, e){
 							        if(i==0){//마지막 파일만(pop은 마지막부터 가져온다.)
 									    var fileInfo = getFileInfo(e);
-									    //console.log(fileInfo);
 							        	$("img[alt="+bnum+"]").attr("src", fileInfo.getLink);	 
 							        }
 							    });
@@ -283,7 +280,8 @@
 				    });
 				  });
 				</script>
-				<div class="row" style="margin-top:50px">
+				<div class="weather row" style="margin-top:50px">
+				<div>
 					<c:forEach items="${weather }" var="wt" varStatus="i">
 						<div class="small-box bg-aqua col-md-12">
 				            <div class="inner">
@@ -296,14 +294,12 @@
 				            <a href="http://www.weather.go.kr/weather/main.jsp" target="_blank" class="small-box-footer">
 				              	전국날씨 <i class="fa fa-arrow-circle-right"></i>
 				            </a>
-				            <a href="#" class="weather right carousel-control">
-				              	>>
-				            </a>
 			            </div>
 					</c:forEach>
+					</div>
+				</div>
 			            <script>
 			            $(function(){
-							var index =  $(".weather.status").attr("index");
 							$.each($(".weather.status"), function(index){
 							    var ds = $(".weather.status[index="+index+"]"); 
 							    var status = ds.attr("data");
@@ -349,11 +345,33 @@
 							    	    ds.find("i").addClass("wi wi-sandstorm");
 							    	    break;
 							    }
+							    $(".weather.row>div").css({
+							        height: $(".small-box.bg-aqua.col-md-12").css("height"),
+							        overflow : "hidden",
+							        left : 0,
+							        top : 0
+							    });
+							  
 							})
+
+							$(document).ready(function(){
+							    var index = 0;
+							    var contentWidth = $(".small-box.bg-aqua.col-md-12").css("width");
+							    var contentLength = $(".small-box.bg-aqua.col-md-12").length;
+							       
+							    var wticker = function() {
+							        timer = setTimeout(function() {
+							          $(".small-box.bg-aqua.col-md-12:eq(0)").animate({marginLeft: "0px" }, 400, function() {
+							            $(this).appendTo(".weather.row>div");
+							          });
+							          wticker();
+							        }, 2000);
+						    	};
+						    	wticker();
+							}); 
 			            });
 						</script>
-					
-				</div>
+	
 				
 				<div class="row" style="margin-top:50px">
 					<div class="box box-widget box-solid box-default col-md-12">
@@ -396,7 +414,7 @@
 	            $(this).appendTo(".table-condensed>tbody");
 	          });
 	          ticker();
-	        }, 2000);
+	        }, 5000);
     	};
     	ticker();
     });
