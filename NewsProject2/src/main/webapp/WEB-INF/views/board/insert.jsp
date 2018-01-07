@@ -163,8 +163,6 @@ $("#mobileFile").on("change", function(event){
 $(".fileDrop").on("drop", function(event){
 	event.preventDefault();
 	files = event.originalEvent.dataTransfer.files;
-	console.log("files[0]: " +files[0]);
-	//var file = files[0];
 	uploadControl(files);
 });
 //삭제처리
@@ -233,7 +231,6 @@ $(".uploadedList").on("mouseenter", "img", function(event){
         event.preventDefault();
         var imgTag = $("#popup_img");
         imgTag.attr("src", fileLink);
-        //console.log(imgTag.attr("src"));
         
         $(".popup").show();
         $(".popup").setCenter();
