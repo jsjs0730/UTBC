@@ -13,7 +13,7 @@
     <meta name="_csrf" content="${_csrf.token}"/>
 	<meta name="_csrf_header" content="${_csrf.headerName}"/>
 	<meta name="_csrf_parameter" content="${_csrf.parameterName}"/>
-    <title>:: Unreal Training Borad Casting :: </title>
+    <title>:: Unreal Training Broad Casting :: </title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.4 -->
     <link href="/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
