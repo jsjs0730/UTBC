@@ -1,6 +1,5 @@
 package tk.utbc.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -25,7 +24,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import tk.utbc.service.BoardService;
 import tk.utbc.util.GetParse;
-import tk.utbc.vo.BoardVO;
 import tk.utbc.vo.Criteria;
 
 /**
