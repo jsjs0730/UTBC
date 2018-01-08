@@ -3,6 +3,8 @@
  */
 package tk.utbc.service;
 
+import java.util.Map;
+
 import tk.utbc.vo.MemberVO;
 
 /**
@@ -14,5 +16,5 @@ public interface MemberService {
 	public void createAuthority(String uid, String authority) throws Exception;
 	public void createUserPoint(String uid) throws Exception;
 	public int chkUser(MemberVO vo) throws Exception;
-	
+	public Map<String, Object> getProfile(String uname) throws Exception;
 }

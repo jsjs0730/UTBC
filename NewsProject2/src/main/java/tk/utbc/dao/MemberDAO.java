@@ -14,4 +14,7 @@ public interface MemberDAO {
 	public void insertAuthority(String uid, String Authority) throws Exception;
 	public void insertUserPoint(String uid) throws Exception;
 	public int checkUser(MemberVO vo) throws Exception;
+	public int writedBoardCnt(String uname) throws Exception;
+	public int writedReplyCnt(String uname) throws Exception;
+	public int getMyPoint(String uname) throws Exception;
 }

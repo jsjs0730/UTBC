@@ -23,8 +23,23 @@
   	<select id="checkUname" resultType="int">
   		select count(uname) from tbl_member where uname=#{uname}  	
   	</select>
-  	
-  	
-  	 	
+  	<select id="writedBoardCnt" resultType="int">
+  		select count(usernick) from tbl_board
+		left join tbl_member
+		on tbl_member.uname = tbl_board.usernick
+		where tbl_board.usernick = #{uname};
+  	</select>
+  	<select id="writedReplyCnt" resultType="int">
+  		select count(replyer) from tbl_reply
+		left join tbl_member
+		on tbl_member.uname = tbl_reply.replyer
+		where tbl_reply.replyer = #{uname};
+  	</select>
+	<select id="getMyPoint" resultType="int">
+		select point from tbl_member_point
+		left join tbl_member
+		on tbl_member.uid = tbl_member_point.uid
+		where tbl_member.uname = #{uname};
+	</select>
   </mapper>
  

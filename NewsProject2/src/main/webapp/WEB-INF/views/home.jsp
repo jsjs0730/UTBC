@@ -75,7 +75,7 @@
 			    <div class="carousel-inner" role="listbox">
 			      	<c:forEach var="sbox" items="${slide }" >
 				     	 <div class="item" data="${sbox.bnum }">
-					      <img src="/resources/img/0d07da65.gif" alt="${sbox.bnum }" width="460" height="345">
+					      <img src="/resources/img/kindaichi.jpg" alt="${sbox.bnum }" width="460" height="345">
 					       <div class="carousel-caption">
 					            <a href="/board/readPage?bnum=${sbox.bnum }"><h2 style="color: #ffffff;box-shadow: 8px 7px 18px 10px #000000ba;background-color: rgba(0, 0, 0, 0.59);">${sbox.title }</h2></a>
 					        </div>
@@ -173,7 +173,7 @@
 			              <p>
 							<c:choose>
 								<c:when test="${fn:length(boardVO.content)>50 }">
-									<p>${fn:escapeXml(fn:substring(boardVO.content.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "").replaceAll("&nbsp;"," "), 0, 30))}...&lt;생략&gt;</p>
+									<p>${fn:escapeXml(fn:substring(boardVO.content.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "").replaceAll("&nbsp;"," "), 0, 15))}...&lt;생략&gt;</p>
 								</c:when>
 								<c:otherwise>
 									<p>${fn:escapeXml(boardVO.content.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "").replaceAll("&nbsp;"," "))  }</p>
@@ -265,30 +265,14 @@
 	          		</div>	          		
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
-					<script>
-		            	$(function(){
-		            	    var login_userimage =  $(".login_userimage").attr("src"); 
-		            	    if(login_userimage == '' || login_userimage == null){
-		            	        $(".login_userimage").attr("src", "/resources/dist/img/propic.jpg");       	   
-		            	    }
-		            	});
-					</script>
 					<div class="box box-solid box-primary">
 			            <div class="box-body box-profile">
 			              <img class="profile-user-img img-responsive img-circle login_userimage" src='<sec:authentication property="principal.filesrc"/>' alt="User profile picture">
-			              <h3 class="profile-username text-center"><sec:authentication property="principal.uname"/>님 환영합니다.</h3>
+			              <h3 class="profile-username text-center"><sec:authentication property="principal.uname" var="uname"/>${uname }님 환영합니다.</h3>
 			              <p class="text-muted text-center">권한 : <sec:authentication property="principal.authorities"/></p>
 			
 			              <ul class="list-group list-group-unbordered">
-			                <li class="list-group-item">
-			                  <b>내가 쓴 글</b> <a class="pull-right">1,322</a>
-			                </li>
-			                <li class="list-group-item">
-			                  <b>내가 쓴 댓글</b> <a class="pull-right">543</a>
-			                </li>
-			                <li class="list-group-item">
-			                  <b>포인트</b> <a class="pull-right">13,287</a>
-			                </li>
+
 			              </ul>
 							<!-- /.col -->
 							<form id="logout" action="/logout" method="post" >
@@ -302,11 +286,44 @@
 			            </div>
 			            <!-- /.box-body -->
 		         	</div>
+					<script type="text/javascript" >
+					<%-- //로그인 시에만 스크립트가 동작하도록 하기위해 <sec:authorize> 태그안에 스크립트를 작성한다. --%>
+						$(function(){
+						    var login_userimage =  $(".login_userimage").attr("src"); 
+		            	    if(login_userimage == '' || login_userimage == null){
+		            	        $(".login_userimage").attr("src", "/resources/dist/img/propic.jpg");       	   
+		            	    }
+		            	    
+						    var uname = '${uname}';
+						    $.getJSON("./member/"+uname, function(data){
+						       var pf = "";
+						       $.each(data, function(key, value){
+					           	   pf += '<li class="list-group-item">'
+					               pf += '<b>내가 쓴 글</b> <a class="pull-right">'+this.writedBoardCnt+'</a>'
+					               pf += '</li>'
+					               pf += '<li class="list-group-item">'
+					               pf += '<b>내가 쓴 댓글</b> <a class="pull-right">'+this.writedReplyCnt+'</a>'
+					               pf += '</li>'
+					               pf += '<li class="list-group-item">'
+					               pf += '<b>포인트</b> <a class="pull-right">'+this.point+'</a>'
+					               pf += '</li>'
+						       });
+						       $(".list-group.list-group-unbordered").html(pf);
+						    });
+						});
+				
+				 	</script>
+					
 			    </sec:authorize>
 				</div>
-				<script>
-				  $(function () {
-				    $('#loginbtn').on("click", function(event){
+				<div class="weather row" style="margin-top:50px">
+					<div>
+						
+					</div>
+				</div>  
+	            <script>                                                                      
+	            $(function(){
+	                $('#loginbtn').on("click", function(event){
 				        if($("#uid").val() == ""){
 				            event.preventDefault();
 				            alert("아이디를 입력해라");
@@ -320,15 +337,6 @@
 				            $("#loginfrm").submit();
 				        }
 				    });
-				  });
-				</script>
-				<div class="weather row" style="margin-top:50px">
-					<div>
-						
-					</div>
-				</div>  
-	            <script>                                                                      
-	            $(function(){
 	                $.getJSON("./weather", function(data){//목록데이터 처리
 				        var wtag = "";
 				        $.each(data.weather, function(key, value){

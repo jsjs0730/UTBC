@@ -52,6 +52,21 @@ public class MemberDAOImpl implements MemberDAO {
 		sqlSession.insert(namespace+"createUserPoint", uid);
 	}
 
+	@Override
+	public int writedBoardCnt(String uname) throws Exception {
+		return sqlSession.selectOne(namespace+"writedBoardCnt", uname);
+	}
+
+	@Override
+	public int writedReplyCnt(String uname) throws Exception {
+		return sqlSession.selectOne(namespace+"writedReplyCnt", uname);
+	}
+
+	@Override
+	public int getMyPoint(String uname) throws Exception {
+		return sqlSession.selectOne(namespace + "getMyPoint", uname);
+	}
+
 	
 
 }

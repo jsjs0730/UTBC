@@ -3,9 +3,13 @@
  */
 package tk.utbc.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import tk.utbc.dao.MemberDAO;
 import tk.utbc.vo.MemberVO;
@@ -39,6 +43,20 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void createUserPoint(String uid) throws Exception {
 		dao.insertUserPoint(uid);
+	}
+
+	@SuppressWarnings("null")
+	@Transactional
+	@Override
+	public Map<String, Object> getProfile(String uname) throws Exception {
+		Map<String, Object> userProfile = new HashMap<>();
+		int point = dao.getMyPoint(uname);
+		int writedBoardCnt = dao.writedBoardCnt(uname);
+		int writedReplyCnt = dao.writedReplyCnt(uname);
+		userProfile.put("point", point);
+		userProfile.put("writedBoardCnt", writedBoardCnt);
+		userProfile.put("writedReplyCnt", writedReplyCnt);
+		return userProfile;
 	}
 	
 	

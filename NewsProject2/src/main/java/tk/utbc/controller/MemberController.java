@@ -5,6 +5,8 @@ package tk.utbc.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -19,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -92,5 +95,14 @@ public class MemberController {
 			model.addAttribute("bCryptString", bCryptString);
 		}
 		return "/common/showBCryptString";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/{uname}", method=RequestMethod.GET)
+	public Map<String, Object> userProfile(@PathVariable("uname") String uname) throws Exception{
+		Map<String, Object> ult = service.getProfile(uname);
+		Map<String, Object> result = new HashMap<>();
+		result.put("profile", ult);
+		return result;
 	}
 }
