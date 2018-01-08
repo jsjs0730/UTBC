@@ -34,22 +34,48 @@ public class BoardVO {
 	
 	private String uid;	//포인트에 사용될 변수 - 보안을 핑계(?)로 조인문으로 바로 부르진 않는다.
 	private String filesrc;	//join문에서 사용될 변수 - 불러도 된다 이건
-	
-	
-	
+	private String point;
+	private String joindate;
+	private String profile_content;
+	private String authority;
+	//게시글 게시자의 대한 프로필 정보
 	public String getUid() {
 		return uid;
 	}
 	public void setUid(String uid) {
 		this.uid = uid;
 	}
-	
 	public String getFilesrc() {
 		return filesrc;
 	}
 	public void setFilesrc(String filesrc) {
 		this.filesrc = filesrc;
 	}
+	public String getPoint() {
+		return point;
+	}
+	public void setPoint(String point) {
+		this.point = point;
+	}
+	public String getJoindate() {
+		return joindate;
+	}
+	public void setJoindate(String joindate) {
+		this.joindate = joindate;
+	}
+	public String getProfile_content() {
+		return profile_content;
+	}
+	public void setProfile_content(String profile_content) {
+		this.profile_content = profile_content;
+	}
+	public String getAuthority() {
+		return authority;
+	}
+	public void setAuthority(String authority) {
+		this.authority = authority;
+	}
+	
 	
 	public Integer getBnum() {
 		return bnum;
@@ -132,7 +158,8 @@ public class BoardVO {
 		return "BoardVO [bnum=" + bnum + ", bname=" + bname + ", usernick=" + usernick + ", title=" + title
 				+ ", content=" + content + ", regdate=" + regdate + ", viewcnt=" + viewcnt + ", replycnt=" + replycnt
 				+ ", vlike=" + vlike + ", dislike=" + dislike + ", del=" + del + ", files=" + Arrays.toString(files)
-				+ ", uid=" + uid + ", filesrc=" + filesrc + "]";
+				+ ", uid=" + uid + ", filesrc=" + filesrc + ", point=" + point + ", joindate=" + joindate
+				+ ", profile_content=" + profile_content + ", authority=" + authority + "]";
 	}
 
 		

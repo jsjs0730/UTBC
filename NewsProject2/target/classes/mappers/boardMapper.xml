@@ -6,16 +6,24 @@
   <mapper namespace="tk.utbc.mapper.boardMapper">
   	<select id="listHome" resultType="BoardVO">
   		<![CDATA[
-  		   select `bnum`, `title`, `content`, `usernick`, `regdate`, `viewcnt`, `replycnt`, `vlike`, `dislike`, `filesrc`   
+		select `bnum`, `title`, `content`, `usernick`, `regdate`, `viewcnt`, `replycnt`, `vlike`, `dislike`, `filesrc`
+		,(select point from tbl_member left join tbl_member_point
+		on tbl_member.uid = tbl_member_point.uid
+		where tbl_member.uname = tbl_board.usernick) as 'point',
+		`joindate`, `profile_content`,
+		(select authority from tbl_member left join tbl_member_authority
+		on tbl_member.uid = tbl_member_authority.uid
+		where tbl_member.uname = tbl_board.usernick) as 'authority' 
 			from tbl_board left join tbl_member
 			 on tbl_board.usernick = tbl_member.uname
 			where bnum > 0 and del = 'N'
 			 order by bnum desc, regdate desc
-		  	 limit 0, 6
+		  	 limit 0, 6;
 		]]>
   	</select>
   	<select id="listSlide" resultType="BoardVO">
-  		select `bnum`, `bname`, `title` from tbl_board where `vlike` > #{vlike} group by `bname`;
+		select `bnum`,`bname`, `title`, `vlike`, `regdate` from  tbl_board t1 where vlike =  
+			(select max(`vlike`) from  tbl_board t2 where `vlike` > #{vlike} and  `bname` = t1.bname);
   	</select>
   	<select id="listFavorite" resultType="BoardVO">
   		select `bnum`, `title`, `vlike`, `bname` from tbl_board where `vlike` > #{vlike} order by vlike desc;

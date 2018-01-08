@@ -1,5 +1,7 @@
 package tk.utbc.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -17,11 +19,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import tk.utbc.service.BoardService;
 import tk.utbc.util.GetParse;
+import tk.utbc.vo.BoardVO;
 import tk.utbc.vo.Criteria;
 
 /**
@@ -38,9 +42,7 @@ public class HomeController {
 	
 	@Inject
 	private BoardService service;
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
+	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(@ModelAttribute("cri")Criteria cri, Locale locale, Model model) throws Exception {
 		logger.info("Welcome home! The client locale is {}.", locale);
@@ -62,15 +64,24 @@ public class HomeController {
 //			System.out.println("ip가 다른 모르는 새끼는 날리는거임");
 //			return "redirect:https://www.naver.com";
 //		}
-		GetParse gp = new GetParse();
-		List<Map> wt = gp.getWeather();
-		int vlike = 1;
 		
-		model.addAttribute("weather", wt);
+		
+		int vlike = 1;
+	
+		//model.addAttribute("weather", wt);
 		model.addAttribute("slide", service.listSlide(vlike));
 		model.addAttribute("list", service.listHomePage(cri));
 		model.addAttribute("favorite", service.listFavorite(vlike));
 		return "home";
+	}
+	@ResponseBody
+	@RequestMapping(value="/weather", method=RequestMethod.GET)
+	public Map<String, Object> weatherPage() throws Exception{
+		GetParse gp = new GetParse();
+		List<Map> wt = gp.getWeather();
+		Map<String, Object> result = new HashMap<>();
+		result.put("weather", wt);
+		return result;
 	}
 	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String loginGET(Model model) {

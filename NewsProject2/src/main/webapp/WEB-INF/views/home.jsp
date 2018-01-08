@@ -77,7 +77,7 @@
 				     	 <div class="item" data="${sbox.bnum }">
 					      <img src="/resources/img/0d07da65.gif" alt="${sbox.bnum }" width="460" height="345">
 					       <div class="carousel-caption">
-					            <a href="/board/readPage?bnum=${sbox.bnum }"><h2 style="color:#2ce9ef">${sbox.title }</h2></a>
+					            <a href="/board/readPage?bnum=${sbox.bnum }"><h2 style="color: #ffffff;box-shadow: 8px 7px 18px 10px #000000ba;background-color: rgba(0, 0, 0, 0.59);">${sbox.title }</h2></a>
 					        </div>
 				      	</div>
 			         </c:forEach>
@@ -117,12 +117,53 @@
 			
 			<div class="row">
 			<c:forEach items="${list }" var="boardVO">
+					<div class="modal fade in" id="profile${boardVO.bnum }" style="display: none; padding-right: 17px;">
+			          <div class="modal-dialog">
+			            <div class="modal-content">
+			              <div class="modal-header">
+			                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			                  <span aria-hidden="true">×</span></button>
+			                <h4 class="modal-title">${boardVO.usernick }님의 회원정보</h4>
+			              </div>
+			              <div class="modal-body">
+			                <div class="box-body box-profile">
+				              <img class="profile-user-img img-responsive img-circle boardWriter" src="${boardVO.filesrc }" alt="User profile picture">
+				              <h3 class="profile-username text-center">${boardVO.usernick }</h3>
+				              <p class="text-muted text-center">권한 :
+								<c:if test="${boardVO.authority eq 'admin' }">관리자</c:if>
+								<c:if test="${boardVO.authority eq 'manager' }">매니저</c:if>
+								<c:if test="${boardVO.authority eq 'user' }">일반</c:if>
+							  </p>
+				
+				              <ul class="list-group list-group-unbordered">
+				                <li class="list-group-item">
+				                  <b>가입일</b> <a class="pull-right">${boardVO.joindate }</a>
+				                </li>
+				                <li class="list-group-item">
+				                  <b>포인트</b> <a class="pull-right">${boardVO.point }</a>
+				                </li>
+				                <li class="list-group-item">
+				                  <b>프로필</b> <a class="pull-right">${boardVO.profile_content }</a>
+				                </li>
+				              </ul>
+				            </div>
+			              </div>
+			              <div class="modal-footer">
+			                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+			                <button type="button" class="btn btn-primary">Save changes</button>
+			              </div>
+			            </div>
+			            <!-- /.modal-content -->
+			          </div>
+			          <!-- /.modal-dialog -->
+        			</div>
+		         	
 				<div class="col-md-4">
 					<div class="box box-widget box-solid box-default" data="${boardVO.bnum }">
 			            <div class="box-header with-border">
 			              <div class="user-block">
 			                <img class="img-circle boardWriter" src="${boardVO.filesrc }" alt="User Image">
-			                <span class="username"><a href="#">${boardVO.usernick }</a></span>
+			                <span class="username"><a href="#" data-toggle="modal" data-target="#profile${boardVO.bnum }"><h5>${boardVO.usernick }</h5></a></span>
 			                <span class="description"><a href="/board/readPage?bnum=${boardVO.bnum}" style="color:#000">${boardVO.title }</a></span>
 			              </div>
 			            </div>
@@ -139,7 +180,7 @@
 								</c:otherwise>
 							</c:choose>   
 						</p>
-			              <span class="pull-right text-muted">${boardVO.vlike } likes - ${boardVO.dislike } dislikes - ${boardVO.viewcnt } comments</span>
+			              <span class="pull-right text-muted">${boardVO.vlike } likes - ${boardVO.dislike } dislikes - ${boardVO.replycnt } comments</span>
 			            </div>
 			            <!-- /.box-body -->
 					</div>
@@ -255,7 +296,8 @@
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 							</form>
 							<c:if test="${pageContext.request.userPrincipal.name != null}">
-								<a class="btn btn-default" href="javascript:document.getElementById('logout').submit()">로그아웃</a>
+								<a class="btn btn-primary" href="javascript:document.getElementById('logout').submit()">로그아웃</a>
+								<!-- <a class="btn btn-primary" href="#">회원정보</a> -->
 							</c:if>
 			            </div>
 			            <!-- /.box-body -->
@@ -281,96 +323,103 @@
 				  });
 				</script>
 				<div class="weather row" style="margin-top:50px">
-				<div>
-					<c:forEach items="${weather }" var="wt" varStatus="i">
-						<div class="small-box bg-aqua col-md-12">
-				            <div class="inner">
-				              <h3>${wt.status }</h3>
-				              <p>${wt.location } ${wt.temp }&#8451</p>
-				            </div>
-				            <div class="weather status icon" index="${i.index }" data="${wt.status}">
-				              <i class=""></i>
-				            </div>
-				            <a href="http://www.weather.go.kr/weather/main.jsp" target="_blank" class="small-box-footer">
-				              	전국날씨 <i class="fa fa-arrow-circle-right"></i>
-				            </a>
-			            </div>
-					</c:forEach>
+					<div>
+						
 					</div>
-				</div>
-			            <script>
-			            $(function(){
-							$.each($(".weather.status"), function(index){
-							    var ds = $(".weather.status[index="+index+"]"); 
-							    var status = ds.attr("data");
-							    
-							    switch(status){
-							    	case "맑음":
-							    		ds.find("i").addClass("wi wi-day-sunny");
-							    		break;
-							    	case "구름조금":
-							    	    ds.find("i").addClass("wi wi-day-sunny-overcast");
-							    	    break;
-							    	case "구름많음":
-							    	    ds.find("i").addClass("wi wi-day-sunny-overcast");
-							    	    break;
-							    	case "흐림":
-							    	    ds.find("i").addClass("wi wi-day-cloudy-high");
-							    	    break;
-							    	case "비":
-							    	    ds.find("i").addClass("wi wi-rain");
-							    	    break;
-							    	case "눈":
-							    	    ds.find("i").addClass("wi wi-snow");
-							    	    break;
-							    	case "비 또는 눈":
-							    	    ds.find("i").addClass("wi wi-sleet");
-							    	    break;
-							    	case "눈 또는 비":
-							    	    ds.find("i").addClass("wi wi-rain-mix");
-							    	    break;
-							    	case "천둥번개":
-							    	    ds.find("i").addClass("wi wi-lightning");
-							    	    break;
-							    	case "안개":
-							    	    ds.find("i").addClass("wi wi-fog");
-							    	    break;
-							    	case "박무":
-							    	    ds.find("i").addClass("wi wi-dust");
-							    	    break;
-							    	case "연무":
-							    	    ds.find("i").addClass("wi wi-smog");
-							    	    break;
-							    	case "황사":
-							    	    ds.find("i").addClass("wi wi-sandstorm");
-							    	    break;
-							    }
-							    $(".weather.row>div").css({
-							        height: $(".small-box.bg-aqua.col-md-12").css("height"),
-							        overflow : "hidden",
-							        left : 0,
-							        top : 0
-							    });
-							  
-							})
+				</div>  
+	            <script>                                                                      
+	            $(function(){
+	                $.getJSON("./weather", function(data){//목록데이터 처리
+				        var wtag = "";
+				        $.each(data.weather, function(key, value){
+							wtag += '<div class="small-box bg-aqua col-md-12">'
+							wtag += '<div class="inner">'
+							wtag += '<h3>'+this.status+'</h3>'
+							wtag += '<p>'+this.location +this.temp+'&#8451</p>'
+							wtag += '</div>'
+							wtag += '<div class="weather status icon" index="'+key+'" data="'+this.status+'">'
+							wtag += '<i class=""></i>'
+							wtag += '</div>'
+							wtag += '<a href="http://www.weather.go.kr/weather/main.jsp" target="_blank" class="small-box-footer">'
+							wtag += '전국날씨 <i class="fa fa-arrow-circle-right"></i>'
+							wtag += '</a>'
+							wtag += '</div>'
+				        });
+				       $(".weather.row>div").html(wtag);
+				       $.each($(".weather.status"), function(index){
+						    var ds = $(".weather.status[index="+index+"]"); 
+						    var status = ds.attr("data");
+						    
+						    switch(status){
+						    	case "맑음":
+						    		ds.find("i").addClass("wi wi-day-sunny");
+						    		break;
+						    	case "구름조금":
+						    	    ds.find("i").addClass("wi wi-day-sunny-overcast");
+						    	    break;
+						    	case "구름많음":
+						    	    ds.find("i").addClass("wi wi-day-sunny-overcast");
+						    	    break;
+						    	case "흐림":
+						    	    ds.find("i").addClass("wi wi-day-cloudy-high");
+						    	    break;
+						    	case "비":
+						    	    ds.find("i").addClass("wi wi-rain");
+						    	    break;
+						    	case "눈":
+						    	    ds.find("i").addClass("wi wi-snow");
+						    	    break;
+						    	case "비 또는 눈":
+						    	    ds.find("i").addClass("wi wi-sleet");
+						    	    break;
+						    	case "눈 또는 비":
+						    	    ds.find("i").addClass("wi wi-rain-mix");
+						    	    break;
+						    	case "천둥번개":
+						    	    ds.find("i").addClass("wi wi-lightning");
+						    	    break;
+						    	case "안개":
+						    	    ds.find("i").addClass("wi wi-fog");
+						    	    break;
+						    	case "박무":
+						    	    ds.find("i").addClass("wi wi-dust");
+						    	    break;
+						    	case "연무":
+						    	    ds.find("i").addClass("wi wi-smog");
+						    	    break;
+						    	case "황사":
+						    	    ds.find("i").addClass("wi wi-sandstorm");
+						    	    break;
+						    }
+						    $(".weather.row>div").css({
+						        height: $(".small-box.bg-aqua.col-md-12").css("height"),
+						        overflow : "hidden",
+						        left : 0,
+						        top : 0
+						    });
+						  
+						});
+				    });
+					
 
-							$(document).ready(function(){
-							    var index = 0;
-							    var contentWidth = $(".small-box.bg-aqua.col-md-12").css("width");
-							    var contentLength = $(".small-box.bg-aqua.col-md-12").length;
-							       
-							    var wticker = function() {
-							        timer = setTimeout(function() {
-							          $(".small-box.bg-aqua.col-md-12:eq(0)").animate({marginLeft: "0px" }, 400, function() {
-							            $(this).appendTo(".weather.row>div");
-							          });
-							          wticker();
-							        }, 2000);
-						    	};
-						    	wticker();
-							}); 
-			            });
-						</script>
+					$(document).ready(function(){
+					    var index = 0;
+					    var contentWidth = $(".small-box.bg-aqua.col-md-12").css("width");
+					    var contentLength = $(".small-box.bg-aqua.col-md-12").length;
+					       
+					    var wticker = function() {
+					        timer = setTimeout(function() {
+					          $(".small-box.bg-aqua.col-md-12:eq(0)").animate({marginLeft: "0px" }, 400, function() {
+					            $(this).appendTo(".weather.row>div");
+					          });
+					          wticker();
+					        }, 2000);
+				    	};
+				    	wticker();
+				    	
+					}); 
+	            });
+				</script>
 	
 				
 				<div class="row" style="margin-top:50px">
