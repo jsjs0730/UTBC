@@ -132,7 +132,7 @@ body{background-image: url("/resources/img/world-map-png-35430.png");background-
 				              <p class="text-muted text-center">권한 :
 								<c:if test="${boardVO.authority eq 'admin' }">관리자</c:if>
 								<c:if test="${boardVO.authority eq 'manager' }">매니저</c:if>
-								<c:if test="${boardVO.authority eq 'user' }">일반</c:if>
+								<c:if test="${boardVO.authority eq 'normal' }">일반</c:if>
 							  </p>
 				
 				              <ul class="list-group list-group-unbordered">
@@ -150,7 +150,6 @@ body{background-image: url("/resources/img/world-map-png-35430.png");background-
 			              </div>
 			              <div class="modal-footer">
 			                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-			                <button type="button" class="btn btn-primary">Save changes</button>
 			              </div>
 			            </div>
 			            <!-- /.modal-content -->
@@ -308,7 +307,7 @@ body{background-image: url("/resources/img/world-map-png-35430.png");background-
 				              <p class="text-muted text-center">권한 :
 								<c:if test="${authority eq '[admin]' }">관리자</c:if>
 								<c:if test="${authority eq '[manager]' }">매니저</c:if>
-								<c:if test="${authority eq '[user]' }">일반</c:if>
+								<c:if test="${authority eq '[nomal]' }">일반</c:if>
 							  </p>
 				              <ul class="list-group list-group-unbordered">
 				                <li class="list-group-item">
@@ -324,7 +323,7 @@ body{background-image: url("/resources/img/world-map-png-35430.png");background-
 				            </div>
 			              </div>
 			              <div class="modal-footer">
-			                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">회원탈퇴</button>
+			                <button type="button" class="btn btn-default pull-left dropout">회원탈퇴</button>
 			                <button type="button" class="btn btn-primary">저장</button>
 			              </div>
 			            </div>
@@ -357,6 +356,33 @@ body{background-image: url("/resources/img/world-map-png-35430.png");background-
 						       $(".myProfile").html(pf);
 						    });
 						    
+						    $(".dropout").on("click", function(){
+						       if(confirm("정말 탈퇴하시겠습니까?")){
+							       $.ajax({
+							           type:"delete",
+							           url:"./member/"+uname,
+							           beforeSend : function(xhr){
+							               xhr.setRequestHeader(csrfHeader, csrfToken);
+							           },
+							           headers:{
+							               "Content-Type" : "application/json",
+							               "X-HTTP-Method-Override" : "DELETE"
+							           },
+							           dataType : "text",
+							           success:function(result){
+							               if(result == "success"){
+							                   alert("탈퇴가 완료 되었습니다.")
+							                   $('#logout').submit();
+							               }
+							           },
+							           error : function(request, status, error){
+							               console.log("code" + request.status + "\n" + "message : " + request.responseText+"\n"+"error : "+error);
+							           }
+							       }); 
+						       }else{
+						           return false;
+						       }
+						    });
 						});
 				
 				 	</script>
