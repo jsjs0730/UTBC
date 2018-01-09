@@ -32,7 +32,8 @@
 				logout-success-url="/"
 				invalidate-session="true"
 				delete-cookies="JSEESSIONID"		
-			/>	
+			/>	<!-- 명시적으로 ,SPRING_SECURITY_REMEMBER_ME_COOKIE 를 추가하여 쿠키를 삭제할 수도 있다.  -->
+		<remember-me key="rmkey" token-validity-seconds="600"/><!-- 10min = 600sec -->
 	</http>
 	<beans:bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></beans:bean>		
 	<authentication-manager>
