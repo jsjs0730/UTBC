@@ -53,7 +53,7 @@
 
 <div class="login-box">
   <div class="login-logo">
-    <a href="/">good<b>UTBC</b></a>
+    <a href="/"><b>UTBC</b></a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
