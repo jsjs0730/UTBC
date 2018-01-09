@@ -60,7 +60,7 @@
     	
     	<!-- 삭제 -->    	
     	<delete id="delete">
-			delete from tbl_reply where rnum=#{rnum}    	
+			delete from tbl_reply where rnum=#{rnum};
     	</delete>
    
 		<!-- 댓글수(페이징용) -->

@@ -269,9 +269,14 @@
 			            <div class="box-body box-profile">
 			              <img class="profile-user-img img-responsive img-circle login_userimage" src='<sec:authentication property="principal.filesrc"/>' alt="User profile picture">
 			              <h3 class="profile-username text-center"><sec:authentication property="principal.uname" var="uname"/>${uname }님 환영합니다.</h3>
-			              <p class="text-muted text-center">권한 : <sec:authentication property="principal.authorities"/></p>
+			              <sec:authentication property="principal.authorities" var="authority"/>
+			              <p class="text-muted text-center">권한 : 
+		              		<c:if test="${authority eq '[admin]' }">관리자</c:if>
+							<c:if test="${authority eq '[manager]' }">매니저</c:if>
+							<c:if test="${authority eq '[normal]' }">일반</c:if>
+						  </p>
 			
-			              <ul class="list-group list-group-unbordered">
+			              <ul class="list-group list-group-unbordered myProfile">
 
 			              </ul>
 							<!-- /.col -->
@@ -308,7 +313,7 @@
 					               pf += '<b>포인트</b> <a class="pull-right">'+this.point+'</a>'
 					               pf += '</li>'
 						       });
-						       $(".list-group.list-group-unbordered").html(pf);
+						       $(".myProfile").html(pf);
 						    });
 						});
 				

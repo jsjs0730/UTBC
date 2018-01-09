@@ -54,16 +54,6 @@ public class HomeController {
 		System.out.println("ip의 데이터 타입 : "+ip.getClass().getName());
 		
 		
-//		if(!locale.toString().equals("ko_KR") && !locale.toString().equals("ko")) {
-//			System.out.println("센족짱개 새끼는 날리는거임");
-//			return "redirect:https://www.naver.com";
-//		}
-//		if(!ip.equals("127.0.0.1") && !ip.equals("0:0:0:0:0:0:0:1")) {
-//			System.out.println("ip가 다른 모르는 새끼는 날리는거임");
-//			return "redirect:https://www.naver.com";
-//		}
-		
-		
 		int vlike = 1;
 	
 		//model.addAttribute("weather", wt);
