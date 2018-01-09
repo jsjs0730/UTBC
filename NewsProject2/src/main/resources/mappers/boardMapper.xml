@@ -23,10 +23,10 @@
   	</select>
   	<select id="listSlide" resultType="BoardVO">
 		select `bnum`,`bname`, `title`, `vlike`, `regdate` from  tbl_board t1 where vlike =  
-			(select max(`vlike`) from  tbl_board t2 where `vlike` > #{vlike} and  `bname` = t1.bname);
+			(select max(`vlike`) from  tbl_board t2 where `vlike` > #{vlike} and `bname` = t1.bname) limit 0, 5;
   	</select>
   	<select id="listFavorite" resultType="BoardVO">
-  		select `bnum`, `title`, `vlike`, `bname` from tbl_board where `vlike` > #{vlike} order by vlike desc;
+  		select `bnum`, `title`, `vlike`, `bname` from tbl_board where `vlike` > #{vlike} order by vlike desc limit 0, 10;
   	</select>
   	<insert id="insertBoard">
   		insert into tbl_board (bname, usernick, title, content)
