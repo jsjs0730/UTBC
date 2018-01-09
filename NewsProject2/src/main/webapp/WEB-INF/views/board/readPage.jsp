@@ -94,7 +94,7 @@
 <div class="container">
 	<div class="row">
 		<div class="col-sm-8">
-			<h1><a href="/board/readPage?bnum=${boardVO.bnum}">${boardVO.title }</a></h1>
+			<h1><a href="/board/readPage?bnum=${boardVO.bnum}&bname=${cri.bname}">${boardVO.title }</a></h1>
 		        <div class="row">
 		          	<div class="col-sm-4 col-sm-4">
 		          		<i class="fa fa-barcode" aria-hidden="true"></i>&nbsp; <span class="itm">${boardVO.bnum }</span>

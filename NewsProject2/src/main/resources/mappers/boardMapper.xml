@@ -6,7 +6,7 @@
   <mapper namespace="tk.utbc.mapper.boardMapper">
   	<select id="listHome" resultType="BoardVO">
   		<![CDATA[
-		select `bnum`, `title`, `content`, `usernick`, `regdate`, `viewcnt`, `replycnt`, `vlike`, `dislike`, `filesrc`
+		select `bnum`, `bname`, `title`, `content`, `usernick`, `regdate`, `viewcnt`, `replycnt`, `vlike`, `dislike`, `filesrc`
 		,(select point from tbl_member left join tbl_member_point
 		on tbl_member.uid = tbl_member_point.uid
 		where tbl_member.uname = tbl_board.usernick) as 'point',

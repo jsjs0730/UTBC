@@ -36,6 +36,7 @@
     <![endif]-->
     
   </head>
+
       <!-- jQuery 2.1.4 -->
     <script src="/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
      <!-- Handlebars 4.0.11 -->
@@ -101,7 +102,7 @@ $(document).ready(
 	<c:if test="${!empty cri.bname}">
 	   <section class="content-header">
 	     <ol class="breadcrumb">
-	       <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+	       <li><a href="/">Home</a></li>
 	       <li><a href="/board/listPage?bname=${cri.bname}">${cri.bname }</a></li>
 	       <li class="active">${boardVO.title }</li>
 	     </ol>
@@ -109,6 +110,10 @@ $(document).ready(
 	</c:if>
 	<c:if test="${empty cri.bname}">
 		<section class="content-header" style="margin-top:30px">
-		
+		<ol class="breadcrumb">
+	       <li><a href="/">Home</a></li>
+	       <li><a href="/board/listPage?bname=${cri.bname}">${cri.bname }</a></li>
+	       <li class="active">${boardVO.title }</li>
+	     </ol>
 		</section>
 	</c:if>

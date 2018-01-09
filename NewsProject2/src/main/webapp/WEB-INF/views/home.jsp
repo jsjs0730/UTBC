@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="include/header.jsp" %>
 
-
 <style>
+
+body{background-image: url("/resources/img/world-map-png-35430.png");background-size: cover;background-position: right;}
 .user-block>img {
     width: 40px;
     height: 40px;
@@ -77,7 +78,7 @@
 				     	 <div class="item" data="${sbox.bnum }">
 					      <img src="/resources/img/kindaichi.jpg" alt="${sbox.bnum }" width="460" height="345">
 					       <div class="carousel-caption">
-					            <a href="/board/readPage?bnum=${sbox.bnum }"><h2 style="color: #ffffff;box-shadow: 8px 7px 18px 10px #000000ba;background-color: rgba(0, 0, 0, 0.59);">${sbox.title }</h2></a>
+					            <a href="/board/readPage?bnum=${sbox.bnum }&bname=${sbox.bname}"><h2 style="color: #ffffff;box-shadow: 8px 7px 18px 10px #000000ba;background-color: rgba(0, 0, 0, 0.59);">${sbox.title }</h2></a>
 					        </div>
 				      	</div>
 			         </c:forEach>
@@ -163,7 +164,7 @@
 			              <div class="user-block">
 			                <img class="img-circle boardWriter" src="${boardVO.filesrc }" alt="User Image">
 			                <span class="username"><a href="#" data-toggle="modal" data-target="#profile${boardVO.bnum }" ><h5>${boardVO.usernick }</h5></a></span>
-			                <span class="description"><a href="/board/readPage?bnum=${boardVO.bnum}" style="color:#000;display: inline-block;white-space: nowrap;">${boardVO.title }</a></span>
+			                <span class="description"><a href="/board/readPage?bnum=${boardVO.bnum}&bname=${boardVO.bname}" style="color:#000;display: inline-block;white-space: nowrap;">${boardVO.title }</a></span>
 			              </div>
 			            </div>
 			            <!-- /.box-header -->
@@ -314,14 +315,17 @@
 				                  <b>가입일</b> <a class="pull-right"><sec:authentication property="principal.joindate"/></a>
 				                </li>
 				                <li class="list-group-item">
+				                  <b>이메일</b> <a class="pull-right"><sec:authentication property="principal.email"/></a>
+				                </li>
+				                <li class="list-group-item">
 				                  <b>프로필</b> <a class="pull-right"><sec:authentication property="principal.profile_content"/></a>
 				                </li>
 				              </ul>
 				            </div>
 			              </div>
 			              <div class="modal-footer">
-			                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-			                <button type="button" class="btn btn-primary">Save changes</button>
+			                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">회원탈퇴</button>
+			                <button type="button" class="btn btn-primary">저장</button>
 			              </div>
 			            </div>
 			            <!-- /.modal-content -->
@@ -502,7 +506,7 @@
 				                <c:forEach var="favorite" items="${favorite }" varStatus="status">
 					                <tr class="fav">
 					                  <td style="text-align:center"><span class="badge  bg-blue">${status.index +1}</span></td>
-					                  <td><a href="/board/readPage?bnum=${favorite.bnum }">${favorite.title }</a></td>
+					                  <td><a href="/board/readPage?bnum=${favorite.bnum }&bname=${favorite.bname}">${favorite.title }</a></td>
 					                  <td>${favorite.vlike }</td>
 					                </tr>
 				                </c:forEach>
