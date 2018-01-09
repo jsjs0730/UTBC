@@ -8,6 +8,7 @@
 	.show{position:relative; max-width:1200px; max-height: 800px; overflow: auto;}
 </style>
 <form role="form" method="post" action="modifyPage" class="frm1">
+	<input type="hidden" name="bname" value="${boardVO.bname }">
 	<input type="hidden" name="bnum" value="${boardVO.bnum }">
 	<input type="hidden" name="page" value="${cri.page }">
 	<input type="hidden" name="perPageNum" value="${cri.perPageNum }">
