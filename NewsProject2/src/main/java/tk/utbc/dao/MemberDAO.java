@@ -19,5 +19,4 @@ public interface MemberDAO {
 	public int writedBoardCnt(String uname) throws Exception;
 	public int writedReplyCnt(String uname) throws Exception;
 	public int getMyPoint(String uname) throws Exception;
-	public List<MemberVO> getMyProfile(String uname) throws Exception;
 }

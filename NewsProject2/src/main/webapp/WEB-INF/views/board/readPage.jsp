@@ -93,13 +93,13 @@
 
 <div class="container">
 	<div class="row">
-		<div class="col-md-8">
+		<div class="col-sm-8">
 			<h1><a href="/board/readPage?bnum=${boardVO.bnum}">${boardVO.title }</a></h1>
 		        <div class="row">
-		          	<div class="col-sm-4 col-md-4">
+		          	<div class="col-sm-4 col-sm-4">
 		          		<i class="fa fa-barcode" aria-hidden="true"></i>&nbsp; <span class="itm">${boardVO.bnum }</span>
 			        </div>				          	
-		          	<div class="col-sm-8 col-md-8">
+		          	<div class="col-sm-8 col-sm-8">
 		          		<i class="fa fa-user" aria-hidden="true"></i>&nbsp; <a style="color:#888">${boardVO.usernick }</a> <span style="color:#bbb">&nbsp; |  &nbsp; </span>
 		          		<i class="fa fa-thumbs-up" aria-hidden="true"></i>&nbsp; <span class="itm">${boardVO.vlike }</span><span style="color:#bbb">&nbsp; |  &nbsp; </span>
 						<i class="fa fa-eye" aria-hidden="true"></i>&nbsp; <span class="itm">${boardVO.viewcnt }</span><span style="color:#bbb">&nbsp; |  &nbsp; </span>
@@ -147,15 +147,15 @@
 			<div class="well" style="height:220px">
 				<h4>너도 한 마디</h4>				
 				<sec:authorize access="isAuthenticated()">
-				  <div class="col-md-6 form-group">
+				  <div class="col-sm-6 form-group">
 				    <label class="sr-only" for="newReplyUsernick">닉네임</label>
 				    <input type="hidden" class="form-control" id="newReplyUsernick" value="${uname }" placeholder="Name" readOnly>
 				  </div>
-				  <div class="col-md-12 form-group">
+				  <div class="col-sm-12 form-group">
 				    <label class="sr-only" for="newReplyText">댓글내용</label>
 				    <textarea class="form-control" id="newReplyText" placeholder="Comment"></textarea>
 				  </div>
-				  <div class="col-md-12 form-group text-right">
+				  <div class="col-sm-12 form-group text-right">
 				  	<button type="submit" class="btn btn-primary" id="replyAddBtn">등록</button>
 				  </div>								
 				</sec:authorize>
@@ -164,7 +164,7 @@
 				</sec:authorize>
 			</div>
 		</div>
-		<div class="col-md-4">
+		<div class="col-sm-4">
 			<div class="well text-center">
 				<p class="lead">
 					Don't want to miss updates? Please click the below button!

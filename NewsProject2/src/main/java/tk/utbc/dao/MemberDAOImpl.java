@@ -68,11 +68,6 @@ public class MemberDAOImpl implements MemberDAO {
 		return sqlSession.selectOne(namespace + "getMyPoint", uname);
 	}
 
-	@Override
-	public List<MemberVO> getMyProfile(String uname) throws Exception {
-		return sqlSession.selectList(namespace + "getMyProfile", uname);
-	}
-
 	
 
 }

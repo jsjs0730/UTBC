@@ -105,12 +105,4 @@ public class MemberController {
 		result.put("stat", ult);
 		return result;
 	}
-	@ResponseBody
-	@RequestMapping(value="/profile/{uname}", method=RequestMethod.GET)
-	public Map<String, Object> userProfile(@PathVariable("uname") String uname) throws Exception{
-		Map<String, Object> ult = service.getProfile(uname);
-		Map<String, Object> result = new HashMap<>();
-		result.put("profile", ult);
-		return result;
-	}
 }

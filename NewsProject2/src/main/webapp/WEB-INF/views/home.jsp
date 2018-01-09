@@ -59,7 +59,7 @@
 <!-- Main Content -->
 <section class="content">
 	<div class="row">
-		<div class="col-md-9"><!-- left-->
+		<div class="col-sm-9"><!-- left-->
 			<div class="row" style="margin-bottom:30px"><!-- slider -->
 				<div id="myCarousel" class="carousel slide" data-ride="carousel">
 			    <!-- Indicators -->
@@ -99,7 +99,6 @@
 							});
 					    });
 					    $(".carousel-inner>.item:eq(0)").addClass("active");
-					    
 					});
 				</script>
 			
@@ -158,13 +157,13 @@
 			          <!-- /.modal-dialog -->
         			</div>
 		         	
-				<div class="col-md-4">
+				<div class="col-sm-4">
 					<div class="box box-widget box-solid box-default" data="${boardVO.bnum }">
 			            <div class="box-header with-border">
 			              <div class="user-block">
 			                <img class="img-circle boardWriter" src="${boardVO.filesrc }" alt="User Image">
-			                <span class="username"><a href="#" data-toggle="modal" data-target="#profile${boardVO.bnum }"><h5>${boardVO.usernick }</h5></a></span>
-			                <span class="description"><a href="/board/readPage?bnum=${boardVO.bnum}" style="color:#000">${boardVO.title }</a></span>
+			                <span class="username"><a href="#" data-toggle="modal" data-target="#profile${boardVO.bnum }" ><h5>${boardVO.usernick }</h5></a></span>
+			                <span class="description"><a href="/board/readPage?bnum=${boardVO.bnum}" style="color:#000;display: inline-block;white-space: nowrap;">${boardVO.title }</a></span>
 			              </div>
 			            </div>
 			            <!-- /.box-header -->
@@ -173,7 +172,7 @@
 			              <p>
 							<c:choose>
 								<c:when test="${fn:length(boardVO.content)>50 }">
-									<p>${fn:escapeXml(fn:substring(boardVO.content.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "").replaceAll("&nbsp;"," "), 0, 15))}...&lt;생략&gt;</p>
+									<p style="display: inline-block;white-space: nowrap;">${fn:escapeXml(fn:substring(boardVO.content.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "").replaceAll("&nbsp;"," "), 0, 30))}...&lt;생략&gt;</p>
 								</c:when>
 								<c:otherwise>
 									<p>${fn:escapeXml(boardVO.content.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "").replaceAll("&nbsp;"," "))  }</p>
@@ -190,7 +189,7 @@
 				<script>
 					$(function(){
 					    var imgbnum = new Array();
-					    $(".col-md-4>.box-widget").each(function(){
+					    $(".col-sm-4>.box-widget").each(function(){
 					        imgbnum.push($(this).attr("data"));
 					    	var bnum = imgbnum.pop();
 					        //홈게시글 첨부파일 불러오기
@@ -216,10 +215,10 @@
 			
 		</div><!-- .left -->
 		<div class="row"><!-- right -->
-			<div class="col-md-2">
+			<div class="col-sm-2">
 				<div class="row">
 				<sec:authorize access="isAnonymous()">
-					<div class="box box-solid box-info col-md-12">					
+					<div class="box box-solid box-info col-sm-12">					
 			            <div class="box-header with-border">
 			              <h3 class="box-title">로그인</h3>
 			              <c:if test="${not empty securityexceptionmsg }">
@@ -286,11 +285,49 @@
 							</form>
 							<c:if test="${pageContext.request.userPrincipal.name != null}">
 								<a class="btn btn-primary" href="javascript:document.getElementById('logout').submit()">로그아웃</a>
-								<!-- <a class="btn btn-primary" href="#">회원정보</a> -->
+								<a class="btn btn-primary profile" href="#" data-toggle="modal" data-target="#myProfile${uname }">회원정보</a>
 							</c:if>
 			            </div>
 			            <!-- /.box-body -->
 		         	</div>
+		         	
+		         	<!--  myProfile -->
+		         	<div class="modal fade in" id="myProfile${uname }" style="display: none; padding-right: 17px;">
+			          <div class="modal-dialog">
+			            <div class="modal-content">
+			              <div class="modal-header">
+			                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			                  <span aria-hidden="true">×</span></button>
+			                <h4 class="modal-title">${uname }님의 회원정보</h4>
+			              </div>
+			              <div class="modal-body">
+			                <div class="box-body box-profile">
+				              <img class="profile-user-img img-responsive img-circle boardWriter" src='<sec:authentication property="principal.filesrc"/>' alt="User profile picture">
+				              <h3 class="profile-username text-center">${uname }</h3>
+				              <p class="text-muted text-center">권한 :
+								<c:if test="${authority eq '[admin]' }">관리자</c:if>
+								<c:if test="${authority eq '[manager]' }">매니저</c:if>
+								<c:if test="${authority eq '[user]' }">일반</c:if>
+							  </p>
+				              <ul class="list-group list-group-unbordered">
+				                <li class="list-group-item">
+				                  <b>가입일</b> <a class="pull-right"><sec:authentication property="principal.joindate"/></a>
+				                </li>
+				                <li class="list-group-item">
+				                  <b>프로필</b> <a class="pull-right"><sec:authentication property="principal.profile_content"/></a>
+				                </li>
+				              </ul>
+				            </div>
+			              </div>
+			              <div class="modal-footer">
+			                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+			                <button type="button" class="btn btn-primary">Save changes</button>
+			              </div>
+			            </div>
+			            <!-- /.modal-content -->
+			          </div>
+        			</div>
+			        <!--  /.myProfile -->
 					<script type="text/javascript" >
 					<%-- //로그인 시에만 스크립트가 동작하도록 하기위해 <sec:authorize> 태그안에 스크립트를 작성한다. --%>
 						$(function(){
@@ -315,6 +352,7 @@
 						       });
 						       $(".myProfile").html(pf);
 						    });
+						    
 						});
 				
 				 	</script>
@@ -345,7 +383,7 @@
 	                $.getJSON("./weather", function(data){//목록데이터 처리
 				        var wtag = "";
 				        $.each(data.weather, function(key, value){
-							wtag += '<div class="small-box bg-aqua col-md-12">'
+							wtag += '<div class="small-box bg-aqua col-sm-12">'
 							wtag += '<div class="inner">'
 							wtag += '<h3>'+this.status+'</h3>'
 							wtag += '<p>'+this.location +this.temp+'&#8451</p>'
@@ -362,7 +400,7 @@
 				       $.each($(".weather.status"), function(index){
 						    var ds = $(".weather.status[index="+index+"]"); 
 						    var status = ds.attr("data");
-						    
+						    //상황별 날씨 아이콘 변경
 						    switch(status){
 						    	case "맑음":
 						    		ds.find("i").addClass("wi wi-day-sunny");
@@ -405,7 +443,7 @@
 						    	    break;
 						    }
 						    $(".weather.row>div").css({
-						        height: $(".small-box.bg-aqua.col-md-12").css("height"),
+						        height: $(".small-box.bg-aqua.col-sm-12").css("height"),
 						        overflow : "hidden",
 						        left : 0,
 						        top : 0
@@ -413,30 +451,42 @@
 						  
 						});
 				    });
-					
-
+	                
+	                
+	                $(".badge:eq(0)").removeClass("bg-blue").addClass("bg-red");
+	                $(".badge:eq(1)").removeClass("bg-blue").addClass("bg-red");
 					$(document).ready(function(){
+					    //날씨
 					    var index = 0;
-					    var contentWidth = $(".small-box.bg-aqua.col-md-12").css("width");
-					    var contentLength = $(".small-box.bg-aqua.col-md-12").length;
+					    var contentWidth = $(".small-box.bg-aqua.col-sm-12").css("width");
+					    var contentLength = $(".small-box.bg-aqua.col-sm-12").length;
 					       
 					    var wticker = function() {
 					        timer = setTimeout(function() {
-					          $(".small-box.bg-aqua.col-md-12:eq(0)").animate({marginLeft: "0px" }, 400, function() {
+					          $(".small-box.bg-aqua.col-sm-12:eq(0)").animate({marginLeft: "0px" }, 400, function() {
 					            $(this).appendTo(".weather.row>div");
 					          });
 					          wticker();
 					        }, 2000);
 				    	};
 				    	wticker();
-				    	
+				    	//인기글
+				    	var ticker = function() {
+	            	        timer = setTimeout(function() {
+	            	          $(".table-condensed>tbody>tr:eq(1)").animate({ marginTop: "-20px" }, 400, function() {
+	            	            $(this).appendTo(".table-condensed>tbody");
+	            	          });
+	            	          ticker();
+	            	        }, 5000);
+	                	};
+	                	ticker();
 					}); 
 	            });
 				</script>
 	
 				
 				<div class="row" style="margin-top:50px">
-					<div class="box box-widget box-solid box-default col-md-12">
+					<div class="box box-widget box-solid box-default col-sm-12">
 		               <div class="box-header">
 			              <h3 class="box-title">인기 기사</h3>
 			            </div>
@@ -466,20 +516,5 @@
 		</div><!-- .right -->
 	</div>
 </section>
-<script>
-    $(".badge:eq(0)").removeClass("bg-blue").addClass("bg-red");
-    $(".badge:eq(1)").removeClass("bg-blue").addClass("bg-red");
-    $(document).ready(function(){
-	    var ticker = function() {
-	        timer = setTimeout(function() {
-	          $(".table-condensed>tbody>tr:eq(1)").animate({ marginTop: "-20px" }, 400, function() {
-	            $(this).appendTo(".table-condensed>tbody");
-	          });
-	          ticker();
-	        }, 5000);
-    	};
-    	ticker();
-    });
-</script>
 
 <%@ include file="include/footer.jsp" %>

@@ -41,11 +41,5 @@
 		on tbl_member.uid = tbl_member_point.uid
 		where tbl_member.uname = #{uname};
 	</select>
-	<select id="getMyProfile" resultType="MemberVO">
-		select email, profile_picture, profile_content from tbl_member_point
-		left join tbl_member
-		on tbl_member.uid = tbl_member_point.uid
-		where tbl_member.uname = #{uname};
-	</select>
   </mapper>
  

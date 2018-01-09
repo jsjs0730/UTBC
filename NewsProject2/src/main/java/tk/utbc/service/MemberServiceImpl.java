@@ -59,14 +59,6 @@ public class MemberServiceImpl implements MemberService {
 		userProfile.put("writedReplyCnt", writedReplyCnt);
 		return userProfile;
 	}
-
-	@Override
-	public Map<String, Object> getProfile(String uname) throws Exception {
-		Map<String, Object> userProfile = new HashMap<>();
-		List<MemberVO> profile = dao.getMyProfile(uname);
-		userProfile.put("profile", profile);
-		return userProfile;
-	}
 	
 	
 }
