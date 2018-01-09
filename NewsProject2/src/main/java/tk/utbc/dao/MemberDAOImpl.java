@@ -4,6 +4,7 @@
 package tk.utbc.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -65,6 +66,11 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public int getMyPoint(String uname) throws Exception {
 		return sqlSession.selectOne(namespace + "getMyPoint", uname);
+	}
+
+	@Override
+	public List<MemberVO> getMyProfile(String uname) throws Exception {
+		return sqlSession.selectList(namespace + "getMyProfile", uname);
 	}
 
 	

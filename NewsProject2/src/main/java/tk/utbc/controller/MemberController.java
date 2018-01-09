@@ -86,7 +86,7 @@ public class MemberController {
 		return String.valueOf(cnt);
 	}
 	
-	@RequestMapping(value="/passwordEncoder", method= {RequestMethod.GET, RequestMethod.POST})
+	/*@RequestMapping(value="/passwordEncoder", method= {RequestMethod.GET, RequestMethod.POST})
 	public String passwordEncoder(@RequestParam(value="targetStr", required=false, defaultValue="") String targetStr, Model model){
 		if(StringUtils.hasText(targetStr)) {
 			//암호화 작업
@@ -95,10 +95,18 @@ public class MemberController {
 			model.addAttribute("bCryptString", bCryptString);
 		}
 		return "/common/showBCryptString";
-	}
+	}*/
 	
 	@ResponseBody
 	@RequestMapping(value="/{uname}", method=RequestMethod.GET)
+	public Map<String, Object> userStat(@PathVariable("uname") String uname) throws Exception{
+		Map<String, Object> ult = service.getStat(uname);
+		Map<String, Object> result = new HashMap<>();
+		result.put("stat", ult);
+		return result;
+	}
+	@ResponseBody
+	@RequestMapping(value="/profile/{uname}", method=RequestMethod.GET)
 	public Map<String, Object> userProfile(@PathVariable("uname") String uname) throws Exception{
 		Map<String, Object> ult = service.getProfile(uname);
 		Map<String, Object> result = new HashMap<>();

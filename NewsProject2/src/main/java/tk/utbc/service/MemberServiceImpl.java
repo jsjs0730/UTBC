@@ -4,6 +4,7 @@
 package tk.utbc.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -48,7 +49,7 @@ public class MemberServiceImpl implements MemberService {
 	@SuppressWarnings("null")
 	@Transactional
 	@Override
-	public Map<String, Object> getProfile(String uname) throws Exception {
+	public Map<String, Object> getStat(String uname) throws Exception {
 		Map<String, Object> userProfile = new HashMap<>();
 		int point = dao.getMyPoint(uname);
 		int writedBoardCnt = dao.writedBoardCnt(uname);
@@ -56,6 +57,14 @@ public class MemberServiceImpl implements MemberService {
 		userProfile.put("point", point);
 		userProfile.put("writedBoardCnt", writedBoardCnt);
 		userProfile.put("writedReplyCnt", writedReplyCnt);
+		return userProfile;
+	}
+
+	@Override
+	public Map<String, Object> getProfile(String uname) throws Exception {
+		Map<String, Object> userProfile = new HashMap<>();
+		List<MemberVO> profile = dao.getMyProfile(uname);
+		userProfile.put("profile", profile);
 		return userProfile;
 	}
 	
