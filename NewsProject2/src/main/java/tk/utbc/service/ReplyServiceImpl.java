@@ -95,7 +95,8 @@ public class ReplyServiceImpl implements ReplyService {
 	@Override
 	public void removeReply(Integer rnum) throws Exception {
 		int bnum = dao.getBnum(rnum); //댓글이 위치한 게시물 번호를 가져옴
-		dao.delete(rnum);
+		//dao.delete(rnum);
+		dao.replyNotDelete(rnum); //삭제하지 않고 댓글 내용을 변경 '이미 삭제된 댓글입니다.'
 		bdao.updateReplyCnt(bnum, -1); //댓글이 삭제 되면 카운트를 한개 내림
 	}
 	

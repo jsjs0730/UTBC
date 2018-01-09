@@ -62,7 +62,9 @@
     	<delete id="delete">
 			delete from tbl_reply where rnum=#{rnum};
     	</delete>
-   
+   		<update id="replyNotDelete">
+   			update tbl_reply set replytext = '이미 삭제된 댓글입니다.' where rnum=#{rnum};
+   		</update>
 		<!-- 댓글수(페이징용) -->
     	<select id="count" resultType="int">
     	<!-- 트랜잭션이 걸리는 시점부터는 tbl_board만을 이용해서 처리해야한다 -->

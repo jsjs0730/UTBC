@@ -44,8 +44,11 @@ public class ReplyDAOImpl implements ReplyDAO {
 		session.delete(namespace+"delete", rnum);
 	}
 	
-	
-	
+	@Override
+	public void replyNotDelete(Integer rnum) throws Exception {
+		session.update(namespace+"replyNotDelete", rnum); 
+	}
+
 	@Override
 	public int getRnum() throws Exception {
 		return session.selectOne(namespace + "getRnum");
