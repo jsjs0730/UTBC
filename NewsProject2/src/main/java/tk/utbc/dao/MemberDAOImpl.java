@@ -69,5 +69,28 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	
+	
+	@Override
+	public void dropPointLog(String uname) throws Exception {
+		sqlSession.delete(namespace + "dropPointLog", uname);
+	}
+
+	@Override
+	public void dropPoint(String uname) throws Exception {
+		sqlSession.delete(namespace + "dropPoint", uname);
+	}
+
+	@Override
+	public void dropAuthority(String uname) throws Exception {
+		sqlSession.delete(namespace + "dropAuthority", uname);
+	}
+
+	@Override
+	public void dropout(String uname) throws Exception {
+		sqlSession.delete(namespace + "dropout", uname);
+		
+	}
+
+	
 
 }

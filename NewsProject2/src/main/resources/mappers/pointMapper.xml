@@ -38,11 +38,6 @@
   	<select id="chkunameForReply" resultType="String">
   		select replyer from tbl_reply where rnum=#{rnum}
   	</select>
-  	<!-- 
-  	 <select id="calculatingPoint" resultType="int">
-  		select count(uid) from tbl_point_log where bnum=#{bnum} and chk=#{chk} bnum은 모두 포함한다.
-  	</select>
-  	 -->
 	<update id="updatePoint">
 	<![CDATA[
 		update tbl_member_point set point = if(point<=0, 0, point)+#{point} where uid = #{uid}

@@ -39,6 +39,7 @@ import tk.utbc.vo.MemberVO;
 public class MemberController {
 	private static final Logger logger =LoggerFactory.getLogger(MemberController.class);
 	
+	@SuppressWarnings("unused")
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
@@ -103,6 +104,14 @@ public class MemberController {
 		Map<String, Object> ult = service.getStat(uname);
 		Map<String, Object> result = new HashMap<>();
 		result.put("stat", ult);
+		return result;
+	}
+	@ResponseBody
+	@RequestMapping(value="/{uname}", method=RequestMethod.DELETE)
+	public Map<String, Object> userDropout(@PathVariable("uname") String uname) throws Exception{
+		service.dropout(uname);
+		Map<String, Object> result = new HashMap<>();
+		result.put("code", "success");
 		return result;
 	}
 }

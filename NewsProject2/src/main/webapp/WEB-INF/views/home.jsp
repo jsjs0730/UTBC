@@ -334,6 +334,10 @@ body{background-image: url("/resources/img/world-map-png-35430.png");background-
 					<script type="text/javascript" >
 					<%-- //로그인 시에만 스크립트가 동작하도록 하기위해 <sec:authorize> 태그안에 스크립트를 작성한다. --%>
 						$(function(){
+						 	//csrf 설정
+							var csrfToken = $("meta[name='_csrf']").attr("content"); 
+							var csrfHeader = $("meta[name='_csrf_header']").attr("content"); 
+
 						    var login_userimage =  $(".login_userimage").attr("src"); 
 		            	    if(login_userimage == '' || login_userimage == null){
 		            	        $(".login_userimage").attr("src", "/resources/dist/img/propic.jpg");       	   
@@ -368,9 +372,9 @@ body{background-image: url("/resources/img/world-map-png-35430.png");background-
 							               "Content-Type" : "application/json",
 							               "X-HTTP-Method-Override" : "DELETE"
 							           },
-							           dataType : "text",
+							           dataType : "json",
 							           success:function(result){
-							               if(result == "success"){
+							               if(result.code == "success"){
 							                   alert("탈퇴가 완료 되었습니다.")
 							                   $('#logout').submit();
 							               }

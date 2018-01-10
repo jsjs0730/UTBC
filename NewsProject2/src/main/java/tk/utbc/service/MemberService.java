@@ -17,4 +17,5 @@ public interface MemberService {
 	public void createUserPoint(String uid) throws Exception;
 	public int chkUser(MemberVO vo) throws Exception;
 	public Map<String, Object> getStat(String uname) throws Exception;
+	public void dropout(String uname) throws Exception;
 }

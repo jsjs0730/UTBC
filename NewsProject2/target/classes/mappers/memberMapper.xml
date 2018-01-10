@@ -41,5 +41,31 @@
 		on tbl_member.uid = tbl_member_point.uid
 		where tbl_member.uname = #{uname};
 	</select>
+	
+	<!-- 회원삭제 -->
+	<delete id="dropPointLog">
+	delete from t1 
+	using tbl_point_log as t1
+	join tbl_member as t2
+	on t1.uid = t2.uid
+	where t2.uname = #{uname};	
+	</delete>
+	<delete id="dropPoint">
+	delete from t1 
+	using tbl_member_point as t1
+	join tbl_member as t2
+	on t1.uid = t2.uid
+	where t2.uname = #{uname};
+	</delete>
+	<delete id="dropAuthority">
+	delete from t1 
+	using tbl_member_authority as t1
+	join tbl_member as t2
+	on t1.uid = t2.uid
+	where t2.uname = #{uname};
+	</delete>
+	<delete id="dropout">
+		delete from tbl_member where uname = #{uname};
+	</delete>
   </mapper>
  

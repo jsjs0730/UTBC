@@ -59,6 +59,16 @@ public class MemberServiceImpl implements MemberService {
 		userProfile.put("writedReplyCnt", writedReplyCnt);
 		return userProfile;
 	}
+
+	@Transactional
+	@Override
+	public void dropout(String uname) throws Exception {
+		dao.dropPointLog(uname);
+		dao.dropPoint(uname);
+		dao.dropAuthority(uname);
+		dao.dropout(uname);
+	}
+	
 	
 	
 }

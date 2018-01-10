@@ -19,4 +19,11 @@ public interface MemberDAO {
 	public int writedBoardCnt(String uname) throws Exception;
 	public int writedReplyCnt(String uname) throws Exception;
 	public int getMyPoint(String uname) throws Exception;
+	
+	
+	public void dropPointLog(String uname) throws Exception;
+	public void dropPoint(String uname) throws Exception;
+	public void dropAuthority(String uname) throws Exception;
+	public void dropout(String uname) throws Exception;
+	
 }
