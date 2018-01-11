@@ -72,6 +72,12 @@
 	<select id="findMyId" resultType="string">
 		select uid from tbl_member where email = #{email};	
 	</select>
-	
-  </mapper>
+	<!-- 비밀번호 찾기 -->
+	<select id="findMyPwd" resultType="string">
+		select uid from tbl_member where uid = #{uid} and email = #{email};
+	</select>
+	<update id="updatePwd">
+		update tbl_member set upw=#{encodePwd} where uid=#{uid};
+	</update>
+	</mapper>
  

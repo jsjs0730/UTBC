@@ -97,6 +97,22 @@ public class MemberDAOImpl implements MemberDAO {
 		
 	}
 
+	@Override
+	public String findMyPwd(String uid, String email) throws Exception {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("uid", uid);
+		paramMap.put("email", email);
+		return sqlSession.selectOne(namespace + "findMyPwd", paramMap);
+	}
+
+	@Override
+	public void updatePwd(String uid, String encodePwd) throws Exception {
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("uid", uid);
+		paramMap.put("encodePwd", encodePwd);
+		sqlSession.update(namespace + "updatePwd", paramMap);
+	}
+	
 	
 
 }

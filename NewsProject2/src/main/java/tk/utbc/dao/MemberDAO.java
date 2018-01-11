@@ -25,4 +25,6 @@ public interface MemberDAO {
 	public void dropout(String uname) throws Exception;
 	
 	public String findMyId(String email) throws Exception;
+	public String findMyPwd(String uid, String email) throws Exception;
+	public void updatePwd(String uid, String encodePwd) throws Exception;
 }

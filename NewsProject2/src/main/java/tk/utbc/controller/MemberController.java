@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import javax.inject.Inject;
 
@@ -145,10 +146,29 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/find/password", method=RequestMethod.POST)
-	public Map<String,Object> findMyPasswordPOST(@RequestParam String uid, @RequestParam String email){
+	public String findMyPasswordPOST(@RequestParam String uid, @RequestParam String email, RedirectAttributes rttr) throws Exception{
 		logger.info("uid : " + uid + "// email : " + email);
 		Map<String,Object> result = new HashMap<>();
 		
-		return result;
+		String id = service.findMyPwd(uid, email); //간단한 ID, 이메일 검증
+		if(id != null) {
+			int ran = new Random().nextInt(500000) + 10000; //10000 ~ 499999
+			
+			String newPwd = String.valueOf(ran);//일종의 rawPwd 생성
+			String encodePwd = BCrypt.hashpw(newPwd, BCrypt.gensalt(10)); //DB에 저장할 때는 encode
+			service.updatePwd(id, encodePwd); //DB
+			
+			String title = "UTBC 임시 비밀번호 안내 메일 입니다.";
+			StringBuilder sb = new StringBuilder();
+			sb.append("귀하의 임시비밀 번호 : " + newPwd);
+			mailService.send(title, sb.toString(), "bakamono56789@yahoo.co.jp", email, null);
+			result.put("code", "success");
+			result.put("message", "귀하의 이메일 주소로 임시 비밀번호가 전송될 것입니다.");
+		}else {
+			result.put("code", "danger");
+			result.put("message", "입력하신 아이디 또는 이메일 정보로 가입된 아이디가 존재하지 않습니다.");
+		}
+		rttr.addFlashAttribute("result", result);
+		return "redirect:/member/find";
 	}
 }

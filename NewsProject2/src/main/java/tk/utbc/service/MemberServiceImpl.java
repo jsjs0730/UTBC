@@ -73,6 +73,17 @@ public class MemberServiceImpl implements MemberService {
 	public String findMyId(String email) throws Exception {
 		return dao.findMyId(email);
 	}
+
+	@Override
+	public String findMyPwd(String uid, String email) throws Exception {
+		return dao.findMyPwd(uid, email);
+	}
+
+	@Override
+	public void updatePwd(String uid, String encodePwd) throws Exception {
+		dao.updatePwd(uid, encodePwd);
+	}
+	
 	
 	
 	
