@@ -112,7 +112,10 @@ public class MemberDAOImpl implements MemberDAO {
 		paramMap.put("encodePwd", encodePwd);
 		sqlSession.update(namespace + "updatePwd", paramMap);
 	}
-	
-	
 
+	@Override
+	public void updateUserProfile(MemberVO vo) throws Exception {
+		sqlSession.update(namespace+"updateUserProfile", vo);
+	}
+	
 }

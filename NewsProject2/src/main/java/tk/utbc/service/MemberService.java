@@ -23,4 +23,5 @@ public interface MemberService {
 	public String findMyId(String email) throws Exception;
 	public String findMyPwd(String uid, String email) throws Exception;
 	public void updatePwd(String uid, String encodePwd) throws Exception;
+	public void updateUserProfile(MemberVO vo) throws Exception;
 }

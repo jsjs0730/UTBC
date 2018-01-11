@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>UTBC | 로그인</title>
+    <title>UTBC | 회원정보변경</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.4 -->
     <link href="/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -22,28 +22,104 @@
     <script src="/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
  
 	<script src="/resources/plugins/iCheck/icheck.min.js"></script>
-	<script>
+<sec:authentication property="principal" var="principal"/>
+<script>
 	  $(function () {
 	    $('input').iCheck({
 	      checkboxClass: 'icheckbox_square-blue',
 	      radioClass: 'iradio_square-blue',
 	      increaseArea: '20%' // optional
 	    });
-	    $('#loginbtn').on("click", function(event){
-	        if($("#uid").val() == ""){
-	            event.preventDefault();
-	            alert("아이디를 입력해라");
-	            $("#uid").focus();
-	        }else if($("#upw").val() == ""){
-	            event.preventDefault();
-	            alert("비밀번호를 입력해라");
-	            $("#upw").focus();
-	        }else{
-	            $("#loginfrm").attr("action" , "<c:url value='/login'/>");
-	            $("#loginfrm").submit();
-	        }
-	    });
 	  });
+
+$(document).ready(function(){
+    var csrfToken = "${_csrf.token}" 
+    var csrfHeader = "${_csrf.headerName}" 
+    var userName = "${principal.uname}"
+    $("#upw").val("");//시작하자마자 지워버리기
+	//닉네임
+	$("#uname").blur(function(){
+		var reg = /^[ㄱ-ㅎ가-힣a-zA-z0-9]{2,6}$/;
+		var msg1 = "닉네임은 영어숫자한글2~6글자까지";
+		var flag = $("#uname");
+		$.ajax({
+	       url:"/member/chkUser",
+	       beforeSend : function(xhr){
+	           xhr.setRequestHeader(csrfHeader, csrfToken);  
+	       },
+	       type:"post",
+	       dataType:"text",
+	       data:$("#uname"),
+	       success:function(data){
+	           if(data>0 && userName != flag.val()){
+	              $("#memFrm>div.form-group:eq(1)").removeClass(" has-success has-feedback");
+	              $("#memFrm>div.form-group:eq(1)").addClass(" has-error has-feedback");
+	              $(".imp1").html("<span class='imp1'>이미 사용중인 닉네임 입니다.</span>");
+	              flag.focus();
+	              console.log(data);
+	           }else{
+	              $(".imp1").text("");
+	              $("#memFrm>div.form-group:eq(1)").removeClass(" has-error has-feedback");
+	              checkInput(reg, flag, msg1);
+	              bkInput(flag);    
+	           }
+	       }
+	     });
+	});
+  //프로필사진
+	$("#profile_picture").on("change", function(event){
+	    var formData = new FormData();
+	    var files = event.target.files;
+	    var file = files[0];
+	    formData.append('file' ,file);
+	    console.log("member_profile_picture : " + file);
+	    $.ajax({
+	       url:"/uploadProfile",
+	       beforeSend : function(xhr){
+               xhr.setRequestHeader(csrfHeader, csrfToken);  
+           },
+	       data:formData,
+	       dataType:"text",
+	       processData: false,
+           contentType: false,
+           type:'POST',
+           success:function(data){
+               imgsrc="/displayFile?location=profile&fileName="+data;
+               $(".img-rounded").attr("src", imgsrc);
+               $("#filesrc").val(imgsrc);
+           }
+	    });
+	});  
+    function checkInput(reg, flag, msg1){
+    	//체크해서 아무것도 없거나 같지 않으면
+    	if(!reg.test(flag.val())){
+    	    flag.next(".imp1").text(msg1);
+    		flag.parent().addClass(" has-error has-feedback");	
+    	}else{
+    		flag.parent().removeClass(" has-error has-feedback");
+    		flag.parent().addClass(" has-success has-feedback");
+    		flag.next(".imp1").text("");
+    	}
+    }
+    //복귀
+    function bkInput(flag){
+        flag.focus(function(){
+    		flag.parent().removeClass(" has-error has-feedback");
+    		flag.next(".imp1").remove();
+    	});
+    }
+    //유효성검사
+	$("#memFrm").submit(function(event){
+	    event.preventDefault();
+	    if($("#memFrm>div").hasClass("has-error") || $("#email").val() == "" || $("#upw").val() == ""||  $("#uname").val() == ""){
+	    	alert("틀린 정보가 있으니 다시 확인하시오")				
+			return false;
+		}else{
+			$(this).get(0).submit();
+			return true;
+		}			
+	});
+});
 	</script>
   <link rel="stylesheet" href="/resources/plugins/iCheck/square/blue.css">
 
@@ -58,34 +134,41 @@
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-  <sec:authentication property="principal"/>
-    <form action="<c:url value='/member/editProfile'/>" method="post" id="loginfrm" name="loginfrm">
+  
+    <form action="/member/editProfile" method="post" id="memFrm" name="memFrm">
       <div class="form-group has-feedback">
-        <input type="text" id="uid" name="uid" class="form-control" value="${principal.uid }" placeholder="id">
-        <span class="glyphicons glyphicons-keys form-control-feedback"></span>
+		<label class="col-sm-12 control-label">프로필에 표시될 사진을 업로드 해주세요.</label>
+		<img class="img-rounded" style="float:left" width="40" height="40" src="${principal.filesrc }">
+		<input type="file" name="profile_picture" id="profile_picture" style="width:100%" value="${principal.profile_picture }">				
+		<input type="hidden" name="filesrc" id="filesrc" value="${principal.filesrc }">
+      </div>
+      <input type="hidden" name="uid" id="uid" value="${principal.uid }">
+      <div class="form-group has-feedback">
+        <input type="text" id="uname" name="uname" class="form-control" value="${principal.uname }" placeholder="uname">
+        <strong class='imp1'></strong>
       </div>
       <div class="form-group has-feedback">
+      	<label class="col-sm-12 control-label" >비밀번호</label>
         <input type="password" id="upw" name="upw" class="form-control" value="${principal.upw }" placeholder="Password">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
+        <label class="col-sm-12 control-label" >이메일</label>
         <input type="text" id="email" name="email" class="form-control" value="${principal.email }" placeholder="Password">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="text" id="email" name="email" class="form-control" value="${principal.profile_content }" placeholder="Password">
-        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        <label class="col-sm-12 control-label" >프로필에 표시될 내용을 입력하세요.</label>
+		<textArea class="form-control" rows="5" name="profile_content" id="profile_content" >${principal.profile_content }</textArea>
       </div>
       <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
       <div class="row">
         <div class="col-xs-4">
-          <button type="submit" id="loginbtn" class="btn btn-primary btn-block btn-flat">로그인</button>
+          <button type="submit" id="loginbtn" class="btn btn-primary btn-block btn-flat" style="text-align:center">저장</button>
         </div>
       </div>
     </form>
-    <a href="#">비밀번호찾기</a><br>
-    <a href="#" class="text-center">회원가입</a>
-  </div>
+   </div>
   <!-- /.login-box-body -->
 </div>
 <!-- /.login-box -->

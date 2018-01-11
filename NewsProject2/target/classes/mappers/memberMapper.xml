@@ -79,5 +79,15 @@
 	<update id="updatePwd">
 		update tbl_member set upw=#{encodePwd} where uid=#{uid};
 	</update>
+	<update id="updateUserProfile">
+		update tbl_member set uname = #{uname},
+				upw= #{upw},
+				email= #{email},
+				profile_content= #{profile_content},
+				profile_picture= #{profile_picture},
+				filesrc= #{filesrc}
+			where uid= #{uid};
+		
+	</update>
 	</mapper>
  

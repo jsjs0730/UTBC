@@ -3,6 +3,7 @@
  */
 package tk.utbc.controller;
 
+import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -160,7 +161,8 @@ public class MemberController {
 			
 			String title = "UTBC 임시 비밀번호 안내 메일 입니다.";
 			StringBuilder sb = new StringBuilder();
-			sb.append("귀하의 임시비밀 번호 : " + newPwd);
+			sb.append("귀하의 임시비밀번호 : " + newPwd);
+			sb.append("\n <주의>반드시 비밀번호를 변경하십시오.");
 			mailService.send(title, sb.toString(), "bakamono56789@yahoo.co.jp", email, null);
 			result.put("code", "success");
 			result.put("message", "귀하의 이메일 주소로 임시 비밀번호가 전송될 것입니다.");
@@ -170,5 +172,17 @@ public class MemberController {
 		}
 		rttr.addFlashAttribute("result", result);
 		return "redirect:/member/find";
+	}
+	
+	@RequestMapping(value="/editProfile", method=RequestMethod.GET)
+	public String editMyProfileGET() {
+		return "/member/editProfile";
+	}
+	@RequestMapping(value="/editProfile", method=RequestMethod.POST)
+	public String editMyProfilePOST(MemberVO vo, RedirectAttributes rttr) throws Exception {
+		vo.setUpw(BCrypt.hashpw(vo.getPassword(), BCrypt.gensalt(10)));
+		service.updateUserProfile(vo);
+		rttr.addFlashAttribute("message", "회원정보가 수정 되었습니다. 재로그인 해주세요.");
+		return "redirect:/";
 	}
 }

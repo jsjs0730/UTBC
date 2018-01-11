@@ -83,6 +83,11 @@ public class MemberServiceImpl implements MemberService {
 	public void updatePwd(String uid, String encodePwd) throws Exception {
 		dao.updatePwd(uid, encodePwd);
 	}
+
+	@Override
+	public void updateUserProfile(MemberVO vo) throws Exception {
+		dao.updateUserProfile(vo);
+	}
 	
 	
 	

@@ -57,6 +57,14 @@ body{background-image: url("/resources/img/world-map-png-35430.png");background-
 	}
 }
 </style>
+<script>
+	//메세지 핸들러
+	var message = "${message}";
+	if(message != ""){
+	    alert(message);
+	    $("#logout").submit();
+	}
+</script>
 <!-- Main Content -->
 <section class="content">
 	<div class="row">
@@ -84,6 +92,7 @@ body{background-image: url("/resources/img/world-map-png-35430.png");background-
 			         </c:forEach>
 			    </div>
 			    <script>
+			    //슬라이더
 					$(function(){
 					    var imgbnum = new Array();
 					    $(".carousel-inner>.item").each(function(){
@@ -283,8 +292,8 @@ body{background-image: url("/resources/img/world-map-png-35430.png");background-
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 							</form>
 							<c:if test="${pageContext.request.userPrincipal.name != null}">
-								<a class="btn btn-primary" href="javascript:document.getElementById('logout').submit()">로그아웃</a>
-								<a class="btn btn-primary profile" href="#" data-toggle="modal" data-target="#myProfile${uname }">회원정보</a>
+								<a class="btn btn-primary pull-right" href="javascript:document.getElementById('logout').submit()">로그아웃</a>
+								<a class="btn btn-warning profile pull-left" href="#" data-toggle="modal" data-target="#myProfile${uname }">회원정보</a>
 							</c:if>
 			            </div>
 			            <!-- /.box-body -->
@@ -306,7 +315,7 @@ body{background-image: url("/resources/img/world-map-png-35430.png");background-
 				              <p class="text-muted text-center">권한 :
 								<c:if test="${authority eq '[admin]' }">관리자</c:if>
 								<c:if test="${authority eq '[manager]' }">매니저</c:if>
-								<c:if test="${authority eq '[nomal]' }">일반</c:if>
+								<c:if test="${authority eq '[normal]' }">일반</c:if>
 							  </p>
 				              <ul class="list-group list-group-unbordered">
 				                <li class="list-group-item">
@@ -322,8 +331,8 @@ body{background-image: url("/resources/img/world-map-png-35430.png");background-
 				            </div>
 			              </div>
 			              <div class="modal-footer">
-			                <button type="button" class="btn btn-default pull-left dropout">회원탈퇴</button>
-			                <button type="button" class="btn btn-primary">저장</button>
+			                <button type="button" class="btn btn-danger pull-left dropout">회원탈퇴</button>
+			                <button type="button" class="btn btn-primary epf">회원정보수정</button>
 			              </div>
 			            </div>
 			            <!-- /.modal-content -->
@@ -336,13 +345,14 @@ body{background-image: url("/resources/img/world-map-png-35430.png");background-
 						 	//csrf 설정
 							var csrfToken = $("meta[name='_csrf']").attr("content"); 
 							var csrfHeader = $("meta[name='_csrf_header']").attr("content"); 
-
+							
 						    var login_userimage =  $(".login_userimage").attr("src"); 
 		            	    if(login_userimage == '' || login_userimage == null){
 		            	        $(".login_userimage").attr("src", "/resources/dist/img/propic.jpg");       	   
 		            	    }
 		            	    
 						    var uname = '${uname}';
+						    //우측 프로필
 						    $.getJSON("./member/"+uname, function(data){
 						       var pf = "";
 						       $.each(data, function(key, value){
@@ -358,7 +368,7 @@ body{background-image: url("/resources/img/world-map-png-35430.png");background-
 						       });
 						       $(".myProfile").html(pf);
 						    });
-						    
+						    //회원탈퇴
 						    $(".dropout").on("click", function(){
 						       if(confirm("정말 탈퇴하시겠습니까?")){
 							       $.ajax({
@@ -386,6 +396,12 @@ body{background-image: url("/resources/img/world-map-png-35430.png");background-
 						           return false;
 						       }
 						    });
+						    //회원정보수정
+						    $(".epf").on("click", function(){
+						       if(confirm("회원정보변경은 반드시 비밀번호를 바꾸셔야 합니다.")){
+						           $(document).attr("href", "/member/editProfile");
+						       } 
+						    });
 						});
 				
 				 	</script>
@@ -399,6 +415,7 @@ body{background-image: url("/resources/img/world-map-png-35430.png");background-
 				</div>  
 	            <script>                                                                      
 	            $(function(){
+	                //우측 로그인메뉴
 	                $('#loginbtn').on("click", function(event){
 				        if($("#uid").val() == ""){
 				            event.preventDefault();
@@ -413,6 +430,7 @@ body{background-image: url("/resources/img/world-map-png-35430.png");background-
 				            $("#loginfrm").submit();
 				        }
 				    });
+	                //날씨정보
 	                $.getJSON("./weather", function(data){//목록데이터 처리
 				        var wtag = "";
 				        $.each(data.weather, function(key, value){
@@ -485,11 +503,11 @@ body{background-image: url("/resources/img/world-map-png-35430.png");background-
 						});
 				    });
 	                
-	                
+	                //인기글 1위,2위 강조
 	                $(".badge:eq(0)").removeClass("bg-blue").addClass("bg-red");
 	                $(".badge:eq(1)").removeClass("bg-blue").addClass("bg-red");
 					$(document).ready(function(){
-					    //날씨
+					    //날씨용 슬라이더
 					    var index = 0;
 					    var contentWidth = $(".small-box.bg-aqua.col-sm-12").css("width");
 					    var contentLength = $(".small-box.bg-aqua.col-sm-12").length;
@@ -503,7 +521,7 @@ body{background-image: url("/resources/img/world-map-png-35430.png");background-
 					        }, 2000);
 				    	};
 				    	wticker();
-				    	//인기글
+				    	//인기글 슬라이더
 				    	var ticker = function() {
 	            	        timer = setTimeout(function() {
 	            	          $(".table-condensed>tbody>tr:eq(1)").animate({ marginTop: "-20px" }, 400, function() {

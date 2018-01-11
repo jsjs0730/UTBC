@@ -13,8 +13,6 @@ button{float:right;}
 }
 
 </style>
-${code }
-${message }
 <script>
 	$(function(){
 	   var code = "${result.code}";
@@ -26,7 +24,25 @@ ${message }
 		if(code != ""){
 		    $(".nav.nav-tabs").before(alert);
 		}
-	   
+	});
+	$(document).ready(function(){
+		$('button[type=submit]').on("click", function(event){
+	      if($(this).parents("div.tab-pane.active").attr("id") == "tab_1"){
+	      	if($(this).parents("div.tab-pane.active").find("input[name=email]").val() == ""){
+	      	    event.preventDefault();
+	      	    alert('이메일 주소를 입력해라');
+	      	}
+	      }else{
+	          if($(this).parents("div.tab-pane.active").find("input[name=uid]").val() == ""){
+	            event.preventDefault();
+				alert("아이디를 입력해라");
+	          }
+	          if($(this).parents("div.tab-pane.active").find("input[name=email]").val() == ""){
+	            event.preventDefault();
+				alert("이메일 주소를 입력해라");
+		      }
+	      }
+		});
 	});
 </script>
 <div class="content" >
