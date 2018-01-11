@@ -25,6 +25,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import tk.utbc.service.BoardService;
 import tk.utbc.util.GetParse;
 import tk.utbc.vo.Criteria;
+import tk.utbc.vo.MemberVO;
 
 /**
  * Handles requests for the application home page.
@@ -53,10 +54,10 @@ public class HomeController {
 		
 		System.out.println("ip의 데이터 타입 : "+ip.getClass().getName());
 		
-		
 		int vlike = 1;
 	
-		//model.addAttribute("weather", wt);
+		
+		model.addAttribute("member", new MemberVO());
 		model.addAttribute("slide", service.listSlide(vlike));
 		model.addAttribute("list", service.listHomePage(cri));
 		model.addAttribute("favorite", service.listFavorite(vlike));
