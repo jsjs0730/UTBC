@@ -5,7 +5,6 @@
           <b>Version</b> 2.0
         </div>
         <strong>Copyright &copy; 2018 <a href="http://almsaeedstudio.com">UTBC</a>.</strong> All rights reserved.
-        
       </footer>
       
     <!-- Bootstrap 3.3.2 JS -->

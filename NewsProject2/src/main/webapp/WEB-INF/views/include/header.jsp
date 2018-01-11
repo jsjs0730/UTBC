@@ -99,21 +99,10 @@ $(document).ready(
     </div>
   </div>
 </nav>
-	<c:if test="${!empty cri.bname}">
-	   <section class="content-header">
-	     <ol class="breadcrumb">
-	       <li><a href="/">Home</a></li>
-	       <li><a href="/board/listPage?bname=${cri.bname}">${cri.bname }</a></li>
-	       <li class="active">${boardVO.title }</li>
-	     </ol>
-	   </section>
-	</c:if>
-	<c:if test="${empty cri.bname}">
-		<section class="content-header" style="margin-top:30px">
-		<ol class="breadcrumb">
-	       <li><a href="/">Home</a></li>
-	       <li><a href="/board/listPage?bname=${cri.bname}">${cri.bname }</a></li>
-	       <li class="active">${boardVO.title }</li>
-	     </ol>
-		</section>
-	</c:if>
+<section class="content-header" style="margin-top:30px">
+	<ol class="breadcrumb">
+       <li><a href="/">Home</a></li>
+       <li><a href="/board/listPage?bname=${cri.bname}">${cri.bname }</a></li>
+       <li class="active">${boardVO.title }</li>
+     </ol>
+</section>

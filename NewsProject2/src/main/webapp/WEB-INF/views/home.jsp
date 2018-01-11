@@ -274,7 +274,6 @@ body{background-image: url("/resources/img/world-map-png-35430.png");background-
 							<c:if test="${authority eq '[manager]' }">매니저</c:if>
 							<c:if test="${authority eq '[normal]' }">일반</c:if>
 						  </p>
-			
 			              <ul class="list-group list-group-unbordered myProfile">
 
 			              </ul>
