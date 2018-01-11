@@ -67,5 +67,11 @@
 	<delete id="dropout">
 		delete from tbl_member where uname = #{uname};
 	</delete>
+	
+	<!-- 아이디 찾기 -->
+	<select id="findMyId" resultType="string">
+		select uid from tbl_member where email = #{email};	
+	</select>
+	
   </mapper>
  

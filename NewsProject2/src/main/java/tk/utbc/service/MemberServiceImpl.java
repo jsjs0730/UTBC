@@ -68,6 +68,11 @@ public class MemberServiceImpl implements MemberService {
 		dao.dropAuthority(uname);
 		dao.dropout(uname);
 	}
+
+	@Override
+	public String findMyId(String email) throws Exception {
+		return dao.findMyId(email);
+	}
 	
 	
 	

@@ -91,6 +91,12 @@ public class MemberDAOImpl implements MemberDAO {
 		
 	}
 
+	@Override
+	public String findMyId(String email) throws Exception {
+		return sqlSession.selectOne(namespace+"findMyId", email);
+		
+	}
+
 	
 
 }

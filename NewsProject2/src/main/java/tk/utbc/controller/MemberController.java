@@ -17,8 +17,6 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +24,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import tk.utbc.service.MailService;
 import tk.utbc.service.MemberService;
 import tk.utbc.vo.MemberVO;
 
@@ -52,6 +52,10 @@ public class MemberController {
 	}
 	@Inject
 	private MemberService service;
+
+	@SuppressWarnings("unused")
+	@Inject
+	private MailService mailService;
 	
 	@RequestMapping("/terms")
 	public String terms() throws Exception{
@@ -97,7 +101,6 @@ public class MemberController {
 		}
 		return "/common/showBCryptString";
 	}*/
-	
 	@ResponseBody
 	@RequestMapping(value="/{uname}", method=RequestMethod.GET)
 	public Map<String, Object> userStat(@PathVariable("uname") String uname) throws Exception{
@@ -106,12 +109,46 @@ public class MemberController {
 		result.put("stat", ult);
 		return result;
 	}
+	
 	@ResponseBody
 	@RequestMapping(value="/{uname}", method=RequestMethod.DELETE)
 	public Map<String, Object> userDropout(@PathVariable("uname") String uname) throws Exception{
 		service.dropout(uname);
 		Map<String, Object> result = new HashMap<>();
 		result.put("code", "success");
+		return result;
+	}
+	
+	@RequestMapping(value="/find", method=RequestMethod.GET)
+	public String find() {
+		return "/member/find";
+	}
+	
+	@RequestMapping(value="/find/id", method=RequestMethod.POST)
+	public String findMyIdPOST(@RequestParam String email, RedirectAttributes rttr) throws Exception{
+		logger.info("email 검사 : "+email);
+		Map<String,Object> result = new HashMap<>();
+		String id = service.findMyId(email);
+		if(id != null) {
+			String title = "UTBC 아이디 찾기 안내 메일 입니다.";
+			StringBuilder sb = new StringBuilder();
+			sb.append("귀하의 아이디는 " + id + " 입니다.");
+			mailService.send(title, sb.toString(), "bakamono56789@yahoo.co.jp", email, null);
+			result.put("code", "success");
+			result.put("message", "귀하의 이메일 주소로 아이디가 전송될 것입니다.");
+		}else {
+			result.put("code", "danger");
+			result.put("message", "입력하신 이메일의 가입된 아이디가 존재하지 않습니다.");
+		}
+		rttr.addFlashAttribute("result", result);
+		return "redirect:/member/find";
+	}
+	
+	@RequestMapping(value="/find/password", method=RequestMethod.POST)
+	public Map<String,Object> findMyPasswordPOST(@RequestParam String uid, @RequestParam String email){
+		logger.info("uid : " + uid + "// email : " + email);
+		Map<String,Object> result = new HashMap<>();
+		
 		return result;
 	}
 }
