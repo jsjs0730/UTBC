@@ -160,7 +160,7 @@ body{background-image: url("/resources/img/world-map-png-35430.png");background-
 				<div class="col-sm-4">
 					<div class="box box-widget box-solid box-default" data="${boardVO.bnum }">
 			            <div class="box-header with-border">
-			              <div class="user-block">
+			              <div class="user-block" style="height:45px">
 			                <img class="img-circle boardWriter" src="${boardVO.filesrc }" alt="User Image">
 			                <span class="username"><a href="#" data-toggle="modal" data-target="#profile${boardVO.bnum }" ><h5>${boardVO.usernick }</h5></a></span>
 			                <span class="description"><a href="/board/readPage?bnum=${boardVO.bnum}&bname=${boardVO.bname}" style="color:#000;display: inline-block;white-space: nowrap;">${boardVO.title }</a></span>
@@ -168,8 +168,8 @@ body{background-image: url("/resources/img/world-map-png-35430.png");background-
 			            </div>
 			            <!-- /.box-header -->
 			            <div class="box-body">
-			              <img class="img-responsive pad" id="phoo" data="${boardVO.bnum }" src="/resources/dist/img/photo2.png" alt="Photo">
-			              <p>
+			              <a  href="/board/readPage?bnum=${boardVO.bnum}&bname=${boardVO.bname}" ><img class="img-responsive pad" id="phoo" data="${boardVO.bnum }" src="/resources/dist/img/photo2.png" alt="Photo"></a>
+			             
 							<c:choose>
 								<c:when test="${fn:length(boardVO.content)>50 }">
 									<p style="display: inline-block;white-space: nowrap;">${fn:escapeXml(fn:substring(boardVO.content.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "").replaceAll("&nbsp;"," "), 0, 30))}...&lt;생략&gt;</p>
@@ -178,7 +178,7 @@ body{background-image: url("/resources/img/world-map-png-35430.png");background-
 									<p>${fn:escapeXml(boardVO.content.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "").replaceAll("&nbsp;"," "))  }</p>
 								</c:otherwise>
 							</c:choose>   
-						</p>
+						
 			              <span class="pull-right text-muted">${boardVO.vlike } likes - ${boardVO.dislike } dislikes - ${boardVO.replycnt } comments</span>
 			            </div>
 			            <!-- /.box-body -->
@@ -256,7 +256,7 @@ body{background-image: url("/resources/img/world-map-png-35430.png");background-
 				              <!-- /.box-body -->
 				              <div class="box-footer">
 				                <button type="submit" class="btn btn-info pull-right" id="loginbtn">확인</button>
-				                <button type="submit" class="btn btn-default">비밀번호찾기</button>
+				                <a class="btn btn-default" href="/member/find">비밀번호찾기</a>
 				              </div>
 				              <!-- /.box-footer -->
 				               <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

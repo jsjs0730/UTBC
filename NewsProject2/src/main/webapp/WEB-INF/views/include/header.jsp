@@ -99,8 +99,8 @@ $(document).ready(
     </div>
   </div>
 </nav>
-<section class="content-header" style="margin-top:30px">
-	<ol class="breadcrumb">
+<section class="content-header col-sm-offset-2" style="margin-top:30px">
+	<ol class="breadcrumb" style="margin:15px auto">
        <li><a href="/">Home</a></li>
        <li><a href="/board/listPage?bname=${cri.bname}">${cri.bname }</a></li>
        <li class="active">${boardVO.title }</li>

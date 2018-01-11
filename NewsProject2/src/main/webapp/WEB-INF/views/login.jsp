@@ -103,8 +103,8 @@
   
     <!-- /.social-auth-links -->
 
-    <a href="#">비밀번호찾기</a><br>
-    <a href="#" class="text-center">회원가입</a>
+    <a href="/member/find">비밀번호찾기</a><br>
+    <a href="/member/signup" class="text-center">회원가입</a>
 
   </div>
   <!-- /.login-box-body -->
