@@ -84,7 +84,7 @@ body{background-image: url("/resources/img/world-map-png-35430.png");background-
 			    <div class="carousel-inner" role="listbox">
 			      	<c:forEach var="sbox" items="${slide }" >
 				     	 <div class="item" data="${sbox.bnum }">
-					      <img src="/resources/img/kindaichi.jpg" alt="${sbox.bnum }" width="460" height="345">
+					      <img src="" alt="${sbox.bnum }" width="460" height="345">
 					       <div class="carousel-caption">
 					            <a href="/board/readPage?bnum=${sbox.bnum }&bname=${sbox.bname}"><h2 style="color: #ffffff;box-shadow: 8px 7px 18px 10px #000000ba;background-color: rgba(0, 0, 0, 0.59);">${sbox.title }</h2></a>
 					        </div>

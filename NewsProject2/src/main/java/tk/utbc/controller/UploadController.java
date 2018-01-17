@@ -92,6 +92,7 @@ public class UploadController {
 	      MediaType mType = MediaUtils.getMediaType(formatName);
 	      HttpHeaders headers = new HttpHeaders();
 	      
+	      //프로필 사진일 때
 	      if(location.equals("profile")) {
 	    	  in = new FileInputStream(uploadPath+"/profile_picture/"+fileName);	    	  
 	      }
