@@ -137,15 +137,17 @@
 	                    	html+='<번호 : '+this.rnum+'></p><h4 class="pull-left">'+this.replyer+'</h4>'
 	                        html+='<input type="hidden" id="replyDepth" value="'+this.depth+'">'
 	                        html+='<input type="hidden" id="replyIdx" value="'+this.idx+'">'
-	                        html+='<p class="pull-right">'
-	        	                if(writer == this.replyer || authority == "[admin]"){
-	        		                html+='<a class="btn btn-primary btn-xs replyModBtn" href="javascript:modifyReply('+this.rnum+');">수정</a>'
-	        		                html+='<a class="btn btn-danger btn-xs replyDelBtn" href="javascript:deleteReply('+this.rnum+');">삭제</a>'
-	        	                }
-	                        	if(writer !=''){
-	                        	    html+='<a class="btn bg-green btn-xs rereplies" href="javascript:addReReply('+this.rnum+')">댓글</a>'
-	                        	}
-	                        html+='</p>'
+	                       if(this.replytext != "이미 삭제된 댓글입니다."){
+		                        html+='<p class="pull-right">'
+		        	                if(writer == this.replyer || authority == "[admin]"){
+		        		                html+='<a class="btn btn-primary btn-xs replyModBtn" href="javascript:modifyReply('+this.rnum+');">수정</a>'
+		        		                html+='<a class="btn btn-danger btn-xs replyDelBtn" href="javascript:deleteReply('+this.rnum+');">삭제</a>'
+		        	                }
+		                        	if(writer !=''){
+		                        	    html+='<a class="btn bg-green btn-xs rereplies" href="javascript:addReReply('+this.rnum+')">댓글</a>'
+		                        	}
+		                        html+='</p>'
+	                       }
 	                html+='</div>'
 	                html+='<p>'
 	                    html+='<em>'+this.replytext+'</em>'

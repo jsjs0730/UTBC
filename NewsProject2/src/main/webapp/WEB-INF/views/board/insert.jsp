@@ -23,6 +23,7 @@
 .show{position:absolute; width:350px; height: 250px;padding:0px;margin:15px;}
 #popup_front>img{position:absolute;}
 .popupDis{position:absolute;padding:0px;width:380px;height:15px;line-height:15px;text-align:center;background-color: #5fa26a;color: #fff;}
+.mailbox-attachment-name{width:inherit;height:inheriat;text-overflow:hidden}
 </style>
 <script>
 	$(document).ready(function(){
@@ -32,9 +33,14 @@
 		$('.canclebtn').on("click", function(){
 			self.location = "/board/listPage?bname=${cri.bname}&page=${cri.page}&perPageNum=${cri.perPageNum}";
 		});
-		$("#bname").val("${cri.bname}");
+		var oldbname = $("#oldbname").val();
+		if(oldbname != ""){
+		    $("#bname option[value="+oldbname+"]").attr("selected",  "selected");
+		}
+		
 	});
 </script>
+<input type="hidden" name="oldbname" id="oldbname" class="form-control" value="${boardVO.bname}" readonly="readonly">
 <form id='registerForm' role="form" method="post">
 	<div class="box-body">
 		<div class="form-group">

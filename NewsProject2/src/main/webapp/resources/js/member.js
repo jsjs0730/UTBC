@@ -98,7 +98,7 @@ $(function(){
 			//체크해서 아무것도 없거나 같지 않으면
 				if($(this).val() == "" || $("#upw").val() != $(this).val()){
 					$(this).val("")
-					$("#pwdChk").attr("placeholder", "ㅁㄲㄴㄹ")
+					$("#pwdChk").attr("placeholder", "다시시도!")
 					$(this).parent().parent().effect("shake");
 					$(this).parent().parent().addClass(" has-error has-feedback");
 				}else{

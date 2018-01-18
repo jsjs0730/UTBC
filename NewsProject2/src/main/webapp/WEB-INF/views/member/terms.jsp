@@ -149,6 +149,7 @@ li>a{border:1px solid}
 		 거절한다.
 		</button>	
   	</div> 
+  	<br/>
 </div>	
 </body>
 </html>

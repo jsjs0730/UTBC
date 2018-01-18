@@ -21,7 +21,7 @@ function getFileInfo(fullName){
         var front = fullName.substr(0,12);// /2018/11/18
         var end = fullName.substr(14);// 3ebb5ffc-22f1-4c6b-bdf0-5bfea6e853ee_0003140383_001_20180109151316505.jpg
         
-        getLink = "/displayFile?location=board&fileName="+ front + "s_" +end;
+        getLink = "/displayFile?location=board&fileName="+ front /*+ "s_" */ +end;
         //console.log("imgsrc : "+imgsrc + "\n" + "fileLink : " + fileLink + "\n" + "fullName :" + fullName + "\n" )
     }else{
         imgsrc = "/resources/dist/img/file.png";

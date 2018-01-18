@@ -90,8 +90,14 @@
 	</div>
 </li>
 </script>
-
-<div class="container">
+<div class="content container">
+<section class="row content-header">
+	<ol class="breadcrumb">
+       <li><a href="/">Home</a></li>
+       <li><a href="/board/listPage?bname=${cri.bname}">${cri.bname }</a></li>
+       <li class="active">${boardVO.title }</li>
+     </ol>
+</section>
 	<div class="row">
 		<div class="col-sm-8">
 			<h1><a href="/board/readPage?bnum=${boardVO.bnum}&bname=${cri.bname}">${boardVO.title }</a></h1>

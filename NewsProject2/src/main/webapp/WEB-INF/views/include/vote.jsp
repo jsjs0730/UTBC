@@ -55,11 +55,11 @@
 				$.each(ballotData.list, function(key, value){
 				    data+='<a href="javascript:voteBoard(1);">'
 				    data+='<b><span id="boardVotedLike">'+this.vlike+'</span></b>'
-				    data+='<p>좋다</p>'
+				    data+='<p>좋아요</p>'
 				    data+='</a>'
 				    data+='<a href="javascript:voteBoard(0);">'
 				    data+='<b><span id="boardVotedDislike">'+this.dislike+'</span></b>'
-				    data+='<p>ㅄ</p>'
+				    data+='<p>싫어요</p>'
 				    data+='</a>'
 				});
 	    	$(".boardVote").html(data);

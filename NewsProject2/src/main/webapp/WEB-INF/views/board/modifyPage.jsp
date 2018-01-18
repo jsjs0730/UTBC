@@ -53,7 +53,6 @@
 		</div>
 		<script>
 			var oldbname = $("#oldbname").val();
-			alert(oldbname);
 			if(oldbname != ""){
 			    $("#bname option[value="+oldbname+"]").attr("selected",  "selected");
 			}

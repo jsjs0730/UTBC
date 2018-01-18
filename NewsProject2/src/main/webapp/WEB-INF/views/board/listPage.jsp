@@ -9,7 +9,7 @@
 
 </style>
 
-<div class="container text-center">    
+<div class="content container text-center">    
 	  <div class="row">
 	    <div class="col-sm-8 text-left">
 			<c:forEach items="${list }" var="boardVO">
@@ -173,7 +173,7 @@
 									+ "&searchKeyword=" + $('#keywordInput').val();
 						});
 				$('#newBtn').on("click", function(evt) {
-					self.location = "insert";
+					self.location = "insert?bname=${cri.bname}";
 				});
 			});
 </script>

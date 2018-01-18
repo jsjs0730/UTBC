@@ -66,7 +66,7 @@ body{background-image: url("/resources/img/world-map-png-35430.png");background-
 	}
 </script>
 <!-- Main Content -->
-<section class="content">
+<div class="content">
 	<div class="row">
 		<div class="col-sm-9"><!-- left-->
 			<div class="row" style="margin-bottom:30px"><!-- slider -->
@@ -399,7 +399,7 @@ body{background-image: url("/resources/img/world-map-png-35430.png");background-
 						    //회원정보수정
 						    $(".epf").on("click", function(){
 						       if(confirm("회원정보변경은 반드시 비밀번호를 바꾸셔야 합니다.")){
-						           $(document).attr("href", "/member/editProfile");
+						           $(location).attr("href", "/member/editProfile");
 						       } 
 						    });
 						});
@@ -566,6 +566,6 @@ body{background-image: url("/resources/img/world-map-png-35430.png");background-
 			</div>
 		</div><!-- .right -->
 	</div>
-</section>
+</div>
 
 <%@ include file="include/footer.jsp" %>
